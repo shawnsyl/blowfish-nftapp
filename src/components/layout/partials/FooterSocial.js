@@ -18,20 +18,7 @@ const FooterSocial = ({
     >
       <ul className="list-reset">
         <li>
-          <a href="https://facebook.com/">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg">
-              <title>Facebook</title>
-              <path
-                d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="https://twitter.com/">
+          <a href="https://twitter.com/blowfishtoken" rel="noopener noreferrer" target="_blank">
             <svg
               width="16"
               height="16"
@@ -43,22 +30,15 @@ const FooterSocial = ({
             </svg>
           </a>
         </li>
-        <li>
-          <a href="https://google.com/">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg">
-              <title>Instagram</title>
-              <g>
-                <circle cx="12.145" cy="3.892" r="1" />
-                <path
-                  d="M8 12c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm0-6c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z" />
-                <path
-                  d="M12 16H4c-2.056 0-4-1.944-4-4V4c0-2.056 1.944-4 4-4h8c2.056 0 4 1.944 4 4v8c0 2.056-1.944 4-4 4zM4 2c-.935 0-2 1.065-2 2v8c0 .953 1.047 2 2 2h8c.935 0 2-1.065 2-2V4c0-.935-1.065-2-2-2H4z" />
-              </g>
-            </svg>
+        <li className='telegram'>
+          <a href="https://t.me/blowfishtokengroup" rel="noopener noreferrer" target="_blank">
+          <svg
+          id="svg" 
+          version="1.1" 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0, 0, 400,400"><g id="svgg"><path id="path0" d="M330.859 74.913 C 301.705 85.507,59.548 179.751,56.538 181.675 C 47.700 187.324,47.414 194.461,55.859 198.631 C 58.333 199.852,127.471 221.875,128.831 221.875 C 129.267 221.875,164.887 199.603,207.986 172.381 C 299.252 114.738,293.917 117.823,297.001 120.908 C 298.236 122.142,297.531 122.801,232.422 181.270 C 199.766 210.596,171.740 235.860,170.144 237.412 L 167.240 240.234 165.276 270.703 C 164.196 287.461,163.101 303.369,162.844 306.055 L 162.376 310.938 164.807 310.938 C 169.572 310.938,172.725 308.523,190.973 290.892 C 201.133 281.077,209.693 272.966,209.996 272.866 C 210.299 272.767,225.864 284.017,244.585 297.866 C 263.306 311.716,279.954 323.674,281.581 324.440 C 290.734 328.753,299.458 325.624,302.723 316.857 C 304.525 312.016,350.782 93.189,350.777 89.526 C 350.760 77.157,342.123 70.821,330.859 74.913 " stroke="none" fillRule="evenodd"></path></g></svg>
           </a>
         </li>
       </ul>
@@ -67,3 +47,4 @@ const FooterSocial = ({
 }
 
 export default FooterSocial;
+
