@@ -86,6 +86,13 @@ const Header = ({
             bottomDivider && 'has-bottom-divider'
           )}>
           <Logo />
+          <ul
+            className="list-reset header-nav-right connect-button mobile"
+          >
+            <li>
+              <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Sign up</Link>
+            </li>
+          </ul>
           {!hideNav &&
             <>
               <button
@@ -115,14 +122,13 @@ const Header = ({
                       <Link to="#0" onClick={closeMenu}>Documentation</Link>
                     </li>
                   </ul>
-                  {!hideSignin &&
-                    <ul
-                      className="list-reset header-nav-right"
-                    >
-                      <li>
-                        <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Sign up</Link>
-                      </li>
-                    </ul>}
+                  <ul
+                    className="list-reset header-nav-right connect-button desktop"
+                  >
+                    <li>
+                      <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Connect</Link>
+                    </li>
+                  </ul>
                 </div>
               </nav>
             </>}

@@ -22,6 +22,10 @@
     justify-content: space-between;
     align-items: center;
 	height: $header-height__mobile;
+
+	.connect-button {
+		margin: 0;
+	}
 }
 
 .header-nav {
@@ -111,6 +115,9 @@
 			.header-nav-inner {
 				flex-direction: column;
 				padding: $header-nav--padding-v__mobile;
+				.connect-button.desktop {
+					display: none;
+				}
 			}
 
 			ul {
@@ -148,5 +155,8 @@
 
 	.site-header-inner {
 		height: $header-height__desktop;
+		.connect-button.mobile {
+			display: none;
+		}
 	}
 }
