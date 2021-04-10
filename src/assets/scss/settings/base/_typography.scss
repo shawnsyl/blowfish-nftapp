@@ -21,7 +21,8 @@ $font--scale: (
 	epsilon: 	( 20px, 30px, -0.1px ),
 	zeta:    	( 18px, 28px, -0.1px ),
 	eta:     	( 16px, 24px, -0.1px ),
-	theta:   	( 14px, 22px, null )
+	theta:   	( 14px, 22px, null ),
+	iota:       ( 12px, 22px, null )
 );
 
 // Base elements: font size
@@ -35,6 +36,7 @@ $font--size: (
 	sm:				'zeta',
 	xs:				'eta',
 	xxs:			'theta',
+	xxxs:			'iota',
 	bquote: 		'epsilon',
 	figcap: 		'theta',
 	code: 			'eta',
@@ -49,6 +51,7 @@ $font--size: (
 	sm-desktop:		null,
 	xs-desktop:		null,
 	xxs-desktop:	null,
+	xxxs-desktop:	null,
 	bquote-desktop: null,
 	figcap-desktop: null,
 	code-desktop:	null,

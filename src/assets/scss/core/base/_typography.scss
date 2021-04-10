@@ -66,6 +66,10 @@ small,
 	@include font-size(xxs);
 }
 
+.text-xxxs {
+	@include font-size(xxxs);
+}
+
 figcaption {
 	@include font-size(figcap);
 	@include font-weight(figcap);
@@ -302,6 +306,10 @@ strong {
 
 	.text-xxs {
 		@include font-size(xxs-desktop);
+	}
+
+	.text-xxxs {
+		@include font-size(xxxs-desktop);
 	}
 
 	figcaption {

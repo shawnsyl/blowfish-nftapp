@@ -112,6 +112,7 @@ const Header = ({
     'button-primary',
     'button-wide-mobile',
     'button-sm',
+    'text-xxxs',
     loadingData && 'button-disabled'
   )
 
@@ -156,9 +157,15 @@ const Header = ({
                 <div className="header-nav-inner">
                   <ul className={
                     classNames(
-                      'list-reset text-xs',
+                      'list-reset text-xxxs',
                       navPosition && `header-nav-${navPosition}`
                     )}>
+                    <li>
+                      <Link to="#0" onClick={closeMenu}>Catalogue</Link>
+                    </li>
+                    <li>
+                      <Link to="#0" onClick={closeMenu}>Search</Link>
+                    </li>
                     <li>
                       <Link to="#0" onClick={closeMenu}>Documentation</Link>
                     </li>

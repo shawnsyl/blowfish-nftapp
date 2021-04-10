@@ -19,13 +19,14 @@ const Logo = ({
       className={classes}
     >
       <h1 className="m-0">
-        <Link to="/">
-          <Image
+          <a href="https://blowfish.one" rel="noopener noreferrer" target="_blank">
+        
+            <Image
             src={require('./../../../assets/images/blowfish-only.png')}
             alt="Open"
             width={32}
             height={32} />
-        </Link>
+          </a>
       </h1>
     </div>
   );
