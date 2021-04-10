@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
 
+import { useContractDataContext } from '../../hooks/contractData/useContractDataContext'
+
 const propTypes = {
   navPosition: PropTypes.string,
   hideNav: PropTypes.bool,
@@ -34,6 +36,14 @@ const Header = ({
 
   const nav = useRef(null);
   const hamburger = useRef(null);
+
+  const {
+      connectWallet,
+      disconnectWallet,
+      contractData,
+      loadingData,
+      reloadRequired
+  } = useContractDataContext();
 
   useEffect(() => {
     isActive && openMenu();
@@ -68,11 +78,42 @@ const Header = ({
     closeMenu();
   }  
 
+  const isButtonDisabled = () => {
+      if (loadingData) {
+          return true;
+      }
+
+      return false;
+  }
+
+  const getButtonText = () => {
+      if (loadingData) {
+          return 'connecting'
+      }
+
+      if (contractData) {
+          if (reloadRequired) {
+              return 'connect'
+          }
+          return 'disconnect'
+      }
+
+      return 'connect'
+  }
+
   const classes = classNames(
     'site-header',
     bottomOuterDivider && 'has-bottom-divider',
     className
   );
+
+  const buttonClasses = classNames(
+    'button',
+    'button-primary',
+    'button-wide-mobile',
+    'button-sm',
+    loadingData && 'button-disabled'
+  )
 
   return (
     <header
@@ -90,7 +131,7 @@ const Header = ({
             className="list-reset header-nav-right connect-button mobile"
           >
             <li>
-              <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Sign up</Link>
+              <Link to="#0" className={buttonClasses} onClick={closeMenu}>Sign up</Link>
             </li>
           </ul>
           {!hideNav &&
@@ -126,7 +167,7 @@ const Header = ({
                     className="list-reset header-nav-right connect-button desktop"
                   >
                     <li>
-                      <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Connect</Link>
+                      <Link to="#0" className={buttonClasses} onClick={connectWallet}>Connect</Link>
                     </li>
                   </ul>
                 </div>

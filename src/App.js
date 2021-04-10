@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
-import ReactGA from 'react-ga';
 
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
@@ -17,7 +16,6 @@ const App = () => {
   let location = useLocation();
 
   useEffect(() => {
-    const page = location.pathname;
     document.body.classList.add('is-loaded')
     childRef.current.init();
 

@@ -9,12 +9,16 @@ import * as serviceWorker from './serviceWorker';
 //import './App.css';
 import './assets/scss/style.scss';
 
+import { ContractDataProvider } from './hooks/contractData/useContractDataContext'
+
 const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
+  <ContractDataProvider>
+    <Router history={history}>
+      <App />
+    </Router>
+  </ContractDataProvider>,
   document.getElementById('root')
 );
 
