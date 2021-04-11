@@ -171,7 +171,7 @@ const Header = ({
                       <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
                     </li>
                     <li>
-                      <Link to="#0" onClick={closeMenu}>Search</Link>
+                      <Link to="/stake" onClick={closeMenu}>Stake</Link>
                     </li>
                     <li>
                       <Link to="#0" onClick={closeMenu}>Documentation</Link>

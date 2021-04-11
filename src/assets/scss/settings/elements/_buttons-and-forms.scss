@@ -17,13 +17,13 @@ $button--color: (
 // Buttons: background color
 $button--bg: (
 	button-light: 			get-color(light, 1),
-	button-light-hover: 	darken(get-color(light, 1), 5%),
+	button-light-hover: 	get-color(primary, 2),
 	button-dark: 			get-color(dark, 2),
 	button-dark-hover: 		lighten(get-color(dark, 2), 2%),
 	button-primary: 		get-color(primary, 1),
-	button-primary-hover: 	lighten(get-color(primary, 1), 2%),
-	button-secondary: 		get-color(secondary, 1),
-	button-secondary-hover:	lighten(get-color(secondary, 1), 2%),
+	button-primary-hover: 	get-color(primary, 2),
+	button-secondary: 		get-color(primary, 1),
+	button-secondary-hover:	get-color(primary, 2),
 	button-disabled: 		get-color(light, 3)
 );
 

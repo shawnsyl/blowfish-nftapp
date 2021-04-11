@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames';
 
+import CatalogueSearch from '../components/elements/CatalogueSearch'
 import PuffTile from '../components/elements/PuffTile'
 
 const puffData = [
@@ -23,6 +24,9 @@ const Catalogue = props => {
 
     return (
         <section className={outerClasses}>
+            <div className='container search'>
+                <CatalogueSearch />
+            </div>
             <div className='container'>
                 <div className={tilesClasses}>
                     {puffData.map((puff, i) => {

@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 //import './App.css';
 import './assets/scss/style.scss';
+import 'semantic-ui-css/semantic.min.css'
 
 import { ContractDataProvider } from './hooks/contractData/useContractDataContext'
 

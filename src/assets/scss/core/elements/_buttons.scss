@@ -18,6 +18,9 @@
     letter-spacing: inherit;
     white-space: nowrap;
 	transition: background .15s ease;
+	&:hover {
+		color: #000;
+	}
 
     &:active {
         outline: 0;
