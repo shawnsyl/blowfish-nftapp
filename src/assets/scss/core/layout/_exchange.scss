@@ -22,13 +22,14 @@
             }
     
             p {
-                font-size: 12px;
+                font-size: 14px;
             }
 
             .exchange-links {
                 display: flex;
                 justify-content: space-around;
                 margin-bottom: 12px;
+                font-size: 20px;
                 .exchange-link-active {
                     font-weight: 900;
                     opacity: 100% !important;

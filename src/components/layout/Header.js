@@ -131,14 +131,14 @@ const Header = ({
           )}>
           <Logo />
           <ul
-            className="list-reset header-nav-right connect-button desktop"
+            className="list-reset header-nav-right connect-button desktop text-xs"
           >
             <li>
               <Link to="/" onClick={closeMenu}>Cryptopuffs</Link>
             </li>
           </ul>
           <ul
-            className="list-reset header-nav-right connect-button mobile"
+            className="list-reset header-nav-right connect-button mobile text-xs"
           >
             <li>
               <Link to="#0" className={buttonClasses} onClick={closeMenu}>Sign up</Link>
@@ -166,21 +166,21 @@ const Header = ({
                 <div className="header-nav-inner">
                   <ul className={
                     classNames(
-                      'list-reset text-xxxs',
+                      'list-reset text-xs',
                       navPosition && `header-nav-${navPosition}`
                     )}>
                     <li>
                       <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
                     </li>
                     <li>
-                      <Link to="/stake" onClick={closeMenu}>Exchange</Link>
+                      <Link to="/exchange" onClick={closeMenu}>Exchange</Link>
                     </li>
                     <li>
                       <Link to="#0" onClick={closeMenu}>Documentation</Link>
                     </li>
                   </ul>
                   <ul
-                    className="list-reset header-nav-right connect-button desktop"
+                    className="list-reset header-nav-right connect-button desktop text-xs"
                   >
                     <Button className='button-primary'>Connect</Button>
                     {/* <li>
