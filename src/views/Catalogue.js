@@ -4,14 +4,10 @@ import classNames from 'classnames';
 import PuffTile from '../components/elements/PuffTile'
 
 const puffData = [
-    {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
+    {},{},{},{},{},{},{},{},{},{},{},{}
 ]
 
 const Catalogue = props => {
-    const tilesClasses = classNames(
-      'tiles-wrap center-content',
-    );   
-
     const outerClasses = classNames(
       'catalogue section',
     //   topOuterDivider && 'has-top-divider',
@@ -19,6 +15,10 @@ const Catalogue = props => {
     //   hasBgColor && 'has-bg-color',
     //   invertColor && 'invert-color',
     //   className
+    );
+    
+    const tilesClasses = classNames(
+      'pufftiles-wrap center-content',
     );
 
     return (
@@ -28,6 +28,9 @@ const Catalogue = props => {
                     {puffData.map((puff, i) => {
                         return <PuffTile delay={i * 200} /> 
                     })}
+                </div>
+                <div>
+                    hello
                 </div>
             </div>
         </section>

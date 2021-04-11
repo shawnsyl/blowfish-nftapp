@@ -2,14 +2,14 @@
 
 // Color
 $link--color: (
-	link: 								get-color(light, 1),
+	link: 								get-color(primary, 1),
 	link-hover: 						null,
-	header-link: 						get-color(light, 2),
-	header-link-hover: 					get-color(light, 1),
+	header-link: 						get-color(primary, 1),
+	header-link-hover: 					get-color(primary, 2),
 	header-link-mobile: 				get-color(light, 1),
 	header-link-mobile-hover: 			null,
-	footer-link: 						get-color(light, 2),
-	footer-link-hover: 					get-color(light, 1),
+	footer-link: 						get-color(primary, 1),
+	footer-link-hover: 					get-color(primary, 2),
 	footer-block-link: 					get-color(light, 2),
 	footer-block-link-hover: 			get-color(light, 1),
 	button-link: 						get-color(light, 2),
