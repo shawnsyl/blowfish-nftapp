@@ -1,0 +1,46 @@
+.stake.section {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .stake-window {
+		    border-radius: 12px;
+		    border: 1px solid #f7f8f9;
+		    box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+            width: 420px;
+            height: 420px;
+            padding: 1rem;
+
+            h1, h2, h3, h4 {
+                color: get-color(primary, 1);
+                text-align: center;
+            }
+    
+            h3 {
+                font-size: 24px;
+            }
+    
+            p {
+                font-size: 12px;
+            }
+
+            .ui.fluid.action {
+                margin-bottom: 12px;
+
+                .ui.button {
+                    color: color(button-primary);
+                    background: color-bg(button-primary);
+                    &:hover {
+                        color: color(button-primary-hover);
+                        // background: color-bg(button-primary-hover);
+                    }
+                }
+            }
+
+            .ui.fluid.selection.dropdown {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}

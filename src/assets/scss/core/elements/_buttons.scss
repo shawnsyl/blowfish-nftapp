@@ -155,6 +155,16 @@
 	}
 }
 
+.ui.button.button-primary {
+	color: color(button-primary);
+	background: color-bg(button-primary);
+
+	&:hover {
+		background: color-bg(button-primary-hover);
+		color: color(button-primary-hover);
+	}
+}
+
 @include media( '<=medium' ) {
 
 	.button-wide-mobile {
