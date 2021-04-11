@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PuffTile from '../components/elements/PuffTile'
 
 const puffData = [
-    {},{},{},{},{},{},{},{},{}
+    {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
 ]
 
 const Catalogue = props => {

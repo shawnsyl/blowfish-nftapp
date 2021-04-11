@@ -129,6 +129,13 @@ const Header = ({
           )}>
           <Logo />
           <ul
+            className="list-reset header-nav-right connect-button desktop"
+          >
+            <li>
+              <Link to="/" onClick={closeMenu}>Cryptopuffs</Link>
+            </li>
+          </ul>
+          <ul
             className="list-reset header-nav-right connect-button mobile"
           >
             <li>
