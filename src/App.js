@@ -8,7 +8,7 @@ import LayoutDefault from './layouts/LayoutDefault';
 
 // Views 
 import Home from './views/Home';
-
+import Catalogue from './views/Catalogue';
 
 const App = () => {
 
@@ -28,6 +28,7 @@ const App = () => {
       children={() => (
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
+          <AppRoute exact path="/catalogue" component={Catalogue} layout={LayoutDefault} />
         </Switch>
       )} />
   );
