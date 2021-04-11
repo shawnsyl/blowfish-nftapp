@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
 
+import { Button } from 'semantic-ui-react';
+
 import { useContractDataContext } from '../../hooks/contractData/useContractDataContext'
 
 const propTypes = {
@@ -171,7 +173,7 @@ const Header = ({
                       <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
                     </li>
                     <li>
-                      <Link to="/stake" onClick={closeMenu}>Stake</Link>
+                      <Link to="/stake" onClick={closeMenu}>Exchange</Link>
                     </li>
                     <li>
                       <Link to="#0" onClick={closeMenu}>Documentation</Link>
@@ -180,9 +182,10 @@ const Header = ({
                   <ul
                     className="list-reset header-nav-right connect-button desktop"
                   >
-                    <li>
+                    <Button className='button-primary'>Connect</Button>
+                    {/* <li>
                       <Link to="#0" className={buttonClasses} onClick={connectWallet}>Connect</Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </nav>

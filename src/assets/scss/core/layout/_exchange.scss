@@ -1,0 +1,77 @@
+.exchange.section {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .exchange-window {
+		    border-radius: 12px;
+		    border: 1px solid #f7f8f9;
+		    box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+            width: 400px;
+            height: 326px;
+            padding: 1rem;
+
+            h1, h2, h3, h4 {
+                color: get-color(primary, 1);
+                text-align: center;
+            }
+    
+            h3 {
+                font-size: 24px;
+            }
+    
+            p {
+                font-size: 12px;
+            }
+
+            .exchange-links {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 12px;
+                .exchange-link-active {
+                    font-weight: 900;
+                    opacity: 100% !important;
+                }
+                .exchange-link-inactive {
+                    font-weight: 500;
+                    opacity: 45%;
+                    color: get-color(primary, 1);
+                }
+                a:hover {
+                    color: get-color(primary, 1);
+                    cursor: pointer !important;
+                    font-weight: 900;
+                    opacity: 100% !important;
+                }
+            }
+
+            .ui.fluid.action {
+                margin-bottom: 12px;
+                height: 38px;
+                .ui.button {
+                    height: 38px;
+                    color: color(button-primary);
+                    background: color-bg(button-primary);
+                    &:hover {
+                        color: color(button-primary-hover);
+                        // background: color-bg(button-primary-hover);
+                    }
+                }
+                div.ui.dropdown.label {
+                    padding-top: 13px;
+                    width: 126px;
+
+                    .dropdown.icon {
+                        position: absolute;
+                        right: 11px;
+                    }
+                }
+            }
+
+            .ui.fluid.selection.dropdown {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}

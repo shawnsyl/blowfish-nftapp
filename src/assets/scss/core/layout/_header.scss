@@ -33,6 +33,7 @@
 		}
 		.button {
 			width: 113px;
+			height: 36px;
 		}
 	}
 }
@@ -43,6 +44,16 @@
 	.header-nav-inner {
 		display: flex;
 		flex-grow: 1;
+
+		// .ui.button {
+		// 	background-color: color-bg(button-primary);
+		// 	color: color(button-primary);
+
+		// 	&:hover {
+		// 		background-color: color-bg(button-primary-hover);
+		// 		color: color(button-primary-hover);
+		// 	}
+		// }
 	}
 
     ul {
