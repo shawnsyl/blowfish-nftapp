@@ -212,12 +212,12 @@ const Exchange = props => {
         return setActiveIndex(index)
     }
 
-    return contractData && !reloadRequired && web3 ? (
+    return  (
         <section className={outerClasses}>
 
             <Countdown />
             <div className='container'>
-                <div className='exchange-window'>
+                {contractData && !reloadRequired && web3  ? <div className='exchange-window'>
                     {/* <div className='exchange-links'>
                         <div>
                             <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
@@ -241,10 +241,10 @@ const Exchange = props => {
                         )
                     } */}
                     {stakingForm()}
-                </div>
+                </div> : null}
             </div>
         </section>
-    ) : null
+    )
 }
 
 export default Exchange;

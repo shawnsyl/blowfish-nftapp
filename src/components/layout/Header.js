@@ -172,20 +172,20 @@ const Header = ({
                     )}>
                     {getButtonText() === 'DISCONNECT' ? (
                       <Fragment>
-                        <li>
-                          <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
-                        </li>
-                        <li>
-                          <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
-                        </li>
-                        <li>
-                          <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
-                        </li>
-                        <li>
-                          <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
-                        </li> 
                       </Fragment>
                     ) : null}
+                    <li>
+                      <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
+                    </li>
+                    <li>
+                      <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
+                    </li>
+                    <li>
+                      <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
+                    </li>
+                    <li>
+                      <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
+                    </li> 
                   </ul>
                   {connectButton()}
                 </div>
