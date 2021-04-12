@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
-import Button from '../elements/Button';
-import Image from '../elements/Image';
-import Modal from '../elements/Modal';
 
 const propTypes = {
   ...SectionProps.types
@@ -23,18 +20,6 @@ const Hero = ({
   invertColor,
   ...props
 }) => {
-
-  const [videoModalActive, setVideomodalactive] = useState(false);
-
-  const openModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(true);
-  }
-
-  const closeModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(false);
-  }   
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -70,9 +55,6 @@ const Hero = ({
                 Collect and trade these little puffy poggers
               </p>
               <div className="" data-reveal-delay="600">
-                <Button tag="a" color="primary" wideMobile className='m-0'>
-                  Get started
-                </Button>
                 <h3 className='mb-0'>
                   About CrytpoPuffs
                 </h3>

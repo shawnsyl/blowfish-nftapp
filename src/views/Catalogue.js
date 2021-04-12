@@ -24,7 +24,7 @@ const Catalogue = props => {
 
     return (
         <section className={outerClasses}>
-            <p>TODO: what can we search by, what filters do we need</p>
+            {/* <p>TODO: what can we search by, what filters do we need</p>
             <p>pagination - gonna figure out the backend</p>
             <div className='container search'>
                 <CatalogueSearch />
@@ -38,6 +38,11 @@ const Catalogue = props => {
                 <div>
                     hello
                 </div>
+
+            </div> */}
+            <div className='container'>
+                <h2>Coming Soon!</h2>
+                
             </div>
         </section>
     )

@@ -111,8 +111,6 @@ const Header = ({
     loadingData && 'button-disabled'
   )
 
-  console.log(tokenInst, reloadRequired);
-
   const connectButton = (type = 'desktop') => {
     return (
       <div className={`list-reset header-nav-right connect-button text-xs ${type}` }>
@@ -176,7 +174,10 @@ const Header = ({
                       <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
                     </li>
                     <li>
-                      <Link to="/exchange" onClick={closeMenu}>Exchange</Link>
+                      <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
+                    </li>
+                    <li>
+                      <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
                     </li>
                     {getButtonText() === 'DISCONNECT' ? (
                       <li>

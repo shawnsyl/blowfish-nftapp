@@ -168,6 +168,10 @@
 		color: color(button-primary);
 		background: color-bg(button-primary);;
 	}
+
+	&.disabled {
+		color: black !important;
+	}
 }
 
 @include media( '<=medium' ) {

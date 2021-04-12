@@ -1,0 +1,38 @@
+div.ui.container.countdown-container {
+    background-color: #ff9400;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 130px;
+    border-radius: .28571429rem;
+    margin-bottom: 28px;
+}
+
+div.ui.container.countdown-container div.countdown-digit {
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+}
+
+div.ui.container.countdown-container div.countdown-digit h1 {
+    font-size: 30px;
+    color: white;
+}
+
+div.ui.container.countdown-container div.countdown-digit p {
+    font-size: 12px;
+}
+
+@media only screen and (min-width: 768px) {
+    div.ui.container.countdown-container {
+        height: 260px;
+    }
+
+    div.ui.container.countdown-container div.countdown-digit h1 {
+        font-size: 60px;
+    }
+    
+    div.ui.container.countdown-container div.countdown-digit p {
+        font-size: 24px;
+    }
+}

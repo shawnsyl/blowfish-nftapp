@@ -9,7 +9,6 @@ const tokenContract = process.env.NODE_ENV === 'development' ? TKNContract : BNB
 const tokenAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_TOKEN : process.env.REACT_APP_BNB_MAIN_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' ? 97 : 56;
 
-
 const setLocalStorage = (key, value) => {
     try {
         window.sessionStorage.setItem(key, JSON.stringify(value)); // JSON.stringify(value)
@@ -86,12 +85,11 @@ export const ContractDataProvider = ({children}) => {
                         setLoadingData(false);
                     } else {
                         setReloadRequired(false)
-                        setLoadingData(false);
-                        // setData();
+                        setData();
     
-                        // setInterval(
-                        //     () => setData(), 60000
-                        // )
+                        setInterval(
+                            () => setData(), 60000
+                        )
                     }
                 });
             }
@@ -134,61 +132,22 @@ export const ContractDataProvider = ({children}) => {
             if (loadingData) {
                 setLoadingData(false);
             }
-            if (lotteryState !== result.lotteryState) {
-                setLotteryState(result.lotteryState);
-            }
-            if (openTimestamp !== result.openTimestamp) {
-                setOpenTimestamp(result.openTimestamp);
-                setLocalStorage('openTimestamp', result.openTimestamp)
-            }
-            if (lotteryRunTime !== result.lotteryRunTime) {
-                setLotteryRunTime(result.lotteryRunTime);
-                setLocalStorage('lotteryRunTime', result.lotteryRunTime)
-            }
-            let newPastWinner = result.pastWinners[result.pastWinners.length - 1]
-
-            let entries = [...result.playerEntries].splice(0, result.numPlayers);
             
             setContractData({
-                ...result,
-                playerEntries: entries.filter(address => {
-                    return address === user
-                }).length,
-                numUnique: entries.filter(unique).length,
-                pastWinner: newPastWinner,
-                entryIncrement: fromWei(result.entryIncrement),
+                ...result
             })
         })
         .catch(e => {
             console.error(e);
+            setLoadingData(false);
         })
     }
 
-    const loadData = async () => {
-        const poolSize = await contract.methods.getPool().call();
-        const lotteryState = await contract.methods.lotteryState().call();
-        const maximumEntries = await contract.methods.MAXIMUM_ENTRIES().call();
-        const maximumPoolSize = await contract.methods.MAXIMIUM_POOL_SIZE().call();
-        const entryIncrement = await contract.methods.ENTRY_INCREMENT().call();
-        const openTimestamp = await contract.methods.getOpenTimestamp().call();
-        const lotteryRunTime = await contract.methods.LOTTERY_RUN_TIME().call();
-        const numPlayers = await contract.methods.getNumPlayers().call();
-        const playerEntries = await contract.methods.getPlayers().call();
+    const loadData = async () => {;
         const playerBalance = await tokenInst.methods.balanceOf(user).call();
-        const pastWinners = await contract.methods.getWinners().call();
 
         return {
-            poolSize,
-            lotteryState,
-            maximumEntries,
-            maximumPoolSize,
-            entryIncrement,
-            openTimestamp,
-            lotteryRunTime,
-            numPlayers,
-            playerEntries,
             playerBalance,
-            pastWinners
         };
     }
 
@@ -199,9 +158,6 @@ export const ContractDataProvider = ({children}) => {
             contract: contract,
             contractData: contractData,
             loadingData: loadingData,
-            lotteryRunTime: lotteryRunTime,
-            lotteryState: lotteryState,
-            openTimestamp: openTimestamp,
             reloadRequired: reloadRequired,
             tokenInst: tokenInst,
             user: user,

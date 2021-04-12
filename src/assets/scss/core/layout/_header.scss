@@ -15,6 +15,10 @@
 	.brand {
 		margin-right: $header-nav--padding-h;
 	}	
+
+	a:hover {
+		color:  color-bg(button-primary-hover) !important;
+	}
 }
 
 .site-header-inner {
