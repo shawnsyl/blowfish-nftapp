@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import classNames from 'classnames';
 
 import {
+    Accordion,
     Button,
     Dropdown,
     Icon,
@@ -52,14 +53,10 @@ const tokenOptions = [
 
 const Exchange = props => {
     const outerClasses = classNames(
-        'exchange section',
-      //   topOuterDivider && 'has-top-divider',
-      //   bottomOuterDivider && 'has-bottom-divider',
-      //   hasBgColor && 'has-bg-color',
-      //   invertColor && 'invert-color',
-      //   className
+        'exchange section'
     );
-
+    
+    const [activeIndex, setActiveIndex] = useState(-1);
     const [isStake, setIsStake] = useState(true);
     const [tokensToStake, setTokensToStake] = useState('');
     const [isAddingLiquidity, setIsAddingLiquidity] = useState(false);
@@ -103,6 +100,13 @@ const Exchange = props => {
         )
     }
 
+    const handleAccordionClick = (index) => {
+        if (activeIndex === index) {
+            return setActiveIndex(-1);
+        }
+        return setActiveIndex(index)
+    }
+
     const liquidityForm = () => {
         return !isAddingLiquidity ? (
             <Fragment>
@@ -115,6 +119,33 @@ const Exchange = props => {
                         No liquidity found
                     </div>
                 </div>
+
+                <Accordion fluid styled>
+                    <Accordion.Title
+                    active={activeIndex === 0}
+                    index={0}
+                    onClick={() => handleAccordionClick(0)}
+                    >
+                    <Icon name='dropdown' />
+                    BLOWF/BNB
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 0}>
+                    <div>
+                        <div className='my-liquidity-row'>
+                            <div>POOLED BLOWF: </div>
+                            <div>269825.67</div>
+                        </div>
+                        <div className='my-liquidity-row'>
+                            <div>POOLED BNB: </div>
+                            <div>3.99</div>
+                        </div>
+                        <div className='my-liquidity-row'>
+                            <div>YOUR POOLED LP TOKENS: </div>
+                            <div>900</div>
+                        </div>
+                    </div>
+                    </Accordion.Content>
+                </Accordion>
             </Fragment>
         ) : (
             <Fragment>
