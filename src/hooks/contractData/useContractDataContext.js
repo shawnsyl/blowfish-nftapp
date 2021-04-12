@@ -2,11 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { getWeb3, getContract, fromWei } from '../../Web3Util';
 
-import BLOWFContract from '../../abi/BLOWF.json';
 import TKNContract from '../../abi/TKN.json';
+import BNBContract from '../../abi/BNBMainnet.json';
 
-const tokenContract = process.env.NODE_ENV === 'development' ? TKNContract : BLOWFContract;
-const tokenAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_TOKEN : process.env.REACT_APP_BLOWFISH_TOKEN;
+const tokenContract = process.env.NODE_ENV === 'development' ? TKNContract : BNBContract;
+const tokenAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_TOKEN : process.env.REACT_APP_BNB_MAIN_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' ? 97 : 56;
 
 
