@@ -5,6 +5,10 @@ import CatalogueSearch from '../components/elements/CatalogueSearch'
 import PuffTile from '../components/elements/PuffTile'
 import Countdown from '../components/elements/Countdown'
 
+import {
+    Container
+} from 'semantic-ui-react'
+
 const puffData = [
     {},{},{},{},{},{},{},{},{},{},{},{}
 ]
@@ -43,6 +47,11 @@ const Catalogue = props => {
             </div> */}
             <div className='container'>
                 <Countdown />
+                <Container text className='mb-32'>
+                    <p>
+                    View your CryptoPuffs and the Puffs that others have minted.
+                    </p>
+                </Container>
             </div>
         </section>
     )

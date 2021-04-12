@@ -106,7 +106,7 @@ const Hero = ({
               How do I buy a CryptoPuff? How much do they cost?
             </h2>
             <p>
-              You can open a PuffCrate by staking BNB in the BlowFish-BNB liquidity pool. Don't worry, it's simpler than it sounds. Our smart contract handles all the logic—you just press the stake button on this website.
+              You can open a PuffCrate by adding BNB to the BlowFish-BNB liquidity pool. It's simpler than it sounds. Our smart contract handles all the logic—you just press the stake button on this website.
             </p>
             <Image src={crate} width="200"/>
             <p className="mt-24">
