@@ -18,6 +18,9 @@
     letter-spacing: inherit;
     white-space: nowrap;
 	transition: background .15s ease;
+	&.ui {
+		font-size: 16px;
+	}
 	&:hover {
 		color: #000;
 	}

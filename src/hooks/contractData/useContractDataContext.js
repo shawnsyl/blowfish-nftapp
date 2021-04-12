@@ -144,7 +144,9 @@ export const ContractDataProvider = ({children}) => {
     }
 
     const loadData = async () => {;
-        const playerBalance = await tokenInst.methods.balanceOf(user).call();
+        const playerBalance = process.env.NODE_ENV === 'development' ?
+            await tokenInst.methods.balanceOf(user).call() :
+            await web3.eth.getBalance(user);
 
         return {
             playerBalance,

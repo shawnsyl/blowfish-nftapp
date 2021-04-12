@@ -212,8 +212,6 @@ const Exchange = props => {
         return setActiveIndex(index)
     }
 
-    console.log(web3);
-
     return contractData && !reloadRequired && web3 ? (
         <section className={outerClasses}>
 
