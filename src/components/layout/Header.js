@@ -141,7 +141,7 @@ const Header = ({
             className="list-reset header-nav-right connect-button desktop site-title"
           >
             <li>
-              <Link to="/" onClick={closeMenu}>Cryptopuffs</Link>
+              <Link to="/" onClick={closeMenu}>CryptoPuffs</Link>
             </li>
           </ul>
           {connectButton('mobile')}
