@@ -8,6 +8,8 @@ import {
     Input
 } from 'semantic-ui-react'
 
+const axios = require('axios');
+
 const stakeOptions = [
     {
         text: '1 Month',
