@@ -77,7 +77,7 @@ const Hero = ({
               How many CryptoPuffs will you find?
             </h2>
             <p>
-              Find a CryptoPuff that's just right for you! Open PuffCrates to discover new CryptoPuff friends. With thousands of variations, you can raise your own unique Puff family.
+              Find a CryptoPuff that's just right for you! Open PuffCrates to discover new CryptoPuff friends. With thousands of variations, you can collect your own unique Puff family.
             </p>
             <h2>
               What are CryptoPuffs?
