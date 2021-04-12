@@ -166,6 +166,16 @@ const Exchange = props => {
     //         </Fragment>
     //     )
     // }
+    
+    const isDisabled = () => {
+        if (process.env.NODE_ENV === 'development') {
+            return false;
+        }
+        if (Date.now() >= 1618768800000) {
+            return false;
+        }
+        return true;
+    }
 
     const stakingForm = () => {
         const {
@@ -186,7 +196,13 @@ const Exchange = props => {
                 </Input> */}
 
                 <Input 
-                action={<Button className='button-primary' disabled>Max</Button>}
+                action={
+                    <Button 
+                    className='button-primary' 
+                    disabled={isDisabled()}>
+                        Max
+                    </Button>
+                }
                 className='exchange-input'
                 fluid
                 label={{ basic: true, content: 'BNB' }}
@@ -197,11 +213,12 @@ const Exchange = props => {
                 <p>Select lock duration</p>
 
                 <Dropdown
+                disabled={isDisabled()}
                 fluid
                 selection
                 options={stakeOptions} />
 
-                <Button className='button-primary' fluid>Lock BNB</Button>
+                <Button className='button-primary' disabled={isDisabled()} fluid>Lock BNB</Button>
             </Fragment>
         )
     }
