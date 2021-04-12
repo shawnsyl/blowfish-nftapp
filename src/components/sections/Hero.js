@@ -73,15 +73,15 @@ const Hero = ({
                 <Image src={bDark}/>
               </div>
             </div> 
-            <h1 className="mt-0 mb-16" data-reveal-delay="200">
+            <h2>
               How many CryptoPuffs will you find?
-            </h1>
+            </h2>
             <p>
               Find a CryptoPuff that's just right for you! Open PuffCrates to discover new CryptoPuff friends. With thousands of variations, you can raise your own unique Puff family.
             </p>
-            <h1>
+            <h2>
               What are CryptoPuffs?
-            </h1>
+            </h2>
             <p>
               CryptoPuffs are adorable pufferfish artwork minted as NFT's on the BinanceSmartChain. Puffs can be auctioned on our own marketplace (coming soon) or traded on any BSC platform that supports ERC721. 
             </p>
@@ -102,9 +102,9 @@ const Hero = ({
             <p>
               On our launch day, you will be able to open CryptoPuffs. Soon after, we will enable the marketplace, and later the Enhance & Battle section.
             </p>
-            <h1>
+            <h2>
               How do I buy a CryptoPuff? How much do they cost?
-            </h1>
+            </h2>
             <p>
               You can open a PuffCrate by staking BNB in the BlowFish-BNB liquidity pool. Don't worry, it's simpler than it sounds. Our smart contract handles all the logic—you just press the stake button on this website.
             </p>
@@ -115,9 +115,9 @@ const Hero = ({
             <p>
               <strong>The price of a CryptoPuff will intially be .1 BNB</strong>. As more Puffs are minted, the price will follow a gentle bonding curve.
             </p>
-            <h1>
+            <h2>
               CryptoPuffs strengthen The BlowFish Platform
-            </h1>
+            </h2>
             <p>
               CryptoPuffs are fun on the outside, but carry some serious tokenomics on the inside. Buying Puffs injects BNB into the BlowFish liquidity pool, increasing the price of BLOWF!
             </p>
