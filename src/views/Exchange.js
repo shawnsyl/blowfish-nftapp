@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import classNames from 'classnames';
 
 import {
     Button,
     Dropdown,
+    Icon,
     Input
 } from 'semantic-ui-react'
 
@@ -57,10 +58,10 @@ const Exchange = props => {
     );
 
     const [isStake, setIsStake] = useState(true);
-    const [tokensToStake, setTokensToStake] = useState('')
-    const [value, setValue] = useState('');
+    const [tokensToStake, setTokensToStake] = useState('');
+    const [isAddingLiquidity, setIsAddingLiquidity] = useState(false);
 
-    console.log(tokensToStake, value);
+    console.log(tokensToStake);
 
     const stakingForm = () => {
         return (
@@ -90,28 +91,30 @@ const Exchange = props => {
     }
 
     const liquidityForm = () => {
-        return (
+        return !isAddingLiquidity ? (
             <Fragment>
-                <p>Stake your LP tokens and receive CryptoPuff lootboxes</p>
+                <Button className='button-primary liquidity-button' onClick={() => setIsAddingLiquidity(true)}>Add Liquidity</Button>
+                <p>Add liquidity to receive LP Tokens</p>
 
-                <p>Available: 42069 BLOWF-wBNB</p>
-                <Input 
-                action='Max' 
-                fluid 
-                label={<Dropdown defaultValue='BNB' options={tokenOptions} />}
-                labelPosition='right'
-                onChange={(_,d) => {
-                    setValue(d.value)
-                }}
-                value={value} />
-                <p>Select stake duration</p>
-
-                <Dropdown
-                fluid
-                selection
-                options={stakeOptions} />
-
-                <Button className='button-primary' fluid>Stake BLOWF-wBNB</Button>
+                <h3>Your Liquidity</h3>
+                <div className='current-liquidity'>
+                    <div className='liquidity-message'>
+                        No liquidity found
+                    </div>
+                </div>
+            </Fragment>
+        ) : (
+            <Fragment>
+                <div className='add-liquidity-header'>
+                    <Icon link name='arrow left' onClick={() => setIsAddingLiquidity(false)}/>
+                    <h3>Add Liquidity</h3>
+                    <div className='liquidity-question'>
+                        <Icon name='question circle outline'/>
+                        <div className='hover-info'>
+                            When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
+                        </div>
+                    </div>
+                </div>
             </Fragment>
         )
     }
@@ -122,7 +125,10 @@ const Exchange = props => {
                 <div className='exchange-window'>
                     <div className='exchange-links'>
                         <div>
-                            <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => setIsStake(true)}>
+                            <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
+                                setIsStake(true);
+                                setIsAddingLiquidity(false);
+                            }}>
                                 Stake
                             </a>
                         </div>

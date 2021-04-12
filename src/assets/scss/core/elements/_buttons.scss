@@ -163,6 +163,11 @@
 		background: color-bg(button-primary-hover);
 		color: color(button-primary-hover);
 	}
+
+	&:focus {
+		color: color(button-primary);
+		background: color-bg(button-primary);;
+	}
 }
 
 @include media( '<=medium' ) {

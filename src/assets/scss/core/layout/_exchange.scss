@@ -9,16 +9,12 @@
 		    border: 1px solid #f7f8f9;
 		    box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
             width: 400px;
-            height: 326px;
+            min-height: 326px;
             padding: 1rem;
-
-            h1, h2, h3, h4 {
-                color: get-color(primary, 1);
-                text-align: center;
-            }
     
             h3 {
-                font-size: 24px;
+                color: get-color(primary, 1);
+                font-size: 18px;
             }
     
             p {
@@ -28,7 +24,7 @@
             .exchange-links {
                 display: flex;
                 justify-content: space-around;
-                margin-bottom: 12px;
+                margin-bottom: 14px;
                 font-size: 20px;
                 .exchange-link-active {
                     font-weight: 900;
@@ -48,7 +44,7 @@
             }
 
             .ui.fluid.action {
-                margin-bottom: 12px;
+                margin-bottom: 14px;
                 height: 38px;
                 .ui.button {
                     height: 38px;
@@ -71,7 +67,77 @@
             }
 
             .ui.fluid.selection.dropdown {
-                margin-bottom: 12px;
+                margin-bottom: 14px;
+            }
+
+            .ui.button.button-primary.liquidity-button {
+                margin-bottom: 14px;
+            }
+
+            .current-liquidity {
+                box-sizing: border-box;
+                margin: 0px;
+                min-width: 0px;
+                width: 100%;
+                border-radius: 10px;
+                padding: 40px;
+                border: 1px solid rgb(247, 248, 250);
+                background-color: rgb(255, 253, 250);
+                
+                .liquidity-message {
+                    box-sizing: border-box;
+                    margin: 0px;
+                    min-width: 0px;
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: rgb(136, 141, 155);
+                    text-align: center;
+                }
+            }
+
+            .add-liquidity-header {
+                box-sizing: border-box;
+                margin: 0px;
+                min-width: 0px;
+                width: 100%;
+                display: flex;
+                padding: 0px;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+
+                h3 {
+                    margin: 0;
+                }
+
+                .liquidity-question {
+                    position: relative;
+
+                    .hover-info {
+                        opacity: 0;
+                        position: absolute;
+                        border-radius: 12px;
+                        border: 1px solid #f7f8f9;
+                        box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+                        padding: 1rem;
+                        left: -50%;
+                        
+                        width: 228px;
+                        padding: 0.6rem 1rem;
+                        line-height: 150%;
+                        font-weight: 400;;
+                        transition: 0.3s;
+                    }
+
+                    &:hover {
+                        .hover-info {
+                            opacity: 1;
+                        }
+                    }
+
+
+                }
             }
         }
     }
