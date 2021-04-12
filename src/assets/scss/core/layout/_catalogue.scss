@@ -1,0 +1,8 @@
+.catalogue {
+    .container {
+        max-width: 1000px;
+        &.search {
+            margin-bottom: 40px;
+        }
+    }
+}

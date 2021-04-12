@@ -1,0 +1,192 @@
+.exchange.section {
+    margin-bottom: 36px;
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .exchange-window {
+		    border-radius: 12px;
+		    border: 1px solid #f7f8f9;
+		    box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+            max-width: 400px;
+            min-height: 326px;
+            padding: 1rem;
+            background-color: white;
+    
+            h3 {
+                color: get-color(primary, 1);
+                font-size: 18px;
+            }
+    
+            p {
+                font-size: 14px;
+            }
+
+            .exchange-links {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 14px;
+                font-size: 20px;
+                .exchange-link-active {
+                    font-weight: 900;
+                    opacity: 100% !important;
+                }
+                .exchange-link-inactive {
+                    font-weight: 500;
+                    opacity: 45%;
+                    color: get-color(primary, 1);
+                }
+                a:hover {
+                    color: get-color(primary, 1);
+                    cursor: pointer !important;
+                    font-weight: 900;
+                    opacity: 100% !important;
+                }
+            }
+
+            .ui.fluid.action {
+                margin-bottom: 14px;
+                height: 38px;
+                .ui.button.button-primary {
+                    height: 38px;
+                    color: color(button-primary);
+                    background: color-bg(button-primary);
+                    &:hover {
+                        color: rgba(0,0,0,.8);
+                        background: color-bg(button-primary-hover);
+                    }
+                }
+                div.ui.compact.selection.dropdown {
+                    width: 130px;
+                }
+            }
+
+            .ui.fluid.selection.dropdown {
+                margin-bottom: 14px;
+            }
+
+            .ui.button.button-primary.liquidity-button {
+                margin-bottom: 14px;
+            }
+
+            .current-liquidity {
+                box-sizing: border-box;
+                margin: 0px;
+                min-width: 0px;
+                width: 100%;
+                border-radius: 10px;
+                padding: 40px;
+                border: 1px solid rgb(247, 248, 250);
+                background-color: rgb(255, 253, 250);
+                
+                .liquidity-message {
+                    box-sizing: border-box;
+                    margin: 0px;
+                    min-width: 0px;
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: rgb(136, 141, 155);
+                    text-align: center;
+                }
+            }
+
+            .add-liquidity-header {
+                box-sizing: border-box;
+                margin-bottom: 14px;
+                min-width: 0px;
+                width: 100%;
+                display: flex;
+                padding: 0px;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+
+                h3 {
+                    margin: 0;
+                }
+
+                .liquidity-question {
+                    position: relative;
+
+                    .hover-info {
+                        opacity: 0;
+                        position: absolute;
+                        border-radius: 12px;
+                        border: 1px solid #f7f8f9;
+                        box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+                        padding: 1rem;
+                        left: -50%;
+                        
+                        width: 228px;
+                        padding: 0.6rem 1rem;
+                        line-height: 150%;
+                        font-weight: 400;
+                        transition: 0.3s;
+                        background: white;
+
+                        pointer-events: none;
+                        z-index: 999;
+
+                    }
+
+                    &:hover {
+                        .hover-info {
+                            opacity: 1;
+                        }
+                    }
+
+
+                }
+            }
+
+            .token-mini-form {
+                border-radius: 16px;
+                background-color: get-color(primary, 3);
+                padding: 12px 16px;
+                margin-bottom: 14px;
+
+                .ui.fluid.action {
+                    margin-bottom: 0px;
+                    height: 38px;
+                    .ui.button.button-primary {
+                        border: none;
+                        height: 38px;
+                        color: color-bg(button-primary);
+                        background: transparent;
+                        opacity: 80%;
+                        font-weight: 500;
+                        
+                        &:hover {
+                            opacity: 1;
+                            font-weight: 900;
+                        }
+                    }
+                    div.ui.compact.selection.dropdown {
+                        width: 130px;
+                    }
+                    input:focus {
+                        border-right: none !important;
+                    }
+                }
+            }
+
+            .plus {
+                text-align: center;
+                margin: 0 0 7px 0;
+            }
+
+            .my-liquidity-row {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .exchange-input {
+                &>input {
+                    border: none;
+                }
+            }
+        }
+    }
+}
