@@ -1,12 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-import { getWeb3, getContract, fromWei } from '../../Web3Util';
+import { getWeb3, getContract } from '../../Web3Util';
 
-import TKNContract from '../../abi/TKN.json';
-import BNBContract from '../../abi/BNBMainnet.json';
-
-const tokenContract = process.env.NODE_ENV === 'development' ? TKNContract : BNBContract;
-const tokenAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_TOKEN : process.env.REACT_APP_BNB_MAIN_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' ? 97 : 56;
 
 const setLocalStorage = (key, value) => {
@@ -37,9 +32,6 @@ export const ContractDataProvider = ({children}) => {
     const [contract, setContract] = useState(() => getLocalStorage('contract', null));
     const [contractData, setContractData] = useState(() => getLocalStorage('contractData', null));
     const [loadingData, setLoadingData] = useState(false);
-    const [lotteryRunTime, setLotteryRunTime] = useState(() => getLocalStorage('lotteryRunTime', 600));
-    const [lotteryState, setLotteryState] = useState(() => getLocalStorage('lotteryState', null));
-    const [openTimestamp, setOpenTimestamp] = useState(() => getLocalStorage('openTimestamp', null));
     const [reloadRequired, setReloadRequired] = useState(() => getLocalStorage('reloadRequired', false));
     const [tokenInst, setTokenInst] = useState(() => getLocalStorage('tokenInst', null));
     const [user, setUser] = useState(() => getLocalStorage('user', null));
@@ -48,12 +40,12 @@ export const ContractDataProvider = ({children}) => {
     const setup = async () => {
         const web3 = await getWeb3();
         let contract;
-        let tokenInst = new web3.eth.Contract(tokenContract, tokenAddress);
+        // let tokenInst = new web3.eth.Contract(tokenContract, tokenAddress);
 
         if (web3) {
             window.web3 = web3;
             window.user = (await web3.eth.getAccounts())[0];
-            // contract = await getContract(web3);
+            contract = await getContract(web3);
             setWeb3(web3);
         }
 
@@ -62,10 +54,15 @@ export const ContractDataProvider = ({children}) => {
             setUser(window.user);
         }
 
-        if (tokenInst) {
-            console.log(tokenInst);
-            setTokenInst(tokenInst)
+        if (contract) {
+            console.log(contract);
+            setContract(contract);
         }
+
+        // if (tokenInst) {
+        //     console.log(tokenInst);
+        //     setTokenInst(tokenInst)
+        // }
     }
 
     useEffect(() => {
@@ -75,8 +72,8 @@ export const ContractDataProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if (!!user && !!tokenInst && !!web3) { //TODO: include !!contract when we have contract data
-            if (Object.keys(tokenInst.methods).length) { //Object.keys(contract.methods);
+        if (!!user && !!contract && !!web3) { //TODO: include !!tokenInst when/if we have tokenInst data
+            if (Object.keys(contract.methods).length) { //Object.keys(tokenInst.methods);
                 web3.eth.net.getId()
                 .then(result => {
                     console.log(result, networkId);
@@ -95,9 +92,8 @@ export const ContractDataProvider = ({children}) => {
             }
             setLocalStorage('user', user);
             setLocalStorage('contract', contract);
-            setLocalStorage('tokenInst', tokenInst);
         };
-    }, [contract, tokenInst, user, web3])
+    }, [contract, user, web3])
 
     useEffect(() => {
         setLocalStorage('contractData', contractData);
@@ -123,10 +119,6 @@ export const ContractDataProvider = ({children}) => {
     }
 
     const setData = () => {
-        const unique = (value, index, self) => {
-            return self.indexOf(value) === index;
-        }
-        
         loadData()
         .then(result => {
             if (loadingData) {

@@ -42,10 +42,10 @@ const Header = ({
   const {
       connectWallet,
       disconnectWallet,
+      contract,
       contractData,
       loadingData,
       reloadRequired,
-      tokenInst
   } = useContractDataContext();
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const Header = ({
           return 'CONNECTING'
       }
 
-      if (tokenInst) {
+      if (contract) {
           if (reloadRequired) {
               return 'CONNECT'
           }

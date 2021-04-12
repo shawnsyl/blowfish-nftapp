@@ -58,18 +58,18 @@ const Hero = ({
         <div className={innerClasses}>
 
           <div className="hero-content">
-            <Image src={logo} width="1000"/>
+            <Image src={logo} width={1000}/>
             <h2 className="mt-24 mb-24" data-reveal-delay="200">
               Collect them, auction them, battle them!
             </h2>
-            <div class="row">
-              <div class="column">
+            <div className="row">
+              <div className="column">
                 <Image src={bFancy}/>
               </div>
-              <div class="column">
+              <div className="column">
                 <Image src={bGreen}/>
               </div>
-              <div class="column">
+              <div className="column">
                 <Image src={bDark}/>
               </div>
             </div> 
@@ -88,14 +88,14 @@ const Hero = ({
             <p>
               There are tens of thousands of variations of CryptoPuffs. Certain features and colors are much rarer than others. The rarity of features will be published to the Catalog before launch. If you're really lucky, you might not get a pufferfish at all (hint, hint).
             </p>
-            <div class="row">
-              <div class="column">
+            <div className="row">
+              <div className="column">
                 <Image src={bCool}/>
               </div>
-              <div class="column">
+              <div className="column">
                 <Image src={bPurple}/>
               </div>
-              <div class="column">
+              <div className="column">
                 <Image src={dSpace}/>
               </div>
             </div> 
@@ -108,7 +108,7 @@ const Hero = ({
             <p>
               You can open a PuffCrate by adding BNB to the BlowFish-BNB liquidity pool. It's simpler than it sounds. Our smart contract handles all the logic—you just press the stake button on this website.
             </p>
-            <Image src={crate} width="200"/>
+            <Image src={crate} width={200}/>
             <p className="mt-24">
               When opening a PuffCrate, you will be given a 1-6 month option for the "lock up period" of the BNB liquidity you're providing. <strong>The longer you lock up, the better odds you have of getting rare CryptoPuffs.</strong> After the lockup period, you will receive your unlocked BLOWF-BNB LP tokens. The value of the LP tokens will depend on the value of $BLOWF. The contract will also deduct a developer fee.
             </p>
@@ -121,7 +121,7 @@ const Hero = ({
             <p>
               CryptoPuffs are fun on the outside, but carry some serious tokenomics on the inside. Buying Puffs injects BNB into the BlowFish liquidity pool, increasing the price of BLOWF!
             </p>
-            <Image src={dInject} width="600"/>
+            <Image src={dInject} width={600}/>
             <p className="mt-24">
               The upcoming <strong>Enhance & Battle</strong> will feature locking BLOWF tokens to enhance your Puff's battling abilities. Locking BLOWF tokens temporarily removes them from circulating supply.
             </p>

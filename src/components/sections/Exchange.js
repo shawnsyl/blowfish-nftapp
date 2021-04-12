@@ -66,6 +66,7 @@ const Exchange = props => {
     const [isAddingLiquidity, setIsAddingLiquidity] = useState(false);
 
     const {
+        contract,
         contractData,
         loadingData,
         reloadRequired,
@@ -81,6 +82,8 @@ const Exchange = props => {
             console.log(response);
         })
     }, [])
+
+    console.log(contract)
 
     // const liquidityForm = () => {
     //     return !isAddingLiquidity ? (
@@ -185,7 +188,6 @@ const Exchange = props => {
                 <Input 
                 action={<Button className='button-primary' disabled>Max</Button>}
                 className='exchange-input'
-                disabled
                 fluid
                 label={{ basic: true, content: 'BNB' }}
                 labelPosition='right'
@@ -195,12 +197,11 @@ const Exchange = props => {
                 <p>Select lock duration</p>
 
                 <Dropdown
-                disabled
                 fluid
                 selection
                 options={stakeOptions} />
 
-                <Button className='button-primary' disabled fluid>Lock BNB</Button>
+                <Button className='button-primary' fluid>Lock BNB</Button>
             </Fragment>
         )
     }
