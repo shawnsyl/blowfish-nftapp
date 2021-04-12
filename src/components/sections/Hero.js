@@ -59,17 +59,17 @@ const Hero = ({
       <div className="container-sm">
         <div className={innerClasses}>
           <div className="hero-content">
-            <h1 className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
+            <h1 className="mt-0 mb-16" data-reveal-delay="200">
               CRYPTOPUFFS
               <br />
-              <span className="text-color-primary reveal-from-bottom">Gamified Blowfish NFT's</span>
+              <span className="text-color-primary ">Gamified Blowfish NFT's</span>
             </h1>
             <div className="container-s">
-              <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
+              <p className="m-0 mb-32 " data-reveal-delay="400">
                 <br/>
                 Collect and trade these little puffy poggers
               </p>
-              <div className="reveal-from-bottom" data-reveal-delay="600">
+              <div className="" data-reveal-delay="600">
                 <Button tag="a" color="primary" wideMobile className='m-0'>
                   Get started
                 </Button>
@@ -82,27 +82,6 @@ const Hero = ({
               </div>
             </div>
           </div>
-          <div className="hero-figure reveal-from-bottom illustration-element-01" data-reveal-value="20px" data-reveal-delay="800">
-            <a
-              data-video="https://player.vimeo.com/video/174002812"
-              href="#0"
-              aria-controls="video-modal"
-              onClick={openModal}
-            >
-              <Image
-                className="has-shadow"
-                src={require('./../../assets/images/video-placeholder.jpg')}
-                alt="Hero"
-                width={896}
-                height={504} />
-            </a>
-          </div>
-          <Modal
-            id="video-modal"
-            show={videoModalActive}
-            handleClose={closeModal}
-            video="https://player.vimeo.com/video/174002812"
-            videoTag="iframe" />
         </div>
       </div>
     </section>

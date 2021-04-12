@@ -9,7 +9,6 @@ import LayoutDefault from './layouts/LayoutDefault';
 // Views 
 import Home from './views/Home';
 import Catalogue from './views/Catalogue';
-import Exchange from './views/Exchange';
 
 const App = () => {
 
@@ -30,7 +29,6 @@ const App = () => {
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
           <AppRoute exact path="/catalogue" component={Catalogue} layout={LayoutDefault} />
-          <AppRoute exact path="/exchange" component={Exchange} layout={LayoutDefault} />
         </Switch>
       )} />
   );

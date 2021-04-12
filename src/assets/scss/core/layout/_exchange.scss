@@ -1,4 +1,5 @@
 .exchange.section {
+    margin-bottom: 36px;
     .container {
         display: flex;
         flex-direction: column;
@@ -178,6 +179,12 @@
             .my-liquidity-row {
                 display: flex;
                 justify-content: space-between;
+            }
+
+            .exchange-input {
+                &>input {
+                    border: none;
+                }
             }
         }
     }

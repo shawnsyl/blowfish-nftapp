@@ -73,40 +73,6 @@ const Exchange = props => {
         })
     }, [])
 
-    const stakingForm = () => {
-        return (
-            <Fragment>
-                <p>Stake your LP tokens and receive CryptoPuff lootboxes</p>
-
-                <p>Available: 42069 BLOWF-wBNB</p>
-                <Input 
-                action
-                fluid 
-                value={tokensToStake}>
-                    <input />
-                    <Button className='button-primary'>Max</Button>
-                    <Select compact defaultValue='BNB' options={tokenOptions} />
-                </Input>
-                
-                <p>Select stake duration</p>
-
-                <Dropdown
-                fluid
-                selection
-                options={stakeOptions} />
-
-                <Button className='button-primary' fluid>Stake BLOWF-wBNB</Button>
-            </Fragment>
-        )
-    }
-
-    const handleAccordionClick = (index) => {
-        if (activeIndex === index) {
-            return setActiveIndex(-1);
-        }
-        return setActiveIndex(index)
-    }
-
     const liquidityForm = () => {
         return !isAddingLiquidity ? (
             <Fragment>
@@ -189,11 +155,54 @@ const Exchange = props => {
         )
     }
 
+    const stakingForm = () => {
+        return (
+            <Fragment>
+                <h3>Lock your BNB to receive CryptoPuff lootboxes</h3>
+
+                <p>Available: 42069 BNB</p>
+                {/* <Input 
+                action
+                fluid 
+                value={tokensToStake}>
+                    <input />
+                    <Button className='button-primary'>Max</Button>
+                    <Select compact defaultValue='BNB' options={tokenOptions} />
+                </Input> */}
+
+                <Input 
+                action={<Button className='button-primary'>Max</Button>}
+                className='exchange-input'
+                fluid
+                label={{ basic: true, content: 'BNB' }}
+                labelPosition='right'
+                transparent 
+                placeholder='Enter amount to lock...' />
+                
+                <p>Select lock duration</p>
+
+                <Dropdown
+                fluid
+                selection
+                options={stakeOptions} />
+
+                <Button className='button-primary' fluid>Lock BNB</Button>
+            </Fragment>
+        )
+    }
+
+    const handleAccordionClick = (index) => {
+        if (activeIndex === index) {
+            return setActiveIndex(-1);
+        }
+        return setActiveIndex(index)
+    }
+
     return (
         <section className={outerClasses}>
             <div className='container'>
                 <div className='exchange-window'>
-                    <div className='exchange-links'>
+                    {/* <div className='exchange-links'>
                         <div>
                             <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
                                 setIsStake(true);
@@ -207,16 +216,15 @@ const Exchange = props => {
                                 Liquidity
                             </a>
                         </div>
-                    </div>
-                    {
+                    </div> */}
+                    {/* {
                         isStake ? (
                             stakingForm()
                         ) : (
                             liquidityForm()
                         )
-                    }
-                    
-
+                    } */}
+                    {stakingForm()}
                 </div>
             </div>
         </section>
