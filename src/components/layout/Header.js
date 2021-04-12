@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
 
-import { Button } from 'semantic-ui-react';
+import { Button, Label } from 'semantic-ui-react';
 
 import { useContractDataContext } from '../../hooks/contractData/useContractDataContext'
 
@@ -44,7 +44,8 @@ const Header = ({
       disconnectWallet,
       contractData,
       loadingData,
-      reloadRequired
+      reloadRequired,
+      tokenInst
   } = useContractDataContext();
 
   useEffect(() => {
@@ -78,29 +79,21 @@ const Header = ({
     if (!nav.current) return
     if (!isActive || nav.current.contains(e.target) || e.target === hamburger.current) return;
     closeMenu();
-  }  
-
-  const isButtonDisabled = () => {
-      if (loadingData) {
-          return true;
-      }
-
-      return false;
-  }
+  } 
 
   const getButtonText = () => {
       if (loadingData) {
-          return 'connecting'
+          return 'CONNECTING'
       }
 
-      if (contractData) {
+      if (tokenInst) {
           if (reloadRequired) {
-              return 'connect'
+              return 'CONNECT'
           }
-          return 'disconnect'
+          return 'DISCONNECT'
       }
 
-      return 'connect'
+      return 'CONNECT'
   }
 
   const classes = classNames(
@@ -117,6 +110,22 @@ const Header = ({
     'text-xxxs',
     loadingData && 'button-disabled'
   )
+
+  console.log(tokenInst, reloadRequired);
+
+  const connectButton = (type = 'desktop') => {
+    return (
+      <div className={`list-reset header-nav-right connect-button text-xs ${type}` }>
+        <Button className='button-primary' disabled={loadingData} onClick={connectWallet}>{getButtonText()}</Button>
+        {reloadRequired ? (
+              <div className='navbar-warningMessage'>
+                  <input type='hidden'/>
+                  <Label pointing>Make sure your wallet is on the BSC network</Label>
+              </div>
+        ) : null}
+      </div>
+    )
+  }
 
   return (
     <header
@@ -137,13 +146,7 @@ const Header = ({
               <Link to="/" onClick={closeMenu}>Cryptopuffs</Link>
             </li>
           </ul>
-          <ul
-            className="list-reset header-nav-right connect-button mobile text-xs"
-          >
-            <li>
-              <Link to="#0" className={buttonClasses} onClick={closeMenu}>Sign up</Link>
-            </li>
-          </ul>
+          {connectButton('mobile')}
           {!hideNav &&
             <>
               <button
@@ -175,18 +178,13 @@ const Header = ({
                     <li>
                       <Link to="/exchange" onClick={closeMenu}>Exchange</Link>
                     </li>
-                    <li>
-                      <Link to="#0" onClick={closeMenu}>Documentation</Link>
-                    </li>
+                    {getButtonText() === 'DISCONNECT' ? (
+                      <li>
+                        <Link to="/puffVault" onClick={closeMenu}>Puff Vault</Link>
+                      </li> 
+                    ) : null}
                   </ul>
-                  <ul
-                    className="list-reset header-nav-right connect-button desktop text-xs"
-                  >
-                    <Button className='button-primary'>Connect</Button>
-                    {/* <li>
-                      <Link to="#0" className={buttonClasses} onClick={connectWallet}>Connect</Link>
-                    </li> */}
-                  </ul>
+                  {connectButton()}
                 </div>
               </nav>
             </>}

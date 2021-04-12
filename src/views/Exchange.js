@@ -5,7 +5,8 @@ import {
     Button,
     Dropdown,
     Icon,
-    Input
+    Input,
+    Select
 } from 'semantic-ui-react'
 
 const axios = require('axios');
@@ -65,6 +66,16 @@ const Exchange = props => {
 
     console.log(tokensToStake);
 
+    useEffect(() => {
+        axios({
+            method: 'GET', 
+            url: 'https://api.pancakeswap.info/api/tokens'
+        })
+        .then(response => {
+            console.log(response);
+        })
+    }, [])
+
     const stakingForm = () => {
         return (
             <Fragment>
@@ -72,13 +83,13 @@ const Exchange = props => {
 
                 <p>Available: 42069 BLOWF-wBNB</p>
                 <Input 
-                action='Max' 
+                action
                 fluid 
-                label={<Dropdown defaultValue='BNB' options={tokenOptions} />}
-                labelPosition='right'onChange={(_,d) => {
-                    setTokensToStake(d.value)
-                }}
-                value={tokensToStake} />
+                value={tokensToStake}>
+                    <input />
+                    <Button className='button-primary'>Max</Button>
+                    <Select compact defaultValue='BNB' options={tokenOptions} />
+                </Input>
                 
                 <p>Select stake duration</p>
 
@@ -116,6 +127,32 @@ const Exchange = props => {
                             When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
                         </div>
                     </div>
+                </div>
+                <div className='token-mini-form'>
+                    <p>Balance: 42069BNB</p>
+                    <Input 
+                    action
+                    fluid
+                    transparent 
+                    placeholder='Search...'>
+                        <input />
+                        <Button className='button-primary'>Max</Button>
+                        <Select compact defaultValue='BNB' options={tokenOptions} />
+                    </Input>
+                </div>
+                <div className='plus'>
+                    <Icon name='plus'/>
+                </div>
+                <div className='token-mini-form'>
+                    <p>Balance: 42069BNB</p>
+                    <Input 
+                    action={<Button className='button-primary'>Max</Button>}
+                    fluid
+                    label={{ basic: true, content: 'BLOWF' }}
+                    labelPosition='right'
+                    transparent 
+                    placeholder='Search...' />
+                    
                 </div>
             </Fragment>
         )

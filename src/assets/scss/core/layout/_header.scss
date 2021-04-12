@@ -35,6 +35,10 @@
 			width: 113px;
 			height: 36px;
 		}
+
+		&.disabled {
+			background-color: color-bg(button-primary-hover) !important;
+		}
 	}
 }
 
@@ -94,6 +98,11 @@
 	a.button {
 		margin-left: $header-nav--padding-h;
 	}
+}
+
+.navbar-warningMessage {
+	position: absolute;
+	width: 112px;
 }
 
 .header-nav-center:first-of-type {

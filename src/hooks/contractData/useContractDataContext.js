@@ -77,14 +77,16 @@ export const ContractDataProvider = ({children}) => {
 
     useEffect(() => {
         if (!!user && !!tokenInst && !!web3) { //TODO: include !!contract when we have contract data
-            if (Object.keys(tokenInst.methods).length) {
+            if (Object.keys(tokenInst.methods).length) { //Object.keys(contract.methods);
                 web3.eth.net.getId()
                 .then(result => {
+                    console.log(result, networkId);
                     if (result !== networkId) {
                         setReloadRequired(true)
                         setLoadingData(false);
                     } else {
                         setReloadRequired(false)
+                        setLoadingData(false);
                         // setData();
     
                         // setInterval(

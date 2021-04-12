@@ -24,6 +24,8 @@ const Catalogue = props => {
 
     return (
         <section className={outerClasses}>
+            <p>TODO: what can we search by, what filters do we need</p>
+            <p>pagination - gonna figure out the backend</p>
             <div className='container search'>
                 <CatalogueSearch />
             </div>
