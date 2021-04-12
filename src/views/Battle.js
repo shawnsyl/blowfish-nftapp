@@ -40,7 +40,7 @@ const Battle = props => {
 
             </div> */}
             <div className='container'>
-                <Countdown />
+                <Countdown endUnix={1619978400000} />
                 <Container text className='mb-32'>
                     <p>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo

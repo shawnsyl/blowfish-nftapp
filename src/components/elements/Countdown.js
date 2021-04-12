@@ -4,17 +4,20 @@ import {
     Container
 } from 'semantic-ui-react'
 
-const endUnix = 1618768800000;
+const Countdown = props => {
+    const {
+        endUnix = 1618768800000
+    } = props;
 
-const getRemainingTime = () => {
-    const now = Date.now()
-    const nowDate = new Date(now);
-    const endDate = new Date(endUnix);
-    return endDate - nowDate   
-}
-
-const Countdown = () => {
+    const getRemainingTime = () => {
+        const now = Date.now()
+        const nowDate = new Date(now);
+        const endDate = new Date(endUnix);
+        return endDate - nowDate   
+    }
+    
     const [remainingTime, setRemainingTime] = useState(getRemainingTime())
+
     useEffect(() => {
         let timer;
         timer = setInterval(() => {
