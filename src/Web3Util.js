@@ -1,8 +1,6 @@
 import Web3 from 'web3';
-import TestContract from './abi/TestLottery.json';
-import LotteryContract from './abi/BlowFishLottery.json';
 
-const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_LOTTERY_CONTRACT : process.env.REACT_APP_BLOWFISH_LOTTERY_CONTRACT;
+// const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_LOTTERY_CONTRACT : process.env.REACT_APP_BLOWFISH_LOTTERY_CONTRACT;
 
 export const getWeb3 = () =>
     new Promise(async(resolve, reject) => {
@@ -30,19 +28,19 @@ export const getWeb3 = () =>
     //});
 });
 
-export const getContract = async (web3) => {
-    const contractAbi = process.env.NODE_ENV === 'development' ? TestContract.abi : LotteryContract
-    window.user = (await web3.eth.getAccounts())[0];
+// export const getContract = async (web3) => {
+//     const contractAbi = process.env.NODE_ENV === 'development' ? TestContract.abi : LotteryContract
+//     window.user = (await web3.eth.getAccounts())[0];
     
-    window.instance = new web3.eth.Contract(
-        contractAbi,
-        contractAddress, // contract address here
-        {
-            from: window.user
-        }
-    );
-    return window.instance;
-}
+//     window.instance = new web3.eth.Contract(
+//         contractAbi,
+//         contractAddress, // contract address here
+//         {
+//             from: window.user
+//         }
+//     );
+//     return window.instance;
+// }
 
 export const fromWei = value => {
     return (value / (1000000000000000000)).toString();
