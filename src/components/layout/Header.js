@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -114,7 +114,7 @@ const Header = ({
   const connectButton = (type = 'desktop') => {
     return (
       <div className={`list-reset header-nav-right connect-button text-xs ${type}` }>
-        <Button className='button-primary' disabled={loadingData} onClick={connectWallet}>{getButtonText()}</Button>
+        <Button className='button-primary' disabled={loadingData} onClick={getButtonText() === 'DISCONNECT' ? disconnectWallet : connectWallet}>{getButtonText()}</Button>
         {reloadRequired ? (
               <div className='navbar-warningMessage'>
                   <input type='hidden'/>
@@ -170,19 +170,21 @@ const Header = ({
                       'list-reset text-xs',
                       navPosition && `header-nav-${navPosition}`
                     )}>
-                    <li>
-                      <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
-                    </li>
-                    <li>
-                      <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
-                    </li>
-                    <li>
-                      <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
-                    </li>
                     {getButtonText() === 'DISCONNECT' ? (
-                      <li>
-                        <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
-                      </li> 
+                      <Fragment>
+                        <li>
+                          <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
+                        </li>
+                        <li>
+                          <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
+                        </li>
+                        <li>
+                          <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
+                        </li>
+                        <li>
+                          <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
+                        </li> 
+                      </Fragment>
                     ) : null}
                   </ul>
                   {connectButton()}

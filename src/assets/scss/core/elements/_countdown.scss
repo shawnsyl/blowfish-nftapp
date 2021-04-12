@@ -6,6 +6,7 @@ div.ui.container.countdown-container {
     height: 130px;
     border-radius: .28571429rem;
     margin-bottom: 28px;
+    flex-direction: row;
 }
 
 div.ui.container.countdown-container div.countdown-digit {

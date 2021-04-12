@@ -12,6 +12,8 @@ import {
     Select
 } from 'semantic-ui-react'
 
+import Countdown from '../elements/Countdown'
+
 const axios = require('axios');
 
 const stakeOptions = [
@@ -212,8 +214,10 @@ const Exchange = props => {
 
     console.log(web3);
 
-    return (
+    return contractData && !reloadRequired && web3 ? (
         <section className={outerClasses}>
+
+            <Countdown />
             <div className='container'>
                 <div className='exchange-window'>
                     {/* <div className='exchange-links'>
@@ -238,11 +242,11 @@ const Exchange = props => {
                             liquidityForm()
                         )
                     } */}
-                    {contractData && !reloadRequired && web3 ? stakingForm() : null}
+                    {stakingForm()}
                 </div>
             </div>
         </section>
-    )
+    ) : null
 }
 
 export default Exchange;
