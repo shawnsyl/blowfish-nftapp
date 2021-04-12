@@ -13,6 +13,7 @@ select,
 textarea {
 	@include font-family(base);
 	@include font-weight(base);
+	font-family: 'Nunito', sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6,
