@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import CatalogueSearch from '../components/elements/CatalogueSearch'
 import PuffTile from '../components/elements/PuffTile'
+import Countdown from '../components/elements/Countdown'
 
 const puffData = [
     {},{},{},{},{},{},{},{},{},{},{},{}
@@ -10,7 +11,7 @@ const puffData = [
 
 const Catalogue = props => {
     const outerClasses = classNames(
-      'catalogue section',
+      'catalogue section container',
     //   topOuterDivider && 'has-top-divider',
     //   bottomOuterDivider && 'has-bottom-divider',
     //   hasBgColor && 'has-bg-color',
@@ -41,8 +42,7 @@ const Catalogue = props => {
 
             </div> */}
             <div className='container'>
-                <h2>Coming Soon!</h2>
-                
+                <Countdown />
             </div>
         </section>
     )

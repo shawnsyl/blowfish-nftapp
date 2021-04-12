@@ -44,7 +44,7 @@ const Footer = ({
             <FooterSocial />
           </div>
           <div className="footer-bottom space-between text-xxs invert-order-desktop">
-            <FooterNav />
+            {/* <FooterNav /> */}
           </div>
         </div>
       </div>

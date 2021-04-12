@@ -13,12 +13,16 @@
 	}
 
 	.brand {
-		margin-right: $header-nav--padding-h;
+		margin-right: 5px;
 	}	
 
 	a:hover {
 		color:  color-bg(button-primary-hover) !important;
 	}
+}
+
+.site-title {
+	font-size: 20px !important;
 }
 
 .site-header-inner {
@@ -38,6 +42,8 @@
 		.button {
 			width: 113px;
 			height: 36px;
+			font-size: 16px;
+			padding: 0;
 		}
 
 		&.disabled {
@@ -126,8 +132,7 @@
 	display: none;
 }
 
-@include media( '<=medium' ) {
-
+@media(max-width: 950px) {
 	.header-nav-toggle {
 		display: block;
 
@@ -178,8 +183,7 @@
 	}
 }
 
-@include media( '>medium' ) {
-
+@media( min-width: 950px ) {
 	.site-header {
 
 		+ .site-content {

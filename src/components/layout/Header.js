@@ -138,7 +138,7 @@ const Header = ({
           )}>
           <Logo />
           <ul
-            className="list-reset header-nav-right connect-button desktop text-xs"
+            className="list-reset header-nav-right connect-button desktop site-title"
           >
             <li>
               <Link to="/" onClick={closeMenu}>Cryptopuffs</Link>
@@ -181,7 +181,7 @@ const Header = ({
                     </li>
                     {getButtonText() === 'DISCONNECT' ? (
                       <li>
-                        <Link to="/puffVault" onClick={closeMenu}>Puff Vault</Link>
+                        <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
                       </li> 
                     ) : null}
                   </ul>
