@@ -43,7 +43,10 @@ const Marketplace = props => {
                 <Countdown endUnix={1619373600000} />
                 <Container text className='mb-32'>
                     <p>
-                    Auction your CryptoPuffs here!
+                    Auction your CryptoPuffs here! Set your price and let the market decide.
+                    </p>
+                    <p>
+                    See a Puff you really like? Place a bid!
                     </p>
                     <p>
                     MarketPlace to be released soon after CryptoPuffs initial launch.
