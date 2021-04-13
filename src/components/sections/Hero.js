@@ -110,7 +110,7 @@ const Hero = ({
             </p>
             <Image src={crate} width="200"/>
             <p className="mt-24">
-              When opening a PuffCate, you will be given a 1-6 month option for the "lock up period" of the BNB liquidity you're providing. <strong>The longer you lock up, the better odds you have of getting rare CryptoPuffs.</strong> After the lockup period, you will receive your unlocked BLOWF-BNB LP tokens. The value of the LP tokens will depend on the value of $BLOWF. The contract will also deduct a developer fee.
+              When opening a PuffCrate, you will be given a 1-6 month option for the "lock up period" of the BNB liquidity you're providing. <strong>The longer you lock up, the better odds you have of getting rare CryptoPuffs.</strong> After the lockup period, you will receive your unlocked BLOWF-BNB LP tokens. The value of the LP tokens will depend on the value of $BLOWF. The contract will also deduct a developer fee.
             </p>
             <p>
               <strong>The price of a CryptoPuff will intially be .1 BNB</strong>. As more Puffs are minted, the price will follow a gentle bonding curve.
