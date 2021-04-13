@@ -60,7 +60,7 @@ const Hero = ({
           <div className="hero-content">
             <Image src={logo} width="1000"/>
             <h2 className="mt-24 mb-24" data-reveal-delay="200">
-              Collect them, trade them, battle them!
+              Collect them, auction them, battle them!
             </h2>
             <div class="row">
               <div class="column">
