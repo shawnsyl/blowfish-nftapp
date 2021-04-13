@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import classNames from 'classnames';
 
+import { fromWei, toWei }  from '../../Web3Util';
+
 import { useContractDataContext } from '../../hooks/contractData/useContractDataContext'
 
 import {
@@ -22,23 +24,23 @@ const stakeOptions = [
         value: 1
     },
     {
-        text: '2 Month',
+        text: '2 Months',
         value: 2
     },
     {
-        text: '3 Month',
+        text: '3 Months',
         value: 3
     },
     {
-        text: '4 Month',
+        text: '4 Months',
         value: 4
     },
     {
-        text: '5 Month',
+        text: '5 Months',
         value: 5
     },
     {
-        text: '6 Month',
+        text: '6 Months',
         value: 6
     },
     
@@ -62,8 +64,11 @@ const Exchange = props => {
     
     const [activeIndex, setActiveIndex] = useState(-1);
     const [isStake, setIsStake] = useState(true);
-    const [tokensToStake, setTokensToStake] = useState('');
     const [isAddingLiquidity, setIsAddingLiquidity] = useState(false);
+    const [lockDuration, setLockDuration] = useState(0);
+    const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
+    const [puffCrateQuantity, setPuffCrateQuantity] = useState(0);
+    const [tokensToStake, setTokensToStake] = useState('');
 
     const {
         contract,
@@ -72,6 +77,7 @@ const Exchange = props => {
         reloadRequired,
         web3
     } = useContractDataContext();
+    console.log(puffCrateQuantity, lockDuration)
 
     useEffect(() => {
         axios({
@@ -83,7 +89,52 @@ const Exchange = props => {
         })
     }, [])
 
-    console.log(contract)
+    useEffect(()=> {
+        if (web3 && contractData) {
+            let newPuffCrateOptions = []
+            const {
+                puffCratePrice
+            } = contractData
+            for (let i = 0; i < 5; i++) {
+                newPuffCrateOptions.push({
+                    text: `${i+1} Crate${i > 0 ? 's' : ''} (Lock ${(parseFloat(web3.utils.fromWei(puffCratePrice)) * (i + 1)).toFixed(2)} BNB)`,
+                    value: i + 1
+                })
+            }
+            setPuffCrateOptions([...newPuffCrateOptions])
+        }
+    }, [web3, contractData])
+    
+    const isDisabled = () => {
+        if (process.env.NODE_ENV === 'development') {
+            return false;
+        }
+        if (Date.now() >= 1618768800000) {
+            return false;
+        }
+        return true;
+    }
+
+    const openCrate = () => {
+        const {
+            puffCratePrice
+        } = contractData
+        const lockAmount = web3.utils.toWei((fromWei(puffCrateQuantity * puffCratePrice)).toString());
+        console.log(lockAmount);
+
+        // (async () => {
+        //     await contract.methods.lock()
+        // })().then(
+
+        // )
+    }
+
+    const handleAccordionClick = (index) => {
+        if (activeIndex === index) {
+            return setActiveIndex(-1);
+        }
+        return setActiveIndex(index)
+    }
 
     // const liquidityForm = () => {
     //     return !isAddingLiquidity ? (
@@ -166,16 +217,6 @@ const Exchange = props => {
     //         </Fragment>
     //     )
     // }
-    
-    const isDisabled = () => {
-        if (process.env.NODE_ENV === 'development') {
-            return false;
-        }
-        if (Date.now() >= 1618768800000) {
-            return false;
-        }
-        return true;
-    }
 
     const stakingForm = () => {
         const {
@@ -195,7 +236,7 @@ const Exchange = props => {
                     <Select compact defaultValue='BNB' options={tokenOptions} />
                 </Input> */}
 
-                <Input 
+                {/* <Input 
                 action={
                     <Button 
                     className='button-primary' 
@@ -208,26 +249,29 @@ const Exchange = props => {
                 label={{ basic: true, content: 'BNB' }}
                 labelPosition='right'
                 transparent 
-                placeholder='Enter amount to lock...' />
+                placeholder='Enter amount to lock...' /> */}
                 
-                <p>Select lock duration</p>
+                <p>Select number of Puff Crates to open</p>
 
                 <Dropdown
                 disabled={isDisabled()}
                 fluid
                 selection
+                onChange={(_, d) => setPuffCrateQuantity(d.value)}
+                options={puffCrateOptions} />
+                
+                <p>Select lock duration. Longer the lock duration, higher the chances of pulling a <strong>higher rarity Puff Crate</strong>!</p>
+
+                <Dropdown
+                disabled={isDisabled()}
+                fluid
+                selection
+                onChange={(_, d) => setLockDuration(d.value)}
                 options={stakeOptions} />
 
-                <Button className='button-primary' disabled={isDisabled()} fluid>Lock BNB</Button>
+                <Button className='button-primary' disabled={isDisabled()} fluid onClick={openCrate}>Open Crates!</Button>
             </Fragment>
         )
-    }
-
-    const handleAccordionClick = (index) => {
-        if (activeIndex === index) {
-            return setActiveIndex(-1);
-        }
-        return setActiveIndex(index)
     }
 
     return  (
@@ -235,31 +279,35 @@ const Exchange = props => {
 
             <Countdown />
             <div className='container'>
-                {contractData && !reloadRequired && web3  ? <div className='exchange-window'>
-                    {/* <div className='exchange-links'>
-                        <div>
-                            <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
-                                setIsStake(true);
-                                setIsAddingLiquidity(false);
-                            }}>
-                                Stake
-                            </a>
-                        </div>
-                        <div>
-                            <a className={!isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => setIsStake(false)}>
-                                Liquidity
-                            </a>
-                        </div>
-                    </div> */}
-                    {/* {
-                        isStake ? (
-                            stakingForm()
-                        ) : (
-                            liquidityForm()
-                        )
-                    } */}
-                    {stakingForm()}
-                </div> : null}
+                {contractData && !reloadRequired && web3 ? 
+                (                   
+                    <div className='exchange-window'>
+                        {/* <div className='exchange-links'>
+                            <div>
+                                <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
+                                    setIsStake(true);
+                                    setIsAddingLiquidity(false);
+                                }}>
+                                    Stake
+                                </a>
+                            </div>
+                            <div>
+                                <a className={!isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => setIsStake(false)}>
+                                    Liquidity
+                                </a>
+                            </div>
+                        </div> */}
+
+                        {/* {
+                            isStake ? (
+                                stakingForm()
+                            ) : (
+                                liquidityForm()
+                            )
+                        } */}
+                        {stakingForm()}
+                    </div>
+                ) : null}
             </div>
         </section>
     )

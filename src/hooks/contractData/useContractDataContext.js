@@ -139,9 +139,11 @@ export const ContractDataProvider = ({children}) => {
         const playerBalance = process.env.NODE_ENV === 'development' ?
             await web3.eth.getBalance(user) :   
             await web3.eth.getBalance(user);
+        const puffCratePrice = await contract.methods.getCryptoPuffsPrice().call();
 
         return {
             playerBalance,
+            puffCratePrice
         };
     }
 
