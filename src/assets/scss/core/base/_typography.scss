@@ -13,13 +13,14 @@ select,
 textarea {
 	@include font-family(base);
 	@include font-weight(base);
-	font-family: 'Nunito', sans-serif !important;
+	font-family: 'Baloo', 'Nunito', sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
 	@include font-family(heading);
 	@include font-weight(heading);
+	font-family: 'Baloo', 'Nunito', sans-serif !important;
 	clear: both;
 	color: color(heading);
 	word-wrap: break-word;
@@ -122,6 +123,9 @@ h4, h5, h6,
 p {
 	margin-top: 0;
 	margin-bottom: $spacing--shared-v;
+	font-weight: lighter;
+	color: get-color(light, 1);
+	font-family: 'Baloo', 'Nunito', sans-serif !important;
 }
 
 dfn, cite, em, i {

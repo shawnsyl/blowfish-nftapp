@@ -29,6 +29,8 @@ min-height: 100vh;
 }
 
 .site-content {
-	// background-color: get-color(light, 2);
+	background: linear-gradient(
+		180deg
+		,#23dde9,#0272a2),#c4c4c4;
     flex: 1 0 auto;
 }

@@ -1,5 +1,4 @@
 .hero {
-
 	.section-inner {
 		padding-top: $hero--padding-t__mobile;
 		padding-bottom: $hero--padding-b__mobile;
@@ -23,6 +22,30 @@
 			vertical-align: top;
 		}
 	}
+}
+
+.hero-light {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-60%);
+	z-index: 2;
+	height: 100vw;
+	pointer-events: none;
+	max-width: 100vw;
+}
+
+.hero-light1 {
+	animation: fadeInOut 2s linear infinite;
+}
+
+.hero-light2 {
+	animation: fadeInOut 2s linear -1s infinite;
+}
+
+@keyframes fadeInOut {
+	0%,100% { opacity: 0 }
+	50% { opacity: 0.6 }
 }
 
 @include media( '<=medium' ) {

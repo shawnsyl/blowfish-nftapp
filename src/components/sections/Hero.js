@@ -12,6 +12,8 @@ import dSpace from '../../assets/images/b_space.png'
 import dInject from '../../assets/images/d_inject.png'
 import logo from '../../assets/images/puff_logo.png'
 import crate from '../../assets/images/crate.png'
+import lightRay1 from '../../assets/images/lightRay1.svg'
+import lightRay2 from '../../assets/images/lightRay2.svg'
 
 import './Hero.css';
 
@@ -50,6 +52,9 @@ const Hero = ({
   );
 
   return (
+    <>
+    {/* <img src={lightRay1} alt="light" class="hero-light hero-light1" />
+    <img src={lightRay2} alt="light" class="hero-light hero-light2" /> */}
     <section
       {...props}
       className={outerClasses}
@@ -132,6 +137,7 @@ const Hero = ({
         </div>
       </div>
     </section>
+    </>
   );
 }
 
