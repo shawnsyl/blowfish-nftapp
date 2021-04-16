@@ -71,15 +71,12 @@ const Exchange = props => {
     const outerClasses = classNames(
         'exchange section'
     );
-    
-    const [activeIndex, setActiveIndex] = useState(-1);
-    const [isStake, setIsStake] = useState(true);
+
     const [isAddingLp, setIsAddingLp] = useState(true);
     const [isUnlocking, setIsUnlocking] = useState(false);
     const [lockDuration, setLockDuration] = useState(0);
     const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
     const [puffCrateQuantity, setPuffCrateQuantity] = useState(0);
-    const [tokensToStake, setTokensToStake] = useState('');
     const [unlocked, setUnlocked] = useState(false);
 
     const {
@@ -91,7 +88,6 @@ const Exchange = props => {
         user,
         web3
     } = useContractDataContext();
-    console.log(puffCrateQuantity, lockDuration)
 
     useEffect(() => {
         axios({
@@ -210,8 +206,6 @@ const Exchange = props => {
             puffCratePrice
         } = contractData
         const lockAmount = web3.utils.toWei((fromWei(puffCrateQuantity * puffCratePrice)).toString());
-        console.log(lockAmount);
-        console.log(contract.methods);
 
         if (isAddingLp) {
             console.log('disabled')
@@ -222,17 +216,17 @@ const Exchange = props => {
                     contract.methods.purchaseCryptoPuff(lockDuration).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
                     }).then(response => {
-                        console.log(response.events.Transfer.returnValues.tokenId);
                         axios({
                             method: 'post', 
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            baseURL:  process.env.REACT_APP_SERVER_HOST + 'api/',
-                            url: 'userNfts/add',
+                            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                            url: 'cryptopuffs/add',
                             data: JSON.stringify({
                                 puffId: response.events.Transfer.returnValues.tokenId,
-                                puffOwner: user
+                                puffOwner: user,
+                                dateMinted: Date.now()
                             })
                         })
                         .then(response => {

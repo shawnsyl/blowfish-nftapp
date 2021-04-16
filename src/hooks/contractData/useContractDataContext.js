@@ -81,7 +81,6 @@ export const ContractDataProvider = ({children}) => {
             if (Object.keys(contract.methods).length && Object.keys(tokenInst.methods).length) {
                 web3.eth.net.getId()
                 .then(result => {
-                    console.log(result, networkId);
                     if (result !== networkId) {
                         setReloadRequired(true)
                         setLoadingData(false);
@@ -99,8 +98,6 @@ export const ContractDataProvider = ({children}) => {
             setLocalStorage('contract', contract);
         };
     }, [contract, tokenInst, user, web3])
-
-    console.log(reloadRequired, loadingData)
 
     useEffect(() => {
         setLocalStorage('contractData', contractData);
