@@ -9,7 +9,7 @@ import CatalogueSearch from '../components/elements/CatalogueSearch';
 import Countdown from '../components/elements/Countdown';
 import PuffTile from '../components/elements/PuffTile';
 
-const puffData = [{}, {}, {}, {}, {}, {}]
+const puffData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 const PuffVault = props => {
     const outerClasses = classNames(

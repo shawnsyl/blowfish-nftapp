@@ -221,8 +221,26 @@ const Exchange = props => {
                 .then(gasEstimate => {
                     contract.methods.purchaseCryptoPuff(lockDuration).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
-                    }).then(() => {
-                        window.location.reload();
+                    }).then(response => {
+                        console.log(response.events.Transfer.returnValues.tokenId);
+                        axios({
+                            method: 'post', 
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            baseURL:  process.env.REACT_APP_SERVER_HOST + 'api/',
+                            url: 'userNfts/add',
+                            data: JSON.stringify({
+                                puffId: response.events.Transfer.returnValues.tokenId,
+                                puffOwner: user
+                            })
+                        })
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        })
                     })
                 });
             } catch (e) {
