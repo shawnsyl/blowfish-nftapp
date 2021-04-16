@@ -20,28 +20,36 @@ const axios = require('axios');
 
 const stakeOptions = [
     {
-        text: '1 Month',
+        text: '1 Week',
         value: 1
     },
     {
-        text: '2 Months',
+        text: '2 Weeks',
         value: 2
     },
     {
-        text: '3 Months',
+        text: '3 Weeks',
         value: 3
     },
     {
-        text: '4 Months',
+        text: '4 Weeks',
         value: 4
     },
     {
-        text: '5 Months',
+        text: '5 Weeks',
         value: 5
     },
     {
-        text: '6 Months',
+        text: '6 Weeks',
         value: 6
+    },
+    {
+        text: '7 Weeks',
+        value: 7
+    },
+    {
+        text: '8 Weeks',
+        value: 8
     },
     
 ]
@@ -57,6 +65,8 @@ const tokenOptions = [
     }
 ]
 
+const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+
 const Exchange = props => {
     const outerClasses = classNames(
         'exchange section'
@@ -64,17 +74,21 @@ const Exchange = props => {
     
     const [activeIndex, setActiveIndex] = useState(-1);
     const [isStake, setIsStake] = useState(true);
-    const [isAddingLiquidity, setIsAddingLiquidity] = useState(false);
+    const [isAddingLp, setIsAddingLp] = useState(true);
+    const [isUnlocking, setIsUnlocking] = useState(false);
     const [lockDuration, setLockDuration] = useState(0);
     const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
     const [puffCrateQuantity, setPuffCrateQuantity] = useState(0);
     const [tokensToStake, setTokensToStake] = useState('');
+    const [unlocked, setUnlocked] = useState(false);
 
     const {
         contract,
         contractData,
         loadingData,
         reloadRequired,
+        tokenInst,
+        user,
         web3
     } = useContractDataContext();
     console.log(puffCrateQuantity, lockDuration)
@@ -115,142 +129,137 @@ const Exchange = props => {
         return true;
     }
 
+    const isButtonDisabled = () => {
+        if (!unlocked && isAddingLp) {
+            return true;
+        }
+
+        if (!(lockDuration > 0 && puffCrateQuantity > 0)) {
+            return true;
+        }
+        
+        if (isUnlocking || loadingData) {
+            return true;
+        }
+
+        return false;
+    }
+
+    const getApproveButtonText = () => {
+        if (isUnlocking) {
+            return 'Approving...'
+        }
+
+        if (unlocked) {
+            return 'Approved'
+        }
+
+        return 'Approve'
+    }
+
+    const approve = async () => {
+        const { puffCratePrice } = contractData;
+
+        const max = 5 * puffCratePrice;
+
+        tokenInst.methods.allowance(user, contractAddress).call()
+        .then(allowance => { 
+            if (Number(allowance) < Number(max)) {
+                tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).estimateGas({from: user})
+                .then(gasEstimate => {
+                    tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).send({gas: gasEstimate, from: user})
+                    .then(approval => {
+                        setUnlocked(true);
+                        setIsUnlocking(false);
+                        return approval
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        setUnlocked(false);
+                        setIsUnlocking(false);
+                    })
+                })
+            } else {
+                setUnlocked(true);
+                setIsUnlocking(false);
+                return;
+            }
+            
+        })
+        .catch(e => {
+            console.error(e);
+            setUnlocked(true);
+            setIsUnlocking(false);
+        })
+    }
+
+    const approveWallet = () => {
+        setIsUnlocking(true);
+        approve()
+        .then(() => {
+        })
+        .catch(e => {
+            console.error(e);
+            setUnlocked(false);
+            setIsUnlocking(false);
+        })
+    }
+
     const openCrate = () => {
         const {
             puffCratePrice
         } = contractData
         const lockAmount = web3.utils.toWei((fromWei(puffCrateQuantity * puffCratePrice)).toString());
         console.log(lockAmount);
+        console.log(contract.methods);
 
-        // (async () => {
-        //     await contract.methods.lock()
-        // })().then(
-
-        // )
-    }
-
-    const handleAccordionClick = (index) => {
-        if (activeIndex === index) {
-            return setActiveIndex(-1);
+        if (isAddingLp) {
+            console.log('disabled')
+        } else {
+            try {
+                contract.methods.purchaseCryptoPuff(lockDuration).estimateGas({from: user, value: lockAmount})
+                .then(gasEstimate => {
+                    contract.methods.purchaseCryptoPuff(lockDuration).send({
+                        gas: gasEstimate + 50000, from: user, value: lockAmount
+                    }).then(() => {
+                        window.location.reload();
+                    })
+                });
+            } catch (e) {
+                console.error(e);
+            }
         }
-        return setActiveIndex(index)
     }
-
-    // const liquidityForm = () => {
-    //     return !isAddingLiquidity ? (
-    //         <Fragment>
-    //             <Button className='button-primary liquidity-button' onClick={() => setIsAddingLiquidity(true)}>Add Liquidity</Button>
-    //             <p>Add liquidity to receive LP Tokens</p>
-
-    //             <h3>Your Liquidity</h3>
-    //             <div className='current-liquidity'>
-    //                 <div className='liquidity-message'>
-    //                     No liquidity found
-    //                 </div>
-    //             </div>
-
-    //             <Accordion fluid styled>
-    //                 <Accordion.Title
-    //                 active={activeIndex === 0}
-    //                 index={0}
-    //                 onClick={() => handleAccordionClick(0)}
-    //                 >
-    //                 <Icon name='dropdown' />
-    //                 BLOWF/BNB
-    //                 </Accordion.Title>
-    //                 <Accordion.Content active={activeIndex === 0}>
-    //                 <div>
-    //                     <div className='my-liquidity-row'>
-    //                         <div>POOLED BLOWF: </div>
-    //                         <div>269825.67</div>
-    //                     </div>
-    //                     <div className='my-liquidity-row'>
-    //                         <div>POOLED BNB: </div>
-    //                         <div>3.99</div>
-    //                     </div>
-    //                     <div className='my-liquidity-row'>
-    //                         <div>YOUR POOLED LP TOKENS: </div>
-    //                         <div>900</div>
-    //                     </div>
-    //                 </div>
-    //                 </Accordion.Content>
-    //             </Accordion>
-    //         </Fragment>
-    //     ) : (
-    //         <Fragment>
-    //             <div className='add-liquidity-header'>
-    //                 <Icon link name='arrow left' onClick={() => setIsAddingLiquidity(false)}/>
-    //                 <h3>Add Liquidity</h3>
-    //                 <div className='liquidity-question'>
-    //                     <Icon name='question circle outline'/>
-    //                     <div className='hover-info'>
-    //                         When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             <div className='token-mini-form'>
-    //                 <p>Balance: 42069BNB</p>
-    //                 <Input 
-    //                 action
-    //                 fluid
-    //                 transparent 
-    //                 placeholder='Search...'>
-    //                     <input />
-    //                     <Button className='button-primary'>Max</Button>
-    //                     <Select compact defaultValue='BNB' options={tokenOptions} />
-    //                 </Input>
-    //             </div>
-    //             <div className='plus'>
-    //                 <Icon name='plus'/>
-    //             </div>
-    //             <div className='token-mini-form'>
-    //                 <p>Balance: 42069BNB</p>
-    //                 <Input 
-    //                 action={<Button className='button-primary'>Max</Button>}
-    //                 fluid
-    //                 label={{ basic: true, content: 'BLOWF' }}
-    //                 labelPosition='right'
-    //                 transparent 
-    //                 placeholder='Search...' />
-                    
-    //             </div>
-    //         </Fragment>
-    //     )
-    // }
 
     const stakingForm = () => {
         const {
             playerBalance
         } = contractData;
         return (
-            <Fragment>
+            <div className='exchange-window'>
                 <h3>Lock your BNB to receive CryptoPuff lootboxes</h3>
 
                 <p>Available: {web3.utils.fromWei(playerBalance)} BNB</p>
-                {/* <Input 
-                action
-                fluid 
-                value={tokensToStake}>
-                    <input />
-                    <Button className='button-primary'>Max</Button>
-                    <Select compact defaultValue='BNB' options={tokenOptions} />
-                </Input> */}
 
-                {/* <Input 
-                action={
-                    <Button 
-                    className='button-primary' 
-                    disabled={isDisabled()}>
-                        Max
-                    </Button>
-                }
-                className='exchange-input'
-                fluid
-                label={{ basic: true, content: 'BNB' }}
-                labelPosition='right'
-                transparent 
-                placeholder='Enter amount to lock...' /> */}
-                
+                <p>Choose to lock:</p>
+
+                <div className='exchange-links'>
+                    <div>
+                        <a className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                            setIsAddingLp(true);
+                        }}>
+                            BLOWF-BNB
+                        </a>
+                    </div>
+                    <div>
+                        <a className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                            setIsAddingLp(false);
+                        }}>
+                            BLOWF
+                        </a>
+                    </div>
+                </div>
+
                 <p>Select number of Puff Crates to open</p>
 
                 <Dropdown
@@ -269,8 +278,16 @@ const Exchange = props => {
                 onChange={(_, d) => setLockDuration(d.value)}
                 options={stakeOptions} />
 
-                <Button className='button-primary' disabled={isDisabled()} fluid onClick={openCrate}>Open Crates!</Button>
-            </Fragment>
+                {isAddingLp ? (
+                    <Button className='button-primary' disabled={isUnlocking || unlocked} fluid onClick={approveWallet}>
+                        {getApproveButtonText()}
+                    </Button>
+                 ) : null}
+                <br />
+                <Button className='button-primary' disabled={isDisabled() || isButtonDisabled()} fluid onClick={openCrate}>
+                    Open Crates!
+                </Button>
+            </div>
         )
     }
 
@@ -279,34 +296,10 @@ const Exchange = props => {
 
             <Countdown />
             <div className='container'>
-                {contractData && !reloadRequired && web3 ? 
-                (                   
-                    <div className='exchange-window'>
-                        {/* <div className='exchange-links'>
-                            <div>
-                                <a className={isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => {
-                                    setIsStake(true);
-                                    setIsAddingLiquidity(false);
-                                }}>
-                                    Stake
-                                </a>
-                            </div>
-                            <div>
-                                <a className={!isStake ? 'exchange-link-active' : 'exchange-link-inactive'} href='#' onClick={() => setIsStake(false)}>
-                                    Liquidity
-                                </a>
-                            </div>
-                        </div> */}
-
-                        {/* {
-                            isStake ? (
-                                stakingForm()
-                            ) : (
-                                liquidityForm()
-                            )
-                        } */}
+                {contractData && !reloadRequired && web3 ? (
+                    <Fragment>
                         {stakingForm()}
-                    </div>
+                    </Fragment>
                 ) : null}
             </div>
         </section>

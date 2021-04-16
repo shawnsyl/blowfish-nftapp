@@ -2,6 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { getWeb3, getContract } from '../../Web3Util';
 
+import MainLPContract from '../../abi/MainLP.json';
+import TestLPContract from '../../abi/TestLP.json'
+
+const tokenContract = process.env.NODE_ENV === 'development' ? TestLPContract : MainLPContract;
+const tokenAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_LP_TOKEN : process.env.REACT_APP_MAIN_LP_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' ? 97 : 56;
 
 const setLocalStorage = (key, value) => {
@@ -40,7 +45,7 @@ export const ContractDataProvider = ({children}) => {
     const setup = async () => {
         const web3 = await getWeb3();
         let contract;
-        // let tokenInst = new web3.eth.Contract(tokenContract, tokenAddress);
+        let tokenInst = new web3.eth.Contract(tokenContract, tokenAddress);
 
         if (web3) {
             window.web3 = web3;
@@ -59,10 +64,10 @@ export const ContractDataProvider = ({children}) => {
             setContract(contract);
         }
 
-        // if (tokenInst) {
-        //     console.log(tokenInst);
-        //     setTokenInst(tokenInst)
-        // }
+        if (tokenInst) {
+            console.log(tokenInst);
+            setTokenInst(tokenInst)
+        }
     }
 
     useEffect(() => {
@@ -72,8 +77,8 @@ export const ContractDataProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if (!!user && !!contract && !!web3) { //TODO: include !!tokenInst when/if we have tokenInst data
-            if (Object.keys(contract.methods).length) { //Object.keys(tokenInst.methods);
+        if (!!tokenInst && !!user && !!contract && !!web3) {
+            if (Object.keys(contract.methods).length && Object.keys(tokenInst.methods).length) {
                 web3.eth.net.getId()
                 .then(result => {
                     console.log(result, networkId);
@@ -93,7 +98,9 @@ export const ContractDataProvider = ({children}) => {
             setLocalStorage('user', user);
             setLocalStorage('contract', contract);
         };
-    }, [contract, user, web3])
+    }, [contract, tokenInst, user, web3])
+
+    console.log(reloadRequired, loadingData)
 
     useEffect(() => {
         setLocalStorage('contractData', contractData);
