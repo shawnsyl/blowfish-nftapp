@@ -39,6 +39,8 @@
 	margin-right: -($tiles-items--padding__mobile / 2);
 	margin-left: -($tiles-items--padding__mobile / 2);
 	margin-top: -($tiles-items--padding__mobile / 2);
+
+	margin-bottom: 48px !important;
 	&:last-of-type {
 		margin-bottom: -($tiles-items--padding__mobile / 2);
 	}
@@ -83,6 +85,7 @@
 		}
 
 		p {
+			color: get-color(primary, 1);
 			font-size: 14px;
 		}
 
@@ -100,7 +103,7 @@
 
 		border-radius: 12px;
 		border: 1px solid #f7f8f9;
-		box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+		// box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
 
 		// box-shadow: 0 0 1px 0 rgb(8 11 14 / 6%), 0 16px 16px -1px rgb(8 11 14 / 10%);
 

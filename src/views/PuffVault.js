@@ -5,11 +5,15 @@ import {
     Container
 } from 'semantic-ui-react'
 
-import Countdown from '../components/elements/Countdown'
+import CatalogueSearch from '../components/elements/CatalogueSearch';
+import Countdown from '../components/elements/Countdown';
+import PuffTile from '../components/elements/PuffTile';
+
+const puffData = [{}, {}, {}, {}, {}, {}]
 
 const PuffVault = props => {
     const outerClasses = classNames(
-      'marketplace section container',
+      'puffvault section container',
     //   topOuterDivider && 'has-top-divider',
     //   bottomOuterDivider && 'has-bottom-divider',
     //   hasBgColor && 'has-bg-color',
@@ -23,8 +27,6 @@ const PuffVault = props => {
 
     return (
         <section className={outerClasses}>
-            {/* <p>TODO: what can we search by, what filters do we need</p>
-            <p>pagination - gonna figure out the backend</p>
             <div className='container search'>
                 <CatalogueSearch />
             </div>
@@ -34,11 +36,7 @@ const PuffVault = props => {
                         return <PuffTile delay={i * 200} /> 
                     })}
                 </div>
-                <div>
-                    hello
-                </div>
-
-            </div> */}
+            </div>
             <div className='container'>
                 <Countdown />
                 <Container text className='mb-32'>

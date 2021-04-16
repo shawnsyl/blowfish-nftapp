@@ -248,7 +248,7 @@ const Exchange = props => {
                         <a className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
                             setIsAddingLp(true);
                         }}>
-                            BLOWF-BNB
+                            Liquidity
                         </a>
                     </div>
                     <div>
@@ -259,6 +259,10 @@ const Exchange = props => {
                         </a>
                     </div>
                 </div>
+
+                {isAddingLp ? <p>
+                    When you add liquidity, you add and lock pool tokens representing your position in exchange for CryptoPuffs. 
+                </p> : null}
 
                 <p>Select number of Puff Crates to open</p>
 
