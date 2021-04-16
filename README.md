@@ -3,6 +3,9 @@
 project bootstraped with open template
 Check the live demo here 👉️ [https://open.cruip.com/](https://open.cruip.com/)
 
+run `yarn` to install dependencies
+start with `yarn start`
+
 needs .env
 # example .env file 
 ```
