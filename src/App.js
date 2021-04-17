@@ -32,7 +32,7 @@ const App = () => {
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
           <AppRoute exact path="/catalogue" component={Catalogue} layout={LayoutDefault} />
-          <AppRoute exact path="/puffvault" component={PuffVault} layout={LayoutDefault} />
+          <AppRoute exact path="/puffvault/:page/:sortBy" component={PuffVault} layout={LayoutDefault} />
           <AppRoute exact path="/battle" component={Battle} layout={LayoutDefault} />
           <AppRoute exact path="/marketplace" component={Marketplace} layout={LayoutDefault} />
         </Switch>

@@ -184,7 +184,7 @@ const Header = ({
                       <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
                     </li>
                     <li>
-                      <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
+                      <Link to="/puffvault/1/none" onClick={closeMenu}>Puff Vault</Link>
                     </li> 
                   </ul>
                   {connectButton()}
