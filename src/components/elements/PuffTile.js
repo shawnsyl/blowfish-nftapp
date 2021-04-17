@@ -6,7 +6,6 @@ import sampleNft from './../../assets/examples/crypto - blowfish NFTs 005.png'
 
 const PuffTile = props => {
     const {
-        delay,
         puffId
     } = props;
     return (
@@ -25,18 +24,15 @@ const PuffTile = props => {
                     <h3 className="mt-0 mb-8">
                         ID: {puffId}
                     </h3>
-                    <p className="m-0 text-xxs">
-                        Buy for 10000BLOWF
-                    </p>
                     <p className='m-0'>
                         <strong>Characteristics</strong>
-                        <ul className='list-reset'>
-                            <li>hi</li>
-                            <li>hi</li>
-                            <li>hi</li>
-                            <li>hi</li>
-                        </ul>
                     </p>
+                    <ul className='list-reset'>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                        <li>hi</li>
+                    </ul>
                 </div>
             </div>
         </div>

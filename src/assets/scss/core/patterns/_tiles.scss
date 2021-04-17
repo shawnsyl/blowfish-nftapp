@@ -131,6 +131,12 @@
 	}
 }
 
+.puffvault {
+	.ui.pagination.menu {
+		margin-bottom: 48px;
+	}
+}
+
 @keyframes puffTileIn {
 	0% {
 		opacity : 0;
