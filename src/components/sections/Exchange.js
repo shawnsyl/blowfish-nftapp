@@ -1,18 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import classNames from 'classnames';
 
-import { fromWei, toWei }  from '../../Web3Util';
+import { fromWei, }  from '../../Web3Util';
 
 import { useContractDataContext } from '../../hooks/contractData/useContractDataContext'
 
 import {
-    Accordion,
     Button,
     Dropdown,
-    Icon,
-    Input,
     Loader,
-    Select
 } from 'semantic-ui-react'
 
 import Countdown from '../elements/Countdown'
@@ -52,18 +48,6 @@ const stakeOptions = [
         text: '8 Weeks',
         value: 8
     },
-    
-]
-
-const tokenOptions = [
-    {
-        text: 'BLOWF-BNB',
-        value: 'BLOWF-BNB'
-    },
-    {
-        text: 'BNB',
-        value: 'BNB'
-    }
 ]
 
 const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
@@ -258,18 +242,18 @@ const Exchange = props => {
 
                 <div className='exchange-links'>
                     <div>
-                        <a className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                        <button className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
                             setIsAddingLp(false);
                         }}>
                             BLOWF
-                        </a>
+                        </button>
                     </div>
                     <div>
-                        <a className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                        <button className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
                             setIsAddingLp(true);
                         }}>
                             Liquidity
-                        </a>
+                        </button>
                     </div>
                 </div>
 

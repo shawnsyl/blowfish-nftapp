@@ -43,7 +43,6 @@ const Header = ({
       connectWallet,
       disconnectWallet,
       contract,
-      contractData,
       loadingData,
       reloadRequired,
   } = useContractDataContext();
@@ -101,15 +100,6 @@ const Header = ({
     bottomOuterDivider && 'has-bottom-divider',
     className
   );
-
-  const buttonClasses = classNames(
-    'button',
-    'button-primary',
-    'button-wide-mobile',
-    'button-sm',
-    'text-xxxs',
-    loadingData && 'button-disabled'
-  )
 
   const connectButton = (type = 'desktop') => {
     return (

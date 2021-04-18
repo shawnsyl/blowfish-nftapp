@@ -16,10 +16,6 @@ const Battle = props => {
     //   invertColor && 'invert-color',
     //   className
     );
-    
-    const tilesClasses = classNames(
-      'pufftiles-wrap center-content',
-    );
 
     return (
         <section className={outerClasses}>

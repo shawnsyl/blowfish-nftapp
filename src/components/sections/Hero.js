@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import Image from '../elements/Image';
-import Exchange from './Exchange';
 
 import bCool from '../../assets/images/b_cool.png'
 import bDark from '../../assets/images/b_dark.png'
@@ -13,8 +12,6 @@ import dSpace from '../../assets/images/b_space.png'
 import dInject from '../../assets/images/d_inject.png'
 import logo from '../../assets/images/puff_logo.png'
 import crate from '../../assets/images/crate.png'
-import lightRay1 from '../../assets/images/lightRay1.svg'
-import lightRay2 from '../../assets/images/lightRay2.svg'
 
 import './Hero.css';
 
@@ -132,7 +129,7 @@ const Hero = ({
               The upcoming <strong>Enhance & Battle</strong> will feature locking BLOWF tokens to enhance your Puff's battling abilities. Locking BLOWF tokens temporarily removes them from circulating supply.
             </p>
             <p>
-              Visit <a href="https://www.blowfish.one/" target="_blank">blowfish.one</a> to learn more about the BlowFish platform and how to purchase $BLOWF.
+              Visit <a href="https://www.blowfish.one/" target="_blank" rel="noopener noreferrer">blowfish.one</a> to learn more about the BlowFish platform and how to purchase $BLOWF.
             </p>
           </div>
         </div>

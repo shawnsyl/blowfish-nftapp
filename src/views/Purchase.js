@@ -3,10 +3,7 @@ import React from 'react'
 import { useContractDataContext } from '../hooks/contractData/useContractDataContext'
 
 import {
-    Container,
-    Dimmer,
     Loader,
-    Pagination
 } from 'semantic-ui-react'
 
 import Exchange from '../components/sections/Exchange';
@@ -15,7 +12,6 @@ const Purchase = props => {
     const {
         contract,
         reloadRequired,
-        user,
         web3,
     } = useContractDataContext();
 

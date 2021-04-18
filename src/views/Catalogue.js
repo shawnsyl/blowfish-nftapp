@@ -6,7 +6,6 @@ import { useContractDataContext } from '../hooks/contractData/useContractDataCon
 
 import {
     Container,
-    Dimmer,
     Loader,
     Pagination
 } from 'semantic-ui-react'
@@ -16,10 +15,6 @@ import PuffTile from '../components/elements/PuffTile'
 import Countdown from '../components/elements/Countdown'
 
 const axios = require('axios');
-
-const puffData = [
-    {},{},{},{},{},{},{},{},{},{},{},{}
-]
 
 const Catalogue = props => {
     const [cryptoPuffs, setCryptoPuffs] = useState(null);

@@ -5,12 +5,9 @@ import { useContractDataContext } from '../hooks/contractData/useContractDataCon
 
 import {
     Container,
-    Dimmer,
     Loader,
-    Pagination
 } from 'semantic-ui-react'
 
-import CatalogueSearch from '../components/elements/CatalogueSearch';
 import Countdown from '../components/elements/Countdown';
 
 const months = {
@@ -59,7 +56,7 @@ const PuffVault = props => {
                     })
             }
         }
-    }, [web3, user, contract])
+    }, [web3, user, contract, reloadRequired])
 
     const formatDate = (date) => {
         const fullDate = new Date(date);

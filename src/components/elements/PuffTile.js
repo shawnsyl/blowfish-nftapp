@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import {
-    Container,
-    Dimmer,
     Loader,
-    Pagination
 } from 'semantic-ui-react'
 
 import Image from '../elements/Image';
-
-import sampleNft from './../../assets/examples/crypto - blowfish NFTs 005.png'
 
 
 const axios = require('axios');
