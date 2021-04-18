@@ -72,7 +72,7 @@ const Exchange = props => {
         'exchange section'
     );
 
-    const [isAddingLp, setIsAddingLp] = useState(true);
+    const [isAddingLp, setIsAddingLp] = useState(false);
     const [isUnlocking, setIsUnlocking] = useState(false);
     const [lockDuration, setLockDuration] = useState(0);
     const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
@@ -257,17 +257,17 @@ const Exchange = props => {
 
                 <div className='exchange-links'>
                     <div>
-                        <a className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
-                            setIsAddingLp(true);
-                        }}>
-                            Liquidity
-                        </a>
-                    </div>
-                    <div>
                         <a className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
                             setIsAddingLp(false);
                         }}>
                             BLOWF
+                        </a>
+                    </div>
+                    <div>
+                        <a className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                            setIsAddingLp(true);
+                        }}>
+                            Liquidity
                         </a>
                     </div>
                 </div>
