@@ -48,16 +48,19 @@ const PuffVault = props => {
     );
 
     useEffect(() => {
-        if (!!user && !!contract) {
-            if (user && Object.keys(contract.methods).length && !reloadRequired) {
-                contract.methods.getLockedLiquidityForAddress(user).call()  
-                    .then(response => {
-                        setLockedLiquidities(response.map(liquidity => ({
-                            tokenCount: liquidity.tokenCount,
-                            expiryTimestamp: liquidity.expiryTimestamp
-                        })))
-                    })
+        if (Date.now() < 1618768800000 && process.env.NODE_ENV !== 'development') {
+            if (!!user && !!contract) {
+                if (user && Object.keys(contract.methods).length && !reloadRequired) {
+                    contract.methods.getLockedLiquidityForAddress(user).call()  
+                        .then(response => {
+                            setLockedLiquidities(response.map(liquidity => ({
+                                tokenCount: liquidity.tokenCount,
+                                expiryTimestamp: liquidity.expiryTimestamp
+                            })))
+                        })
+                }
             }
+
         }
     }, [user, contract])
 
