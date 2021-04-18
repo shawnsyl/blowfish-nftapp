@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useContractDataContext } from '../hooks/contractData/useContractDataContext'
@@ -14,17 +13,26 @@ import {
 import CatalogueSearch from '../components/elements/CatalogueSearch';
 import Countdown from '../components/elements/Countdown';
 
+const months = {
+    0: 'January',
+    1: 'February',
+    2: 'March',
+    3: 'April',
+    4: 'May',
+    5: 'June',
+    6: 'July',
+    7: 'August',
+    8: 'September',
+    9: 'October',
+    10: 'November',
+    11: 'December',
+}
+
 const PuffVault = props => {
     const [lockedLiquidities, setLockedLiquidities] = useState(null);
 
-    const history = useHistory();
-
     const {
         contract,
-        contractData,
-        loadingData,
-        reloadRequired,
-        tokenInst,
         user,
         web3
     } = useContractDataContext();
@@ -40,11 +48,8 @@ const PuffVault = props => {
 
     useEffect(() => {
         if (user && Object.keys(contract.methods).length) {
-            console.log(user);
-            console.log(contract.methods);
             contract.methods.getLockedLiquidityForAddress(user).call()  
                 .then(response => {
-                    console.log(response);
                     setLockedLiquidities(response.map(liquidity => ({
                         tokenCount: liquidity.tokenCount,
                         expiryTimestamp: liquidity.expiryTimestamp
@@ -52,6 +57,15 @@ const PuffVault = props => {
                 })
         }
     }, [user, contract])
+
+    const formatDate = (date) => {
+        const fullDate = new Date(date);
+        const month = months[fullDate.getMonth()];
+        const day = fullDate.getDate();
+        const year = fullDate.getFullYear();
+
+        return `${month} ${day}, ${year}`
+    }
 
     const getLiquidityTable = () => {
         return (
@@ -68,13 +82,13 @@ const PuffVault = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        {lockedLiquidities.map(liquidity => (
-                            <tr>
+                        {lockedLiquidities.map((liquidity, index) => (
+                            <tr key={index}>
                                 <td>
-                                    {liquidity.tokenCount}
+                                    {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
                                 </td>
                                 <td>
-                                    {liquidity.expiryTimestamp}
+                                    {formatDate(liquidity.expiryTimestamp * 1000)}
                                 </td>
                             </tr>
                         ))}
@@ -83,14 +97,9 @@ const PuffVault = props => {
             </div>
         )
     }
-    
-    console.log(lockedLiquidities)
 
     return (
         <section className={outerClasses}>
-            <div className='container search'>
-                <CatalogueSearch />
-            </div>
             {Date.now() < 1618768800000 && process.env.NODE_ENV !== 'development' ? (
                 <div className='container'>
                     <Countdown />
@@ -104,7 +113,7 @@ const PuffVault = props => {
                 <Fragment>
                     <h1>Locked Liquidity</h1>
                     <div style={{minHeight: '1028px'}}>
-                    {!!lockedLiquidities ? (
+                    {!!lockedLiquidities && web3 ? (
                         <Fragment>
                             {getLiquidityTable()}
                         </Fragment>

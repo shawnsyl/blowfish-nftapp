@@ -117,9 +117,9 @@ const Catalogue = props => {
 
     return (
         <section className={outerClasses}>
-            <div className='container search'>
+            {/* <div className='container search'>
                 <CatalogueSearch />
-            </div>
+            </div> */}
             {Date.now() < 1618768800000 && process.env.NODE_ENV !== 'development' ? (
                 <div className='container'>
                     <Countdown />
@@ -141,7 +141,7 @@ const Catalogue = props => {
                             </div>
                         </div>
                     ) : (
-                        <div style={{minHeight: '1028px'}}>
+                        <div style={{minHeight: '740px'}}>
                             <Loader active inverted inline='centered'>Loading</Loader>
                         </div>
                     )}

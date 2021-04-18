@@ -24,7 +24,7 @@ const PuffTile = props => {
                     <h3 className="mt-0 mb-8">
                         ID: {puffId}
                     </h3>
-                    <p className='m-0'>
+                    {/* <p className='m-0'>
                         <strong>Characteristics</strong>
                     </p>
                     <ul className='list-reset'>
@@ -32,7 +32,7 @@ const PuffTile = props => {
                         <li>hi</li>
                         <li>hi</li>
                         <li>hi</li>
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
         </div>
