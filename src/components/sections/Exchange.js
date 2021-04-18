@@ -104,7 +104,7 @@ const Exchange = props => {
         if (process.env.NODE_ENV === 'development') {
             return false;
         }
-        if (Date.now() >= 1618768800000) {
+        if (Date.now() >= 1618808400000) {
             return false;
         }
         return true;
@@ -294,7 +294,7 @@ const Exchange = props => {
 
     return  (
         <section className={outerClasses}>
-        {Date.now() < 1618768800000 && process.env.NODE_ENV !== 'development' ? (
+        {Date.now() < 1618808400000 && process.env.NODE_ENV !== 'development' ? (
             <Countdown />
         ) : (
             <div className='container'>
