@@ -309,8 +309,9 @@ const Exchange = props => {
 
     return  (
         <section className={outerClasses}>
-
+        {Date.now() < 1618768800000 && process.env.NODE_ENV !== 'development' ? (
             <Countdown />
+        ) : (
             <div className='container'>
                 {contractData && !reloadRequired && web3 ? (
                     <Fragment>
@@ -318,6 +319,7 @@ const Exchange = props => {
                     </Fragment>
                 ) : null}
             </div>
+        )}                   
         </section>
     )
 }

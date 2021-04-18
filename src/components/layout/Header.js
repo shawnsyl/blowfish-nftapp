@@ -179,7 +179,13 @@ const Header = ({
                       </Fragment>
                     ) : null}
                     <li>
-                      <Link to="/catalogue/1/none" onClick={closeMenu}>Catalogue</Link>
+                      <Link to="/purchase" onClick={closeMenu}>Purchase</Link>
+                    </li>
+                    <li>
+                      <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
+                    </li> 
+                    <li>
+                      <Link to="/catalog/1/none" onClick={closeMenu}>Catalog</Link>
                     </li>
                     <li>
                       <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
@@ -187,9 +193,6 @@ const Header = ({
                     <li>
                       <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
                     </li>
-                    <li>
-                      <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
-                    </li> 
                   </ul>
                   {connectButton()}
                 </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import Image from '../elements/Image';
+import Exchange from './Exchange';
 
 import bCool from '../../assets/images/b_cool.png'
 import bDark from '../../assets/images/b_dark.png'

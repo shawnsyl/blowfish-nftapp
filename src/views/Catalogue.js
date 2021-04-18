@@ -109,7 +109,7 @@ const Catalogue = props => {
     }, [page])
 
     const onPageChange = newPage => {
-        history.push(`/catalogue/${newPage}/${sortBy}`);
+        history.push(`/catalog/${newPage}/${sortBy}`);
         setPage(newPage);
         setCryptoPuffs(null);
     }
