@@ -96,13 +96,32 @@
 	}
 }
 
-.catalogue {
-	.ui.pagination.menu {
-		margin-bottom: 48px;
+.puffvault {
+	padding-bottom: 48px;
+	.liquidity-table {
+		width: 100%;
+		min-height: 400px;
+		background-color: white;
+		margin: 0;
+		max-width: none;
+		padding: 0;
+		opacity : 0;
+		transform: translateY(2.4rem);
+
+		border-radius: 12px;
+		border: 1px solid #f7f8f9;
+		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
+		color: get-color(primary, 1);
+
+		tr {
+			border: none;
+			height: 64px;
+		}
+
+		th, td {
+			padding: 8px 16px;
+		}
 	}
-    .container.pufftiles {
-        padding-top: 12px;
-    }
 }
 
 @keyframes puffTileIn {

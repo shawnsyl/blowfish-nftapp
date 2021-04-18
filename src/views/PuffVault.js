@@ -13,19 +13,9 @@ import {
 
 import CatalogueSearch from '../components/elements/CatalogueSearch';
 import Countdown from '../components/elements/Countdown';
-import PuffTile from '../components/elements/PuffTile';
-
-const puffData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-
-const axios = require('axios');
-
-const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
 
 const PuffVault = props => {
-    const [cryptoPuffs, setCryptoPuffs] = useState(null);
-    const [numPages, setNumPages] = useState(0);
-    const [page, setPage] = useState(props.match.params.page);
-    const [sortBy, setSortBy] = useState(props.match.params.sortBy);
+    const [lockedLiquidities, setLockedLiquidities] = useState(null);
 
     const history = useHistory();
 
@@ -47,10 +37,6 @@ const PuffVault = props => {
     //   invertColor && 'invert-color',
     //   className
     );
-    
-    const tilesClasses = classNames(
-      'pufftiles-wrap center-content',
-    );
 
     useEffect(() => {
         if (user && Object.keys(contract.methods).length) {
@@ -59,9 +45,46 @@ const PuffVault = props => {
             contract.methods.getLockedLiquidityForAddress(user).call()  
                 .then(response => {
                     console.log(response);
+                    setLockedLiquidities(response.map(liquidity => ({
+                        tokenCount: liquidity.tokenCount,
+                        expiryTimestamp: liquidity.expiryTimestamp
+                    })))
                 })
         }
     }, [user, contract])
+
+    const getLiquidityTable = () => {
+        return (
+            <div className='liquidity-table'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Token Amount
+                            </th>
+                            <th>
+                                Locked Until
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {lockedLiquidities.map(liquidity => (
+                            <tr>
+                                <td>
+                                    {liquidity.tokenCount}
+                                </td>
+                                <td>
+                                    {liquidity.expiryTimestamp}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+    
+    console.log(lockedLiquidities)
 
     return (
         <section className={outerClasses}>
@@ -80,9 +103,15 @@ const PuffVault = props => {
             ) : (
                 <Fragment>
                     <h1>Locked Liquidity</h1>
-                        {/* <div style={{minHeight: '1028px'}}>
-                            <Loader active inverted inline='centered'>Loading</Loader>
-                        </div> */}
+                    <div style={{minHeight: '1028px'}}>
+                    {!!lockedLiquidities ? (
+                        <Fragment>
+                            {getLiquidityTable()}
+                        </Fragment>
+                    ) : (
+                        <Loader active inverted inline='centered'>Loading</Loader>
+                    )}
+                    </div>
                 </Fragment>
             )}
         </section>

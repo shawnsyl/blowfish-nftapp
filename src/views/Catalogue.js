@@ -40,13 +40,7 @@ const Catalogue = props => {
     );
 
     const {
-        contract,
-        contractData,
-        loadingData,
-        reloadRequired,
-        tokenInst,
         user,
-        web3
     } = useContractDataContext();
 
     const history = useHistory();
@@ -115,7 +109,7 @@ const Catalogue = props => {
     }, [page])
 
     const onPageChange = newPage => {
-        history.push(`/puffvault/${newPage}/${sortBy}`);
+        history.push(`/catalogue/${newPage}/${sortBy}`);
         setPage(newPage);
         setCryptoPuffs(null);
     }
