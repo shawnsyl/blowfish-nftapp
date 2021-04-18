@@ -33,6 +33,7 @@ const PuffVault = props => {
 
     const {
         contract,
+        reloadRequired,
         user,
         web3
     } = useContractDataContext();
@@ -47,14 +48,16 @@ const PuffVault = props => {
     );
 
     useEffect(() => {
-        if (user && Object.keys(contract.methods).length) {
-            contract.methods.getLockedLiquidityForAddress(user).call()  
-                .then(response => {
-                    setLockedLiquidities(response.map(liquidity => ({
-                        tokenCount: liquidity.tokenCount,
-                        expiryTimestamp: liquidity.expiryTimestamp
-                    })))
-                })
+        if (!!user && !!contract) {
+            if (user && Object.keys(contract.methods).length && !reloadRequired) {
+                contract.methods.getLockedLiquidityForAddress(user).call()  
+                    .then(response => {
+                        setLockedLiquidities(response.map(liquidity => ({
+                            tokenCount: liquidity.tokenCount,
+                            expiryTimestamp: liquidity.expiryTimestamp
+                        })))
+                    })
+            }
         }
     }, [user, contract])
 
@@ -113,7 +116,7 @@ const PuffVault = props => {
                 <Fragment>
                     <h1>Locked Liquidity</h1>
                     <div style={{minHeight: '1028px'}}>
-                    {!!lockedLiquidities && web3 ? (
+                    {!!lockedLiquidities && !!web3 && !reloadRequired && contract ? (
                         <Fragment>
                             {getLiquidityTable()}
                         </Fragment>

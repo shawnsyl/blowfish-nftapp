@@ -11,6 +11,7 @@ import {
     Dropdown,
     Icon,
     Input,
+    Loader,
     Select
 } from 'semantic-ui-react'
 
@@ -317,7 +318,7 @@ const Exchange = props => {
                     <Fragment>
                         {stakingForm()}
                     </Fragment>
-                ) : null}
+                ) : <Loader active inverted inline='centered'>Loading</Loader>}
             </div>
         )}                   
         </section>

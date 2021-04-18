@@ -40,48 +40,55 @@ const Catalogue = props => {
     );
 
     const {
+        contract,
+        reloadRequired,
         user,
+        web3,
     } = useContractDataContext();
 
     const history = useHistory();
 
-    useEffect(() => {
-        axios({
-            method: 'get', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                user: user,
-                page: page,
-                sortBy: sortBy === 'none' ? null : sortBy
-            }
-        })
-        .then(response => {
-            setCryptoPuffs(response.data.cryptopuffs);
-        })
-        .catch(err => {
-            console.error(err);
-        })
+    console.log(web3, contract);
 
-        axios({
-            method: 'get', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                user: user,
-                sortBy: sortBy === 'none' ? null : sortBy
-            }
-        }).then(response => {
-            setNumPages(Math.ceil(response.data.cryptopuffs.length/12));
-        }).catch(err => {
-            console.error(err);
-        })
+    useEffect(() => {
+        if (!!web3 && contract && !reloadRequired) {
+            axios({
+                method: 'get', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                url: 'cryptopuffs/',
+                params: {
+                    user: user,
+                    page: page,
+                    sortBy: sortBy === 'none' ? null : sortBy
+                }
+            })
+            .then(response => {
+                setCryptoPuffs(response.data.cryptopuffs);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    
+            axios({
+                method: 'get', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                url: 'cryptopuffs/',
+                params: {
+                    user: user,
+                    sortBy: sortBy === 'none' ? null : sortBy
+                }
+            }).then(response => {
+                setNumPages(Math.ceil(response.data.cryptopuffs.length/12));
+            }).catch(err => {
+                console.error(err);
+            })
+        }
     }, [])
 
     useEffect(() => {
@@ -132,7 +139,7 @@ const Catalogue = props => {
             ) : (
                 <Fragment>
                     <h1>My Cryptopuffs</h1>
-                    {!!cryptoPuffs && numPages > 0 ? (
+                    {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
                         <div className='pufftiles container'>
                             <div className={tilesClasses}>
                                 {cryptoPuffs.map((puff, i) => {
