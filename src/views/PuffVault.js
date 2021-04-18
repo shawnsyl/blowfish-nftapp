@@ -19,6 +19,8 @@ const puffData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 const axios = require('axios');
 
+const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+
 const PuffVault = props => {
     const [cryptoPuffs, setCryptoPuffs] = useState(null);
     const [numPages, setNumPages] = useState(0);
@@ -51,73 +53,15 @@ const PuffVault = props => {
     );
 
     useEffect(() => {
-        axios({
-            method: 'get', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                user: user,
-                page: page,
-                sortBy: sortBy === 'none' ? null : sortBy
-            }
-        })
-        .then(response => {
-            setCryptoPuffs(response.data.cryptopuffs);
-        })
-        .catch(err => {
-            console.error(err);
-        })
-
-        axios({
-            method: 'get', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                user: user,
-                sortBy: sortBy === 'none' ? null : sortBy
-            }
-        }).then(response => {
-            setNumPages(Math.ceil(response.data.cryptopuffs.length/12));
-        }).catch(err => {
-            console.error(err);
-        })
-    }, [])
-
-    useEffect(() => {
-        if (numPages > 0) {
-            axios({
-                method: 'get', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-                url: 'cryptopuffs/',
-                params: {
-                    user: user,
-                    page: page,
-                    sortBy: sortBy === 'none' ? null : sortBy
-                }
-            })
-            .then(response => {
-                setCryptoPuffs(response.data.cryptopuffs);
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        if (user && Object.keys(contract.methods).length) {
+            console.log(user);
+            console.log(contract.methods);
+            contract.methods.getLockedLiquidityForAddress(user).call()  
+                .then(response => {
+                    console.log(response);
+                })
         }
-    }, [page])
-
-    const onPageChange = newPage => {
-        history.push(`/puffvault/${newPage}/${sortBy}`);
-        setPage(newPage);
-        setCryptoPuffs(null);
-    }
+    }, [user, contract])
 
     return (
         <section className={outerClasses}>
@@ -135,29 +79,10 @@ const PuffVault = props => {
                 </div>
             ) : (
                 <Fragment>
-                    {!!cryptoPuffs && numPages > 0 ? (
-                        <div className='container'>
-                            <div className={tilesClasses}>
-                                {cryptoPuffs.map((puff, i) => {
-                                    return <PuffTile delay={i * 200} puffId={puff.puffId} /> 
-                                })}
-                            </div>
-                        </div>
-                    ) : (
-                        <div style={{minHeight: '1028px'}}>
+                    <h1>Locked Liquidity</h1>
+                        {/* <div style={{minHeight: '1028px'}}>
                             <Loader active inverted inline='centered'>Loading</Loader>
-                        </div>
-                    )}
-                    
-                    {numPages > 0 ? <Pagination
-                    onPageChange={(_,d) => onPageChange(d.activePage)}
-                    boundaryRange={0}
-                    defaultActivePage={page}
-                    ellipsisItem={null}
-                    firstItem={null}
-                    lastItem={null}
-                    siblingRange={1}
-                    totalPages={numPages} /> : null}
+                        </div> */}
                 </Fragment>
             )}
         </section>

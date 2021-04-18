@@ -136,7 +136,11 @@ const Header = ({
             'site-header-inner',
             bottomDivider && 'has-bottom-divider'
           )}>
-          <Logo />
+          <div style={{
+            marginRight: '13px'
+          }}>
+            <Logo />
+          </div>
           <ul
             className="list-reset header-nav-right connect-button desktop site-title"
           >
@@ -175,7 +179,7 @@ const Header = ({
                       </Fragment>
                     ) : null}
                     <li>
-                      <Link to="/catalogue" onClick={closeMenu}>Catalogue</Link>
+                      <Link to="/catalogue/1/none" onClick={closeMenu}>Catalogue</Link>
                     </li>
                     <li>
                       <Link to="/marketplace" onClick={closeMenu}>Marketplace</Link>
@@ -184,7 +188,7 @@ const Header = ({
                       <Link to="/battle" onClick={closeMenu}>Enhance & Battle</Link>
                     </li>
                     <li>
-                      <Link to="/puffvault/1/none" onClick={closeMenu}>Puff Vault</Link>
+                      <Link to="/puffvault" onClick={closeMenu}>Puff Vault</Link>
                     </li> 
                   </ul>
                   {connectButton()}

@@ -65,10 +65,11 @@ const Countdown = props => {
         <Fragment>
             <div className='container-sm'>
                 <h1 style={{textAlign: 'center'}}>Coming soon!</h1>
-                <Container className='countdown-container'>
-                    {formatTime()}
-                </Container>
-
+                {endUnix === 1618768800000 ? (
+                    <Container className='countdown-container'>
+                        {formatTime()}
+                    </Container>
+                ) : null}
             </div>
         </Fragment>
     )
