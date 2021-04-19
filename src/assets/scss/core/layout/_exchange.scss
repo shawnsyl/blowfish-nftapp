@@ -38,14 +38,14 @@
                 }
                 .exchange-link-inactive {
                     font-weight: 500;
-                    opacity: 45%;
+                    opacity: 0.45;
                     color: get-color(primary, 1);
                     
                     &:hover {
                         color: get-color(primary, 1);
                         cursor: pointer !important;
                         font-weight: 900;
-                        opacity: 100%;
+                        opacity: 1;
                     }
                 }
             }
@@ -171,7 +171,7 @@
                         height: 38px;
                         color: color-bg(button-primary);
                         background: transparent;
-                        opacity: 80%;
+                        opacity: 0.8;
                         font-weight: 500;
                         
                         &:hover {
