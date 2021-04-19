@@ -31,30 +31,22 @@
                 margin-bottom: 14px;
                 font-size: 20px;
                 cursor: pointer;
-                button {
-                    border: none;
-                    background: none;
-                    
-                    &:hover {
-                        color: get-color(primary, 1);
-                        cursor: pointer !important;
-                        font-weight: 900;
-                        opacity: 100% !important;
-                    }
 
-                    &:focus {
-                        outline: none;
-                    }
-                }
                 .exchange-link-active {
                     font-weight: 900;
-                    opacity: 100% !important;
                     color: get-color(primary, 1);
                 }
                 .exchange-link-inactive {
                     font-weight: 500;
                     opacity: 45%;
                     color: get-color(primary, 1);
+                    
+                    &:hover {
+                        color: get-color(primary, 1);
+                        cursor: pointer !important;
+                        font-weight: 900;
+                        opacity: 100%;
+                    }
                 }
             }
 
