@@ -9,6 +9,8 @@ const tokenContract = process.env.NODE_ENV === 'development' || process.env.NODE
 const tokenAddress = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? process.env.REACT_APP_TEST_LP_TOKEN : process.env.REACT_APP_MAIN_LP_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? 97 : 56;
 
+console.log(process.env.NODE_ENV)
+
 const setLocalStorage = (key, value) => {
     try {
         window.sessionStorage.setItem(key, JSON.stringify(value)); // JSON.stringify(value)
