@@ -132,6 +132,10 @@ const Exchange = props => {
             return true;
         }
 
+        if (isOpening) {
+            return true;
+        }
+
         return false;
     }
 
@@ -295,19 +299,15 @@ const Exchange = props => {
                 <p>Choose to lock:</p>
 
                 <div className='exchange-links'>
-                    <div>
-                        <button className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
-                            setIsAddingLp(false);
-                        }}>
-                            BLOWF
-                        </button>
+                    <div className={!isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                        setIsAddingLp(false);
+                    }}>
+                        BLOWF
                     </div>
-                    <div>
-                        <button className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
-                            setIsAddingLp(true);
-                        }}>
-                            Liquidity
-                        </button>
+                    <div className={isAddingLp ? 'exchange-link-active' : 'exchange-link-inactive'} onClick={() => {
+                        setIsAddingLp(true);
+                    }}>
+                        Liquidity
                     </div>
                 </div>
 
