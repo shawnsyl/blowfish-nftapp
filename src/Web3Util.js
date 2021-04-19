@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 
 import TestContract from './abi/TestContract.json';
-const contractAddress = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+const contractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
 
 export const getWeb3 = () =>
     new Promise(async(resolve, reject) => {
@@ -30,7 +30,7 @@ export const getWeb3 = () =>
 });
 
 export const getContract = async (web3) => {
-    const contractAbi = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? TestContract : TestContract
+    const contractAbi = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? TestContract : TestContract
     window.user = (await web3.eth.getAccounts())[0];
     
     window.instance = new web3.eth.Contract(

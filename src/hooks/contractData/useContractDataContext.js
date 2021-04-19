@@ -5,9 +5,9 @@ import { getWeb3, getContract } from '../../Web3Util';
 import MainLPContract from '../../abi/MainLP.json';
 import TestLPContract from '../../abi/TestLP.json'
 
-const tokenContract = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? TestLPContract : MainLPContract;
-const tokenAddress = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? process.env.REACT_APP_TEST_LP_TOKEN : process.env.REACT_APP_MAIN_LP_TOKEN;
-const networkId = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? 97 : 56;
+const tokenContract = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? TestLPContract : MainLPContract;
+const tokenAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_LP_TOKEN : process.env.REACT_APP_MAIN_LP_TOKEN;
+const networkId = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? 97 : 56;
 
 console.log(process.env.NODE_ENV)
 
@@ -142,7 +142,7 @@ export const ContractDataProvider = ({children}) => {
     }
 
     const loadData = async () => {;
-        const playerBalance = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ?
+        const playerBalance = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ?
             await web3.eth.getBalance(user) :   
             await web3.eth.getBalance(user);
         const puffCratePrice = await contract.methods.getCryptoPuffsPrice().call();

@@ -50,7 +50,7 @@ const stakeOptions = [
     },
 ]
 
-const contractAddress = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+const contractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
 
 const Exchange = props => {
     const outerClasses = classNames(
