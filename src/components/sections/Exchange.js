@@ -110,7 +110,7 @@ const Exchange = props => {
     }, [web3, contractData])
     
     const isDisabled = () => {
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') {
             return false;
         }
         if (Date.now() >= 1618974000000) {
