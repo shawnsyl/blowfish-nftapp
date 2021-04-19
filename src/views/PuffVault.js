@@ -27,6 +27,7 @@ const months = {
 
 const PuffVault = props => {
     const [lockedLiquidities, setLockedLiquidities] = useState(null);
+    const [lockedTokens, setLockedTokens] = useState(null);
 
     const {
         contract,
@@ -54,6 +55,14 @@ const PuffVault = props => {
                             expiryTimestamp: liquidity.expiryTimestamp
                         })))
                     })
+                
+                contract.methods.getLockedTokensForAddress(user).call()  
+                    .then(response => {
+                        setLockedTokens(response.map(token => ({
+                            tokenCount: token.tokenCount,
+                            expiryTimestamp: token.expiryTimestamp
+                        })))
+                    })
             }
         }
     }, [web3, user, contract, reloadRequired])
@@ -69,38 +78,68 @@ const PuffVault = props => {
 
     const getLiquidityTable = () => {
         return (
-            <div className='liquidity-table'>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Token Amount
-                            </th>
-                            <th>
-                                Locked Until
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {lockedLiquidities.map((liquidity, index) => (
-                            <tr key={index}>
-                                <td>
-                                    {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
-                                </td>
-                                <td>
-                                    {formatDate(liquidity.expiryTimestamp * 1000)}
-                                </td>
+            <div className='liquidity-table-container'>
+                <h1>Locked Liquidity</h1>
+                <div className='liquidity-table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Token Amount
+                                </th>
+                                <th>
+                                    Locked Until
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {lockedLiquidities.map((liquidity, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
+                                    </td>
+                                    <td>
+                                        {formatDate(liquidity.expiryTimestamp * 1000)}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <h1>Locked Tokens</h1>
+                <div className='liquidity-table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Token Amount
+                                </th>
+                                <th>
+                                    Locked Until
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {lockedTokens.map((token, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        {Number(web3.utils.fromWei(token.tokenCount)).toFixed(2) + 'BLOWF'}
+                                    </td>
+                                    <td>
+                                        {formatDate(token.expiryTimestamp * 1000)}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }
 
     return (
         <section className={outerClasses}>
-            {Date.now() < 1618808400000 && process.env.NODE_ENV !== 'development' ? (
+            {Date.now() < 1618808400000 && !(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') ? (
                 <div className='container'>
                     <Countdown />
                     <Container text className='mb-32'>
@@ -111,9 +150,8 @@ const PuffVault = props => {
                 </div>
             ) : (
                 <Fragment>
-                    <h1>Locked Liquidity</h1>
                     <div style={{minHeight: '1028px'}}>
-                    {!!lockedLiquidities && !!web3 && !reloadRequired && contract ? (
+                    {!!lockedLiquidities && !!lockedTokens && !!web3 && !reloadRequired && contract ? (
                         <Fragment>
                             {getLiquidityTable()}
                         </Fragment>

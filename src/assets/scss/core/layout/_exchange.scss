@@ -6,6 +6,7 @@
         align-items: center;
         
         .exchange-window {
+            animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
 		    border-radius: 12px;
 		    border: 1px solid #f7f8f9;
 		    // box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
@@ -29,20 +30,30 @@
                 justify-content: space-around;
                 margin-bottom: 14px;
                 font-size: 20px;
+                button {
+                    border: none;
+                    background: none;
+                    
+                    &:hover {
+                        color: get-color(primary, 1);
+                        cursor: pointer !important;
+                        font-weight: 900;
+                        opacity: 100% !important;
+                    }
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
                 .exchange-link-active {
                     font-weight: 900;
                     opacity: 100% !important;
+                    color: get-color(primary, 1);
                 }
                 .exchange-link-inactive {
                     font-weight: 500;
                     opacity: 45%;
                     color: get-color(primary, 1);
-                }
-                a:hover {
-                    color: get-color(primary, 1);
-                    cursor: pointer !important;
-                    font-weight: 900;
-                    opacity: 100% !important;
                 }
             }
 
@@ -61,6 +72,12 @@
                 div.ui.compact.selection.dropdown {
                     width: 130px;
                 }
+            }
+                    
+            .openingtext {
+                width: 107px;
+                display: inline-block;
+                text-align: left;
             }
 
             .ui.fluid.selection.dropdown {
@@ -195,4 +212,16 @@
             }
         }
     }
+}
+
+@keyframes puffTileIn {
+	0% {
+		opacity : 0;
+		transform: translateY(2.4rem);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }

@@ -50,7 +50,7 @@ const stakeOptions = [
     },
 ]
 
-const contractAddress = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+const contractAddress = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
 
 const Exchange = props => {
     const outerClasses = classNames(
@@ -58,6 +58,8 @@ const Exchange = props => {
     );
 
     const [isAddingLp, setIsAddingLp] = useState(false);
+    const [isOpening, setIsOpening] = useState(false);
+    const [openingText, setOpeningText] = useState('Opening Crates');
     const [isUnlocking, setIsUnlocking] = useState(false);
     const [lockDuration, setLockDuration] = useState(0);
     const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
@@ -75,14 +77,21 @@ const Exchange = props => {
     } = useContractDataContext();
 
     useEffect(() => {
-        axios({
-            method: 'GET', 
-            url: 'https://api.pancakeswap.info/api/tokens'
-        })
-        .then(response => {
-            console.log(response);
-        })
-    }, [])
+        let timer;
+        timer = setInterval(() => {
+            if (openingText === 'Opening Crates...') {
+                setOpeningText('Opening Crates');
+            } else {
+                setOpeningText(openingText + '.');
+            }
+        }, 1000)
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+    }, [openingText])
 
     useEffect(()=> {
         if (web3 && contractData) {
@@ -145,6 +154,7 @@ const Exchange = props => {
 
         tokenInst.methods.allowance(user, contractAddress).call()
         .then(allowance => { 
+            console.log(allowance);
             if (Number(allowance) < Number(max)) {
                 tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).estimateGas({from: user})
                 .then(gasEstimate => {
@@ -187,20 +197,20 @@ const Exchange = props => {
     }
 
     const openCrate = () => {
+        setIsOpening(true);
         const {
             puffCratePrice
         } = contractData
         const lockAmount = web3.utils.toWei((fromWei(puffCrateQuantity * puffCratePrice)).toString());
 
         if (isAddingLp) {
-            console.log('disabled')
-        } else {
             try {
-                contract.methods.purchaseCryptoPuff(lockDuration).estimateGas({from: user, value: lockAmount})
+                contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
                 .then(gasEstimate => {
-                    contract.methods.purchaseCryptoPuff(lockDuration).send({
+                    contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
                     }).then(response => {
+                        console.log(response.events.Transfer.returnValues)
                         axios({
                             method: 'post', 
                             headers: {
@@ -216,14 +226,58 @@ const Exchange = props => {
                         })
                         .then(response => {
                             console.log(response);
+                            setIsOpening(false);
                         })
                         .catch(err => {
                             console.error(err);
+                            setIsOpening(false);
                         })
+                    }).catch(err => {
+                        console.error(err);
+                        setIsOpening(false);
                     })
                 });
             } catch (e) {
                 console.error(e);
+                setIsOpening(false);
+            }
+        } else {
+            try {
+                contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
+                .then(gasEstimate => {
+                    contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).send({
+                        gas: gasEstimate + 50000, from: user, value: lockAmount
+                    }).then(response => {
+                        console.log(response.events.Transfer.returnValues)
+                        axios({
+                            method: 'post', 
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                            url: 'cryptopuffs/add',
+                            data: JSON.stringify({
+                                puffId: response.events.Transfer.returnValues.tokenId,
+                                puffOwner: user,
+                                dateMinted: Date.now()
+                            })
+                        })
+                        .then(response => {
+                            setIsOpening(false);
+                            console.log(response);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            setIsOpening(false);
+                        })
+                    }).catch(err => {
+                        console.error(err);
+                        setIsOpening(false);
+                    })
+                });
+            } catch (e) {
+                console.error(e);
+                setIsOpening(false);
             }
         }
     }
@@ -285,8 +339,8 @@ const Exchange = props => {
                     </Button>
                  ) : null}
                 <br />
-                <Button className='button-primary' disabled={isDisabled() || isButtonDisabled()} fluid onClick={openCrate}>
-                    Open Crates!
+                <Button className='button-primary' disabled={isDisabled() || isButtonDisabled() || isOpening} fluid onClick={openCrate}>
+                    {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
             </div>
         )
@@ -294,7 +348,7 @@ const Exchange = props => {
 
     return  (
         <section className={outerClasses}>
-        {Date.now() < 1618808400000 && process.env.NODE_ENV !== 'development' ? (
+        {Date.now() < 1618808400000 && !(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') ? (
             <Countdown />
         ) : (
             <div className='container'>

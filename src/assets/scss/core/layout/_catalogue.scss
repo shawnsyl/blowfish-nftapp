@@ -97,6 +97,9 @@
 }
 
 .catalogue {
+	h1 {
+		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
+	}
 	.ui.pagination.menu {
 		margin-bottom: 48px;
 	}

@@ -43,10 +43,8 @@ const Catalogue = props => {
 
     const history = useHistory();
 
-    console.log(web3, contract);
-
     useEffect(() => {
-        if (!!web3 && contract && !reloadRequired) {
+        if (!!web3 && !!contract && !reloadRequired) {
             axios({
                 method: 'get', 
                 headers: {
@@ -84,7 +82,7 @@ const Catalogue = props => {
                 console.error(err);
             })
         }
-    }, [])
+    }, [web3, contract, reloadRequired])
 
     useEffect(() => {
         if (numPages > 0) {
@@ -122,7 +120,7 @@ const Catalogue = props => {
             {/* <div className='container search'>
                 <CatalogueSearch />
             </div> */}
-            {Date.now() < 1618808400000 && process.env.NODE_ENV !== 'development' ? (
+            {Date.now() < 1618808400000 && !(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') ? (
                 <div className='container'>
                     <Countdown />
                     <Container text className='mb-32'>
@@ -133,15 +131,17 @@ const Catalogue = props => {
                 </div>
             ) : (
                 <Fragment>
-                    <h1>My Cryptopuffs</h1>
                     {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
-                        <div className='pufftiles container'>
-                            <div className={tilesClasses}>
-                                {cryptoPuffs.map((puff, i) => {
-                                    return <PuffTile key={i} puffId={puff.puffId} /> 
-                                })}
+                        <Fragment>
+                            <h1>My Cryptopuffs</h1>
+                            <div className='pufftiles container'>
+                                <div className={tilesClasses}>
+                                    {cryptoPuffs.map((puff, i) => {
+                                        return <PuffTile key={i} puffId={puff.puffId} /> 
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        </Fragment>
                     ) : (
                         <div style={{minHeight: '740px'}}>
                             <Loader active inverted inline='centered'>Loading</Loader>

@@ -98,9 +98,13 @@
 
 .puffvault {
 	padding-bottom: 48px;
+	.liquidity-table-container {
+		h1 {
+			animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
+		}
+	}
 	.liquidity-table {
-		width: 100%;
-		min-height: 400px;
+		width: 100%;;
 		background-color: white;
 		margin: 0;
 		max-width: none;
