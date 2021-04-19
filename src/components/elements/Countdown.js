@@ -6,7 +6,7 @@ import {
 
 const Countdown = props => {
     const {
-        endUnix = 1618808400000
+        endUnix = 1618974000000
     } = props;
 
     const getRemainingTime = () => {
@@ -65,7 +65,7 @@ const Countdown = props => {
         <Fragment>
             <div className='container-sm'>
                 <h1 style={{textAlign: 'center'}}>Coming soon!</h1>
-                {endUnix === 1618808400000 ? (
+                {endUnix === 1618974000000 ? (
                     <Container className='countdown-container'>
                         {formatTime()}
                     </Container>
