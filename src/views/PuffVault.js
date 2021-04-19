@@ -139,7 +139,7 @@ const PuffVault = props => {
 
     return (
         <section className={outerClasses}>
-            {Date.now() < 1618808400000 && !(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') ? (
+            {Date.now() < 1618808400000 && !(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
                 <div className='container'>
                     <Countdown />
                     <Container text className='mb-32'>
