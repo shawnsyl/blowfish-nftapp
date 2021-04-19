@@ -9,7 +9,7 @@ const tokenContract = process.env.NODE_ENV === 'development' || process.env.REAC
 const tokenAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_LP_TOKEN : process.env.REACT_APP_MAIN_LP_TOKEN;
 const networkId = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? 97 : 56;
 
-console.log(process.env.NODE_ENV)
+console.log(process.env.REACT_APP_IS_STAGING)
 
 const setLocalStorage = (key, value) => {
     try {
