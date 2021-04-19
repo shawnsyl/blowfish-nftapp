@@ -22,7 +22,9 @@
 }
 
 .site-title {
-	font-size: 24px !important;
+	li {
+		font-size: 34px !important;
+	}
 }
 
 .site-header-inner {
@@ -72,6 +74,12 @@
 			font-size: 16px;
 			padding: 0;
 		}
+		.list-reset {
+			li {
+
+				font-size: 16px !important;
+			}
+		}
 	}
 
     ul {
@@ -87,7 +95,6 @@
     }
 
     li {
-
 		+ .header-button {
 			margin-left: $header-nav--padding-h;
 		}
