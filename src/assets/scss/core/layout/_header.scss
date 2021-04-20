@@ -70,10 +70,12 @@
 		// 		color: color(button-primary-hover);
 		// 	}
 		// }
+
 		.ui.button {
 			font-size: 16px;
 			padding: 0;
 		}
+
 		.list-reset {
 			li {
 
@@ -197,6 +199,9 @@
 }
 
 @media( min-width: 950px ) {
+	.header-logo-container {
+		margin-right: 13px;
+	}
 	.site-header {
 
 		+ .site-content {

@@ -126,9 +126,7 @@ const Header = ({
             'site-header-inner',
             bottomDivider && 'has-bottom-divider'
           )}>
-          <div style={{
-            marginRight: '13px'
-          }}>
+          <div className='header-logo-container'>
             <Logo />
           </div>
           <ul
