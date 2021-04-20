@@ -60,11 +60,9 @@ const Exchange = props => {
     const [isAddingLp, setIsAddingLp] = useState(false);
     const [isOpening, setIsOpening] = useState(false);
     const [openingText, setOpeningText] = useState('Opening Crates');
-    const [isUnlocking, setIsUnlocking] = useState(false);
     const [lockDuration, setLockDuration] = useState(0);
     const [puffCrateOptions, setPuffCrateOptions] = useState([{text: 'Loading...'}])
     const [puffCrateQuantity, setPuffCrateQuantity] = useState(0);
-    const [unlocked, setUnlocked] = useState(false);
 
     const {
         contract,
@@ -120,15 +118,11 @@ const Exchange = props => {
     }
 
     const isButtonDisabled = () => {
-        if (!unlocked && isAddingLp) {
-            return true;
-        }
-
         if (!(lockDuration > 0 && puffCrateQuantity > 0)) {
             return true;
         }
         
-        if (isUnlocking || loadingData) {
+        if (loadingData) {
             return true;
         }
 
@@ -137,18 +131,6 @@ const Exchange = props => {
         }
 
         return false;
-    }
-
-    const getApproveButtonText = () => {
-        if (isUnlocking) {
-            return 'Approving...'
-        }
-
-        if (unlocked) {
-            return 'Approved'
-        }
-
-        return 'Approve'
     }
 
     const approve = async () => {
@@ -164,39 +146,19 @@ const Exchange = props => {
                 .then(gasEstimate => {
                     tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).send({gas: gasEstimate, from: user})
                     .then(approval => {
-                        setUnlocked(true);
-                        setIsUnlocking(false);
                         return approval
                     })
                     .catch(e => {
                         console.error(e);
-                        setUnlocked(false);
-                        setIsUnlocking(false);
                     })
                 })
             } else {
-                setUnlocked(true);
-                setIsUnlocking(false);
                 return;
             }
             
         })
         .catch(e => {
             console.error(e);
-            setUnlocked(true);
-            setIsUnlocking(false);
-        })
-    }
-
-    const approveWallet = () => {
-        setIsUnlocking(true);
-        approve()
-        .then(() => {
-        })
-        .catch(e => {
-            console.error(e);
-            setUnlocked(false);
-            setIsUnlocking(false);
         })
     }
 
@@ -333,12 +295,6 @@ const Exchange = props => {
                 onChange={(_, d) => setLockDuration(d.value)}
                 options={stakeOptions} />
 
-                {isAddingLp ? (
-                    <Button className='button-primary' disabled={isUnlocking || unlocked} fluid onClick={approveWallet}>
-                        {getApproveButtonText()}
-                    </Button>
-                 ) : null}
-                <br />
                 <Button className='button-primary' disabled={isDisabled() || isButtonDisabled() || isOpening} fluid onClick={openCrate}>
                     {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
