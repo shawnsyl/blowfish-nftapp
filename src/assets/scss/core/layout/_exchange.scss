@@ -23,6 +23,10 @@
             p {
                 font-size: 14px;
                 color: get-color(primary, 1);
+                &.warn {
+                    color: 	#FF6347;
+                    margin-top: 14px;
+                }
             }
 
             .exchange-links {
@@ -77,8 +81,7 @@
                 margin-bottom: 14px;
             }
 
-            .ui.button.button-primary.liquidity-button {
-                margin-bottom: 14px;
+            .ui.button.button-primary {
             }
 
             .ui.basic.label.label {

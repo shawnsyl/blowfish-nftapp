@@ -107,6 +107,14 @@ const Exchange = props => {
             setPuffCrateOptions([...newPuffCrateOptions])
         }
     }, [web3, contractData])
+
+    useEffect(() => {
+        if (infoText.length) {
+            setTimeout(() => {
+                setInfoText('');
+            }, 5000);
+        }
+    }, [infoText])
     
     const isDisabled = () => {
         if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') {
@@ -132,35 +140,6 @@ const Exchange = props => {
         }
 
         return false;
-    }
-
-    const approve = async () => {
-        const { puffCratePrice } = contractData;
-
-        const max = 5 * puffCratePrice;
-
-        tokenInst.methods.allowance(user, contractAddress).call()
-        .then(allowance => { 
-            console.log(allowance);
-            if (Number(allowance) < Number(max)) {
-                tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).estimateGas({from: user})
-                .then(gasEstimate => {
-                    tokenInst.methods.approve(contractAddress, web3.utils.toWei((max).toString())).send({gas: gasEstimate, from: user})
-                    .then(approval => {
-                        return approval
-                    })
-                    .catch(e => {
-                        console.error(e);
-                    })
-                })
-            } else {
-                return;
-            }
-            
-        })
-        .catch(e => {
-            console.error(e);
-        })
     }
 
     const openCrate = () => {
@@ -194,19 +173,25 @@ const Exchange = props => {
                         .then(response => {
                             console.log(response);
                             setIsOpening(false);
+                            setInfoText('Succesfully opened crates!');
                         })
                         .catch(err => {
                             console.error(err);
                             setIsOpening(false);
+                            setInfoText('Failed to open crates!');
                         })
                     }).catch(err => {
-                        console.error(err);
+                        console.log(err);
                         setIsOpening(false);
+                        if (err.code === 4001) {
+                            setInfoText('User cancelled transaction!');
+                        }
                     })
                 });
             } catch (e) {
                 console.error(e);
                 setIsOpening(false);
+                setInfoText('Failed to open crates!');
             }
         } else {
             try {
@@ -232,19 +217,25 @@ const Exchange = props => {
                         .then(response => {
                             setIsOpening(false);
                             console.log(response);
+                            setInfoText('Succesfully Opened Crates!');
                         })
                         .catch(err => {
                             console.error(err);
                             setIsOpening(false);
+                            setInfoText('Failed to open crates!');
                         })
                     }).catch(err => {
-                        console.error(err);
+                        console.log(err);
                         setIsOpening(false);
+                        if (err.code === 4001) {
+                            setInfoText('User cancelled transaction!');
+                        }
                     })
                 });
             } catch (e) {
                 console.error(e);
                 setIsOpening(false);
+                setInfoText('Failed to open crates!');
             }
         }
     }
@@ -299,6 +290,7 @@ const Exchange = props => {
                 <Button className='button-primary' disabled={isDisabled() || isButtonDisabled() || isOpening} fluid onClick={openCrate}>
                     {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
+                <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </div>
         )
     }
