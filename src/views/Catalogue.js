@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import classNames from 'classnames';
 
 import { useContractDataContext } from '../hooks/contractData/useContractDataContext'
@@ -50,10 +51,8 @@ const Catalogue = props => {
 
     useEffect(() => {
         if (!!web3 && !!contract && !reloadRequired && Object.keys(contract.methods).length) {
-            console.log(contract);
             contract.methods.totalSupply().call()
                 .then(response => {
-                    console.log(response);
                     setTotalSupply(parseInt(response));
                 })
             axios({
@@ -70,7 +69,6 @@ const Catalogue = props => {
                 }
             })
             .then(response => {
-                console.log(response);
                 setCryptoPuffs(response.data.cryptopuffs);
             })
             .catch(err => {
@@ -102,7 +100,6 @@ const Catalogue = props => {
                 baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
                 url: 'cryptopuffs/'
             }).then(response => {
-                console.log(response);
                 setAllPuffs(response.data.cryptopuffs)
             }).catch(err => {
                 console.error(err);
@@ -133,6 +130,14 @@ const Catalogue = props => {
             })
         }
     }, [page])
+
+    useEffect(() => {
+        if (numPages > 0) {
+            console.log(props.match.params.page)
+            setPage(props.match.params.page);
+            setCryptoPuffs(null);
+        }
+    }, [props.match.params.page])
 
     useEffect(() => {
         if (!!allPuffs && totalSupply > 0) {
@@ -213,6 +218,18 @@ const Catalogue = props => {
                                     })}
                                 </div>
                             </div>
+                    
+                            {numPages > 0 ? (
+                                <Pagination
+                                onPageChange={(_,d) => onPageChange(d.activePage)}
+                                boundaryRange={0}
+                                defaultActivePage={page}
+                                ellipsisItem={null}
+                                firstItem={null}
+                                lastItem={null}
+                                siblingRange={1}
+                                totalPages={numPages} /> 
+                            ) : null}
                         </Fragment>
                     ) : (
                         <div>
@@ -232,22 +249,10 @@ const Catalogue = props => {
                             <Loader active inverted inline='centered'>Loading</Loader>
                         </div>
                     )}
-                    
-                    {numPages > 0 ? (
-                        <Pagination
-                        onPageChange={(_,d) => onPageChange(d.activePage)}
-                        boundaryRange={0}
-                        defaultActivePage={page}
-                        ellipsisItem={null}
-                        firstItem={null}
-                        lastItem={null}
-                        siblingRange={1}
-                        totalPages={numPages} /> 
-                    ) : null}
                 </Fragment>
             )}
         </section>
     )
 }
 
-export default Catalogue;
+export default withRouter(Catalogue);

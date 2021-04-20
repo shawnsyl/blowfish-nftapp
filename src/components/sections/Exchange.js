@@ -57,6 +57,7 @@ const Exchange = props => {
         'exchange section'
     );
 
+    const [infoText, setInfoText] = useState('');
     const [isAddingLp, setIsAddingLp] = useState(false);
     const [isOpening, setIsOpening] = useState(false);
     const [openingText, setOpeningText] = useState('Opening Crates');

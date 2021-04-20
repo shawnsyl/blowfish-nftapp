@@ -61,16 +61,10 @@ const PuffVault = props => {
                 
                 contract.methods.getLockedTokensForAddress(user).call()  
                     .then(response => {
-                        console.log(response);
                         setLockedTokens(response.map(token => ({
                             tokenCount: token.tokenCount,
                             expiryTimestamp: token.expiryTimestamp
                         })))
-                    })
-                
-                contract.methods.balanceOf(user).call()  
-                    .then(response => {
-                        console.log(response);
                     })
             }
         }
@@ -108,7 +102,6 @@ const PuffVault = props => {
             .then(gasEstimate => {
                 contract.methods.withdrawLiquidityTokens(index).send({from: user, gas: gasEstimate + 50000})
                     .then(response => {
-                        console.log(response);
                         setIsWithdrawing(false);
                         window.location.reload();
                     })
@@ -125,7 +118,6 @@ const PuffVault = props => {
             .then(gasEstimate => {
                 contract.methods.withdrawTokens(index).send({from: user, gas: gasEstimate + 50000})
                     .then(response => {
-                        console.log(response);
                         setIsWithdrawing(false);
                         window.location.reload();
                     })
@@ -141,91 +133,99 @@ const PuffVault = props => {
         return (
             <div className='liquidity-table-container'>
                 <h1>Locked Liquidity</h1>
-                <div className='liquidity-table'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    BLOWF/BNB
-                                </th>
-                                <th>
-                                    Locked Until
-                                </th>
-                                <th>
-                                    Withdraw
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {lockedLiquidities.map((liquidity, index) => {
-                                if(liquidity.tokenCount !== '0')
-                                    return(
-                                        <tr key={index}>
-                                            <td>
-                                                {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
-                                            </td>
-                                            <td>
-                                                {formatDate(liquidity.expiryTimestamp * 1000)}
-                                            </td>
-                                            <td>
-                                                <Button 
-                                                className='button-primary' 
-                                                disabled={Date.now() < liquidity.expiryTimestamp * 1000 || isWithdrawing || liquidity.tokenCount === '0'}
-                                                onClick={() => withdrawLiquidity(index)}>
-                                                    <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    )
-                                else
-                                    return null;
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <h1>Locked Tokens</h1>
-                <div className='liquidity-table'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    BLOWF
-                                </th>
-                                <th>
-                                    Locked Until
-                                </th>
-                                <th>
-                                    Withdraw
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {lockedTokens.map((token, index) => {
-                                if (token.tokenCount !== '0') 
-                                    return (
-                                        <tr key={index}>
-                                            <td>
-                                                {Number(web3.utils.fromWei(token.tokenCount)).toFixed(2)}
-                                            </td>
-                                            <td>
-                                                {formatDate(token.expiryTimestamp * 1000)}
-                                            </td>
-                                            <td>
-                                                <Button 
-                                                className='button-primary' 
-                                                disabled={Date.now() < token.expiryTimestamp * 1000 || isWithdrawing || token.tokenCount === '0'}
-                                                onClick={() => withdrawTokens(index)}>
-                                                    <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    )
-                                else
-                                    return null;
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                {!!lockedLiquidities && !!web3 && !reloadRequired && contract ? (
+                    <div className='liquidity-table'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        BLOWF/BNB
+                                    </th>
+                                    <th>
+                                        Locked Until
+                                    </th>
+                                    <th>
+                                        Withdraw
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {lockedLiquidities.map((liquidity, index) => {
+                                    if(liquidity.tokenCount !== '0')
+                                        return(
+                                            <tr key={index}>
+                                                <td>
+                                                    {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
+                                                </td>
+                                                <td>
+                                                    {formatDate(liquidity.expiryTimestamp * 1000)}
+                                                </td>
+                                                <td>
+                                                    <Button 
+                                                    className='button-primary' 
+                                                    disabled={Date.now() < liquidity.expiryTimestamp * 1000 || isWithdrawing || liquidity.tokenCount === '0'}
+                                                    onClick={() => withdrawLiquidity(index)}>
+                                                        <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    else
+                                        return null;
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <Loader active inverted inline='centered'>Loading</Loader>
+                )}
+                <h1>Locked BLOWF</h1>
+                {!!lockedTokens && !!web3 && !reloadRequired && contract ? (
+                    <div className='liquidity-table'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        BLOWF
+                                    </th>
+                                    <th>
+                                        Locked Until
+                                    </th>
+                                    <th>
+                                        Withdraw
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {lockedTokens.map((token, index) => {
+                                    if (token.tokenCount !== '0') 
+                                        return (
+                                            <tr key={index}>
+                                                <td>
+                                                    {Number(web3.utils.fromWei(token.tokenCount)).toFixed(2)}
+                                                </td>
+                                                <td>
+                                                    {formatDate(token.expiryTimestamp * 1000)}
+                                                </td>
+                                                <td>
+                                                    <Button 
+                                                    className='button-primary' 
+                                                    disabled={Date.now() < token.expiryTimestamp * 1000 || isWithdrawing || token.tokenCount === '0'}
+                                                    onClick={() => withdrawTokens(index)}>
+                                                        <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    else
+                                        return null;
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <Loader active inverted inline='centered'>Loading</Loader>
+                )}
             </div>
         )
     }
@@ -243,14 +243,10 @@ const PuffVault = props => {
                 </div>
             ) : (
                 <Fragment>
+                    <Fragment>
+                        {getLiquidityTable()}
+                    </Fragment>
                     <div style={{minHeight: '1028px'}}>
-                    {!!lockedLiquidities && !!lockedTokens && !!web3 && !reloadRequired && contract ? (
-                        <Fragment>
-                            {getLiquidityTable()}
-                        </Fragment>
-                    ) : (
-                        <Loader active inverted inline='centered'>Loading</Loader>
-                    )}
                     </div>
                 </Fragment>
             )}
