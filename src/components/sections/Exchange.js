@@ -244,6 +244,7 @@ const Exchange = props => {
         const {
             playerBalance
         } = contractData;
+        console.log(stakeOptions);
         return (
             <div className='exchange-window'>
                 <h3>Lock your BNB to receive CryptoPuff lootboxes</h3>

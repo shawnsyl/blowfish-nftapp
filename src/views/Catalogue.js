@@ -53,6 +53,7 @@ const Catalogue = props => {
         if (!!web3 && !!contract && !reloadRequired && Object.keys(contract.methods).length) {
             contract.methods.totalSupply().call()
                 .then(response => {
+                    console.log(response);
                     setTotalSupply(parseInt(response));
                 })
             axios({
@@ -100,6 +101,7 @@ const Catalogue = props => {
                 baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
                 url: 'cryptopuffs/'
             }).then(response => {
+                console.log(response)
                 setAllPuffs(response.data.cryptopuffs)
             }).catch(err => {
                 console.error(err);
