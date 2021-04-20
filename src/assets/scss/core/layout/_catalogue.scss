@@ -97,15 +97,51 @@
 }
 
 .catalogue {
-	h1 {
-		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
-	}
 	.ui.pagination.menu {
 		margin-bottom: 48px;
 	}
     .container.pufftiles {
         padding-top: 12px;
     }
+
+	.recent-mints-table-container {
+		margin-bottom: 24px;
+	}
+	.recent-mints-table {
+		width: 100%;;
+		background-color: white;
+		margin: 0;
+		max-width: none;
+		padding: 0;
+		opacity : 0;
+		transform: translateY(2.4rem);
+
+		border-radius: 12px;
+		border: 1px solid #f7f8f9;
+		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
+		color: get-color(primary, 1);
+
+		tr {
+			border: none;
+			height: 64px;
+		}
+
+		th, td {
+			padding: 8px 16px;
+		}
+
+		.buttonText {
+			display: inline-block;
+			width: 90.75px;
+			text-align: left;
+			padding-left: 12px;
+
+			&.withdrawing {
+				padding-left: 0px;
+			}
+		}
+
+	}
 }
 
 @keyframes puffTileIn {

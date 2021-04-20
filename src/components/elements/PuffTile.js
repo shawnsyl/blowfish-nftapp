@@ -32,8 +32,8 @@ const PuffTile = props => {
 
 
     return (
-        <a href={`/puff/${puffId}`}>
-            <div className="tiles-item pufftile-container">
+        <div className="tiles-item pufftile-container">
+            <a href={`/puff/${puffId}`}>
                 <div className="tiles-item-inner">
                     <div className="features-tiles-item-header">
                         {!!imageUrl ? (
@@ -63,8 +63,8 @@ const PuffTile = props => {
                         </ul> */}
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     )
 }
 
