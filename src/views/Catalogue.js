@@ -55,7 +55,7 @@ const Catalogue = props => {
                 baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
                 url: 'cryptopuffs/',
                 params: {
-                    user: user,
+                    puffOwner: user,
                     page: page,
                     sortBy: sortBy === 'none' ? null : sortBy
                 }

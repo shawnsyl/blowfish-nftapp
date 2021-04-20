@@ -13,6 +13,7 @@ import Home from './views/Home';
 import Purchase from './views/Purchase';
 import Marketplace from './views/Marketplace';
 import PuffVault from './views/PuffVault';
+import PuffView from './views/PuffView';
 
 const App = () => {
 
@@ -37,6 +38,7 @@ const App = () => {
           <AppRoute exact path="/purchase" component={Purchase} layout={LayoutDefault} />
           <AppRoute exact path="/battle" component={Battle} layout={LayoutDefault} />
           <AppRoute exact path="/marketplace" component={Marketplace} layout={LayoutDefault} />
+          <AppRoute exact path="/puff/:puffId" component={PuffView} layout={LayoutDefault} />
         </Switch>
       )} />
   );

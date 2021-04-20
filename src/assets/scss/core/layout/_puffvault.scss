@@ -88,6 +88,13 @@
 			height: 100%;
 			padding: $tiles-item--inner-padding-v $tiles-item--inner-padding-h;
 		}
+
+		&:hover {
+			box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+			transform: scale(1.1);
+			cursor: pointer;
+		}
+		
 		@for $i from 1 through 12 {
 			&:nth-child(#{$i}) {
 				animation-delay: calc(#{$i} * var(--tileDelay));
