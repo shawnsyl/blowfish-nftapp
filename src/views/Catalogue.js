@@ -20,6 +20,7 @@ const Catalogue = props => {
     const [cryptoPuffs, setCryptoPuffs] = useState(null);
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(props.match.params.page);
+    const [recentMints, setRecentMints] = useState(null);
     const [sortBy, setSortBy] = useState(props.match.params.sortBy);
     const outerClasses = classNames(
       'catalogue section container',
@@ -45,6 +46,7 @@ const Catalogue = props => {
 
     useEffect(() => {
         if (!!web3 && !!contract && !reloadRequired) {
+            console.log(contract);
             axios({
                 method: 'get', 
                 headers: {
@@ -133,7 +135,7 @@ const Catalogue = props => {
                 <Fragment>
                     {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
                         <Fragment>
-                            <h1>My Cryptopuffs</h1>
+                            <h1>My CryptoPuffs</h1>
                             <div className='pufftiles container'>
                                 <div className={tilesClasses}>
                                     {cryptoPuffs.map((puff, i) => {
@@ -147,6 +149,23 @@ const Catalogue = props => {
                             <Loader active inverted inline='centered'>Loading</Loader>
                         </div>
                     )}
+
+                    {/* {!!recentMints && !!web3 && !!contract && !reloadRequired ? (
+                        <Fragment>
+                            <h1>Recently Discovered CryptoPuffs</h1>
+                            <div className='pufftiles container'>
+                                <div className={tilesClasses}>
+                                    {cryptoPuffs.map((puff, i) => {
+                                        return <PuffTile key={i} puffId={puff.puffId} /> 
+                                    })}
+                                </div>
+                            </div>
+                        </Fragment>
+                    ) : (
+                        <div style={{minHeight: '740px'}}>
+                            <Loader active inverted inline='centered'>Loading</Loader>
+                        </div>
+                    )} */}
                     
                     {numPages > 0 ? (
                         <Pagination

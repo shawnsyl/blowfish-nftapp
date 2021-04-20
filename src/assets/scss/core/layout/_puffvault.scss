@@ -125,6 +125,18 @@
 		th, td {
 			padding: 8px 16px;
 		}
+
+		.buttonText {
+			display: inline-block;
+			width: 90.75px;
+			text-align: left;
+			padding-left: 12px;
+
+			&.withdrawing {
+				padding-left: 0px;
+			}
+		}
+
 	}
 }
 

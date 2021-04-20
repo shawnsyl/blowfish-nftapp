@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useContractDataContext } from '../hooks/contractData/useContractDataContext'
 
 import {
+    Button,
     Container,
     Loader,
 } from 'semantic-ui-react'
@@ -28,6 +29,8 @@ const months = {
 const PuffVault = props => {
     const [lockedLiquidities, setLockedLiquidities] = useState(null);
     const [lockedTokens, setLockedTokens] = useState(null);
+    const [isWithdrawing, setIsWithdrawing] = useState(false);
+    const [withdrawText, setWithdrawText] = useState('Withdrawing')
 
     const {
         contract,
@@ -58,14 +61,37 @@ const PuffVault = props => {
                 
                 contract.methods.getLockedTokensForAddress(user).call()  
                     .then(response => {
+                        console.log(response);
                         setLockedTokens(response.map(token => ({
                             tokenCount: token.tokenCount,
                             expiryTimestamp: token.expiryTimestamp
                         })))
                     })
+                
+                contract.methods.balanceOf(user).call()  
+                    .then(response => {
+                        console.log(response);
+                    })
             }
         }
     }, [web3, user, contract, reloadRequired])
+
+    useEffect(() => {
+        let timer;
+        timer = setInterval(() => {
+            if (withdrawText === 'Withdrawing...') {
+                setWithdrawText('Withdrawing');
+            } else {
+                setWithdrawText(withdrawText + '.');
+            }
+        }, 1000)
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+    }, [withdrawText])
 
     const formatDate = (date) => {
         const fullDate = new Date(date);
@@ -74,6 +100,41 @@ const PuffVault = props => {
         const year = fullDate.getFullYear();
 
         return `${month} ${day}, ${year}`
+    }
+
+    const withdrawLiquidity = (index) => {
+        setIsWithdrawing(true);
+        contract.methods.withdrawLiquidityTokens(index).estimateGas({from: user})
+            .then(gasEstimate => {
+                contract.methods.withdrawLiquidityTokens(index).send({from: user, gas: gasEstimate + 50000})
+                    .then(response => {
+                        console.log(response);
+                        setIsWithdrawing(false);
+                        window.location.reload();
+                    })
+                    .catch(e => {
+                        setIsWithdrawing(false);
+                        console.error(e);
+                    })
+            })
+    }
+
+    const withdrawTokens = (index) => {
+        setIsWithdrawing(true);
+        contract.methods.withdrawTokens(index).estimateGas({from: user})
+            .then(gasEstimate => {
+                contract.methods.withdrawTokens(index).send({from: user, gas: gasEstimate + 50000})
+                    .then(response => {
+                        console.log(response);
+                        setIsWithdrawing(false);
+                        window.location.reload();
+                    })
+                    .catch(e => {
+                        setIsWithdrawing(false);
+                        console.error(e);
+                    })
+            })
+       
     }
 
     const getLiquidityTable = () => {
@@ -85,24 +146,40 @@ const PuffVault = props => {
                         <thead>
                             <tr>
                                 <th>
-                                    Token Amount
+                                    BLOWF/BNB
                                 </th>
                                 <th>
                                     Locked Until
                                 </th>
+                                <th>
+                                    Withdraw
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {lockedLiquidities.map((liquidity, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
-                                    </td>
-                                    <td>
-                                        {formatDate(liquidity.expiryTimestamp * 1000)}
-                                    </td>
-                                </tr>
-                            ))}
+                            {lockedLiquidities.map((liquidity, index) => {
+                                if(liquidity.tokenCount !== '0')
+                                    return(
+                                        <tr key={index}>
+                                            <td>
+                                                {Number(web3.utils.fromWei(liquidity.tokenCount)).toFixed(2)}
+                                            </td>
+                                            <td>
+                                                {formatDate(liquidity.expiryTimestamp * 1000)}
+                                            </td>
+                                            <td>
+                                                <Button 
+                                                className='button-primary' 
+                                                disabled={Date.now() < liquidity.expiryTimestamp * 1000 || isWithdrawing || liquidity.tokenCount === '0'}
+                                                onClick={() => withdrawLiquidity(index)}>
+                                                    <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                else
+                                    return null;
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -112,24 +189,40 @@ const PuffVault = props => {
                         <thead>
                             <tr>
                                 <th>
-                                    Token Amount
+                                    BLOWF
                                 </th>
                                 <th>
                                     Locked Until
                                 </th>
+                                <th>
+                                    Withdraw
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {lockedTokens.map((token, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        {Number(web3.utils.fromWei(token.tokenCount)).toFixed(2) + 'BLOWF'}
-                                    </td>
-                                    <td>
-                                        {formatDate(token.expiryTimestamp * 1000)}
-                                    </td>
-                                </tr>
-                            ))}
+                            {lockedTokens.map((token, index) => {
+                                if (token.tokenCount !== '0') 
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                {Number(web3.utils.fromWei(token.tokenCount)).toFixed(2)}
+                                            </td>
+                                            <td>
+                                                {formatDate(token.expiryTimestamp * 1000)}
+                                            </td>
+                                            <td>
+                                                <Button 
+                                                className='button-primary' 
+                                                disabled={Date.now() < token.expiryTimestamp * 1000 || isWithdrawing || token.tokenCount === '0'}
+                                                onClick={() => withdrawTokens(index)}>
+                                                    <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                else
+                                    return null;
+                            })}
                         </tbody>
                     </table>
                 </div>
