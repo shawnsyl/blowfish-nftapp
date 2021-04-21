@@ -17,12 +17,13 @@ const PuffTile = props => {
     const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
+        const api = process.env.IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? 'https://api.blowfish.one/test/' : 'https://api.blowfish.one/puff/'
         axios({
             method: 'get', 
             headers: {
                 'Content-Type': 'application/json'
             },
-            url: 'https://api.blowfish.one/',
+            url: api + puffId,
         }).then(response => {
             console.log(response);
         }).catch(err => {

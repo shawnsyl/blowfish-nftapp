@@ -267,7 +267,8 @@ const Exchange = props => {
                 </div>
 
                 {isAddingLp ? <p>
-                    When you add liquidity, you add and lock pool tokens representing your position in exchange for CryptoPuffs. 
+                    When you add liquidity, you add and lock pool tokens representing your position in exchange for CryptoPuffs.<br/>
+                    The liquidity option doubles your odds of certain rare features.
                 </p> : null}
 
                 <p>Select number of Puff Crates to open.*</p>
