@@ -100,7 +100,7 @@ const Exchange = props => {
             } = contractData
             for (let i = 0; i < 5; i++) {
                 newPuffCrateOptions.push({
-                    text: `${i+1} Crate${i > 0 ? 's' : ''} (Lock ${(parseFloat(web3.utils.fromWei(puffCratePrice)) * (i + 1)).toFixed(2)} BNB)`,
+                    text: `${i+1} Crate${i > 0 ? 's' : ''} (${(parseFloat(web3.utils.fromWei(puffCratePrice)) * (i + 1)).toFixed(2)} BNB)`,
                     value: i + 1
                 })
             }
@@ -270,7 +270,7 @@ const Exchange = props => {
                     When you add liquidity, you add and lock pool tokens representing your position in exchange for CryptoPuffs. 
                 </p> : null}
 
-                <p>Select number of Puff Crates to open</p>
+                <p>Select number of Puff Crates to open.*</p>
 
                 <Dropdown
                 disabled={isDisabled()}
@@ -291,6 +291,9 @@ const Exchange = props => {
                 <Button className='button-primary' disabled={isDisabled() || isButtonDisabled() || isOpening} fluid onClick={openCrate}>
                     {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
+
+                <p style={{textAlign: 'right'}}>*30% dev fees</p>
+
                 <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </div>
         )
