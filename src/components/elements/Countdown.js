@@ -66,7 +66,7 @@ const Countdown = props => {
             <div className='container-sm'>
                 <h1 style={{textAlign: 'center'}}>Coming soon!</h1>
                 <p>
-                    Coming soon, check Telegram for updates
+                    COMING SOON!! CHECK TELEGRAM FOR UPDATES
                 </p>
             </div>
         </Fragment>
