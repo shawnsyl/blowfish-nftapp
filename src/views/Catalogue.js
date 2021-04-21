@@ -199,7 +199,7 @@ const Catalogue = props => {
             {/* <div className='container search'>
                 <CatalogueSearch />
             </div> */}
-            {Date.now() < 1618974000000 && !(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
+            {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
                 <div className='container'>
                     <Countdown />
                     <Container text className='mb-32'>

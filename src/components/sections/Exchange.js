@@ -120,9 +120,6 @@ const Exchange = props => {
         if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') {
             return false;
         }
-        if (Date.now() >= 1618974000000) {
-            return false;
-        }
         return true;
     }
 
@@ -302,7 +299,7 @@ const Exchange = props => {
 
     return  (
         <section className={outerClasses}>
-        {Date.now() < 1618974000000 && !(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
+        {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
             <Countdown />
         ) : (
             <div className='container'>
