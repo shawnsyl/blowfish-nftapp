@@ -62,7 +62,7 @@ const PuffView = props => {
                 'access-control-allow-origin' : '*',
                 'Content-Type': 'application/json'
             },
-            url: (process.env.REACT_APP_IS_STAGING == 'TRUE' ? '/nftapi/' : api) + puffId,
+            url: api + puffId,
         }).then(response => {
             setImageUrl(response.data.image);
 
