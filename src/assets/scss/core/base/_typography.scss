@@ -123,9 +123,9 @@ h4, h5, h6,
 p {
 	margin-top: 0;
 	margin-bottom: $spacing--shared-v;
-	font-weight: lighter;
+	font-weight: 400;
 	color: get-color(light, 1);
-	font-family: 'Baloo', 'Nunito', sans-serif !important;
+	font-family: 'Baloo 2', 'Nunito', sans-serif !important;
 }
 
 dfn, cite, em, i {

@@ -232,12 +232,12 @@ const Catalogue = props => {
                             {numPages > 0 ? (
                                 <Pagination
                                 onPageChange={(_,d) => onPageChange(d.activePage)}
-                                boundaryRange={0}
+                                boundaryRange={1}
+                                siblingRange={1}
                                 defaultActivePage={page}
-                                ellipsisItem={null}
+                                ellipsisItem={undefined}
                                 firstItem={null}
                                 lastItem={null}
-                                siblingRange={1}
                                 totalPages={numPages} /> 
                             ) : null}
                         </Fragment>

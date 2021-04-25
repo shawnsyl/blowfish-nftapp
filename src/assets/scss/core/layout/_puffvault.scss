@@ -120,6 +120,10 @@
 		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
 		color: get-color(primary, 1);
 
+		tbody {
+			font-family: 'Baloo 2';
+		}
+
 		tr {
 			border: none;
 			height: 64px;
