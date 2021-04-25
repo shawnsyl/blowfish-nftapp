@@ -93,7 +93,7 @@ const PuffVault = props => {
         const day = fullDate.getDate();
         const year = fullDate.getFullYear();
         const hour = fullDate.getHours();
-        const minute = fullDate.getHours();
+        const minute = fullDate.getMinutes();
 
         return `${month} ${day}, ${year} ${hour > 12 ? hour - 12 : hour}:${minute < 10 ? '0' : ''}${minute} ${hour >= 12 ? 'PM' : 'AM'}`
     }
