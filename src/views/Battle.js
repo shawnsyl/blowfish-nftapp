@@ -39,13 +39,13 @@ const Battle = props => {
                 <Countdown endUnix={1619978400000} />
                 <Container text className='mb-32'>
                     <p>
-                    Enhance and Battle will be a future update to CryptoPuffs.
+                        Enhance and Battle will be a future update to CryptoPuffs.
                     </p>
                     <p>
-                    Lock BLOWF tokens for a certain time period to receive upgrades. Place bets and battle with other CryptoPuffs to win rewards. More upgrades and BLOWF winnings.
+                        Lock BLOWF tokens for a certain time period to receive upgrades. Place bets and battle with other CryptoPuffs to win rewards. More upgrades and BLOWF winnings.
                     </p>
                     <p>
-                    
+                        Send your Puffs on expeditions and receive rewards!
                     </p>
                 </Container>
             </div>

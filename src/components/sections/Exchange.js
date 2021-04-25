@@ -262,7 +262,7 @@ const Exchange = props => {
 
         return (
             <div className='exchange-window'>
-                <h3>Lock your BNB to receive CryptoPuff lootboxes</h3>
+                <h3>Swap BNB to open crates</h3>
 
                 <p>Available: {web3.utils.fromWei(playerBalance)} BNB</p>
 
@@ -281,12 +281,15 @@ const Exchange = props => {
                     </div>
                 </div>
 
-                {isAddingLp ? <p>
-                    When you add liquidity, you add and lock pool tokens representing your position in exchange for CryptoPuffs.<br/>
+                {!isAddingLp ? <p>
+                    Swap BNB for BLOWF tokens.
+                </p> :
+                <p>
+                    Swap BNB for BLOWF-BNB liquidity tokens.<br/>
                     The liquidity option doubles your odds of certain rare features.
-                </p> : null}
+                </p> }
 
-                <p>Select number of Puff Crates to open.*</p>
+                <p>Select number of Puff Crates to open.</p>
 
                 <Dropdown
                 disabled={isDisabled()}
@@ -295,7 +298,7 @@ const Exchange = props => {
                 onChange={(_, d) => setPuffCrateQuantity(d.value)}
                 options={puffCrateOptions} />
                 
-                <p>Select lock duration. Longer the lock duration, higher the chances of pulling a <strong>higher rarity Puff Crate</strong>!</p>
+                <p>Select lock duration of your tokens. The longer the duration, the higher the chances of pulling a <strong>rarer Puff Crate</strong>!</p>
 
                 <Dropdown
                 disabled={isDisabled()}
@@ -308,7 +311,7 @@ const Exchange = props => {
                     {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
 
-                <p style={{textAlign: 'right'}}>*30% dev fees</p>
+                <p style={{textAlign: 'right', paddingTop: 10}}>30% development fee</p>
 
                 {isOpening ? <p>Please do not refresh or navigate away from the page while transaction is in progress...</p> : null}
 
