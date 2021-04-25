@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import { Prompt } from 'react-router'
 import classNames from 'classnames';
 
 import { fromWei, }  from '../../Web3Util';
@@ -139,6 +140,59 @@ const Exchange = props => {
         return false;
     }
 
+    const updateDb = transferArray => {
+        if (Array.isArray(transferArray)) {
+            let requests = transferArray.map(transfer => axios({
+                method: 'post', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                url: 'cryptopuffs/add',
+                data: JSON.stringify({
+                    puffId: transfer.returnValues.tokenId,
+                    puffOwner: user,
+                    dateMinted: Date.now()
+                })
+            }));
+            Promise.all(requests)
+                .then(responses => {
+                    setIsOpening(false);
+                    console.log(responses);
+                    setInfoText('Succesfully Opened Crates!');
+                })
+                .catch(err => {
+                    console.error(err);
+                    setIsOpening(false);
+                    setInfoText('Failed to open crates!');
+                })
+        } else {
+            axios({
+                method: 'post', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                url: 'cryptopuffs/add',
+                data: JSON.stringify({
+                    puffId: transferArray.returnValues.tokenId,
+                    puffOwner: user,
+                    dateMinted: Date.now()
+                })
+            })
+            .then(response => {
+                setIsOpening(false);
+                console.log(response);
+                setInfoText('Succesfully Opened Crates!');
+            })
+            .catch(err => {
+                console.error(err);
+                setIsOpening(false);
+                setInfoText('Failed to open crates!');
+            })
+        }
+    }
+
     const openCrate = () => {
         setIsOpening(true);
         const {
@@ -156,29 +210,7 @@ const Exchange = props => {
                         console.log(response)
                         console.log(response.events);
                         console.log(response.events.Transfer.returnValues)
-                        axios({
-                            method: 'post', 
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-                            url: 'cryptopuffs/add',
-                            data: JSON.stringify({
-                                puffId: response.events.Transfer.returnValues.tokenId,
-                                puffOwner: user,
-                                dateMinted: Date.now()
-                            })
-                        })
-                        .then(response => {
-                            console.log(response);
-                            setIsOpening(false);
-                            setInfoText('Succesfully opened crates!');
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            setIsOpening(false);
-                            setInfoText('Failed to open crates!');
-                        })
+                        updateDb(response.events.Transfer)
                     }).catch(err => {
                         console.log(err);
                         setIsOpening(false);
@@ -199,29 +231,10 @@ const Exchange = props => {
                     contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
                     }).then(response => {
-                        axios({
-                            method: 'post', 
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-                            url: 'cryptopuffs/add',
-                            data: JSON.stringify({
-                                puffId: response.events.Transfer.returnValues.tokenId,
-                                puffOwner: user,
-                                dateMinted: Date.now()
-                            })
-                        })
-                        .then(response => {
-                            setIsOpening(false);
-                            console.log(response);
-                            setInfoText('Succesfully Opened Crates!');
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            setIsOpening(false);
-                            setInfoText('Failed to open crates!');
-                        })
+                        console.log(response)
+                        console.log(response.events);
+                        console.log(response.events.Transfer.returnValues)
+                        updateDb(response.events.Transfer)
                     }).catch(err => {
                         console.log(err);
                         setIsOpening(false);
@@ -293,6 +306,8 @@ const Exchange = props => {
 
                 <p style={{textAlign: 'right'}}>*30% dev fees</p>
 
+                {isOpening ? <p>Please do not refresh or navigate away from the page while transaction is in progress...</p> : null}
+
                 <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </div>
         )
@@ -300,6 +315,10 @@ const Exchange = props => {
 
     return  (
         <section className={outerClasses}>
+        <Prompt
+          when={isOpening}
+          message='You have transactions in progress!'
+        />
         {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
             <Countdown />
         ) : (

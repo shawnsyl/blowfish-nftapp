@@ -9,7 +9,7 @@ import {
 
 const axios = require('axios');
 
-const maxRetries = 10
+const maxRetries = 12
 
 const PuffView = props => {
     const {

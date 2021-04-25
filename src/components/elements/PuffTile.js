@@ -6,7 +6,7 @@ import {
 
 import Image from '../elements/Image';
 
-const maxRetries = 10
+const maxRetries = 12
 const axios = require('axios');
 
 const PuffTile = props => {
