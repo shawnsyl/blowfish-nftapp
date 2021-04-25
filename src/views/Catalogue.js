@@ -189,7 +189,9 @@ const Catalogue = props => {
                                         {mint.puffOwner}
                                     </td>
                                     <td>
-                                        <Puff size={64} puffId={mint.puffId} />
+                                        <a href={`/puff/${mint.puffId}`}>
+                                            <Puff size={64} puffId={mint.puffId} />
+                                        </a>
                                     </td>
                                 </tr>
                             ))}

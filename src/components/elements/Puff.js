@@ -4,7 +4,7 @@ import {
     Loader,
 } from 'semantic-ui-react'
 
-import Image from '../elements/Image';
+import Image from './Image';
 
 const maxRetries = 12
 const axios = require('axios');

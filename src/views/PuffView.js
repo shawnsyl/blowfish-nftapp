@@ -7,6 +7,8 @@ import {
     Loader,
 } from 'semantic-ui-react'
 
+import Puff from '../components/elements/Puff';
+
 const axios = require('axios');
 
 const maxRetries = 12
@@ -77,24 +79,12 @@ const PuffView = props => {
             <h2>CryptoPuff Id: {puffId}</h2>
             {!!puff ? (
                 <div className='puffview'>
-                    <div className="features-tiles-item-image mb-16">
-                        {!!imageUrl ? (
-                            <div className="features-tiles-item-image mb-16">
-                                <Image
-                                src={imageUrl}
-                                alt="Features tile icon 01"
-                                width={600}
-                                height={600} />
-                            </div>
-                        ) : (
-                            <Loader active inline='centered'><p style={{color: '#004d6f'}}>Loading...</p></Loader>
-                        )}
-                    </div>
+                    <Puff size={600} puffId={puffId} />
                     <h2>Owner: {puff.puffOwner}</h2>
                 </div> 
             ) : (
                 <div style={{minHeight: '740px'}}>
-                    <Loader active inverted inline='centered'>Loading</Loader>
+                    <Loader active inline='centered'>Loading</Loader>
                 </div>
             )}
         </section>
