@@ -153,6 +153,8 @@ const Exchange = props => {
                     contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
                     }).then(response => {
+                        console.log(response)
+                        console.log(response.events);
                         console.log(response.events.Transfer.returnValues)
                         axios({
                             method: 'post', 
@@ -197,7 +199,6 @@ const Exchange = props => {
                     contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).send({
                         gas: gasEstimate + 50000, from: user, value: lockAmount
                     }).then(response => {
-                        console.log(response.events.Transfer.returnValues)
                         axios({
                             method: 'post', 
                             headers: {
@@ -241,7 +242,7 @@ const Exchange = props => {
         const {
             playerBalance
         } = contractData;
-        console.log(stakeOptions);
+
         return (
             <div className='exchange-window'>
                 <h3>Lock your BNB to receive CryptoPuff lootboxes</h3>

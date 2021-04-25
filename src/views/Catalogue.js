@@ -14,6 +14,7 @@ import {
 
 import CatalogueSearch from '../components/elements/CatalogueSearch'
 import PuffTile from '../components/elements/PuffTile'
+import Puff from '../components/elements/Puff'
 import Countdown from '../components/elements/Countdown'
 
 const axios = require('axios');
@@ -174,6 +175,9 @@ const Catalogue = props => {
                                 <th>
                                     Owner
                                 </th>
+                                <th>
+                                    NFT
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -184,6 +188,9 @@ const Catalogue = props => {
                                     </td>
                                     <td>
                                         {mint.puffOwner}
+                                    </td>
+                                    <td>
+                                        <Puff size={64} puffId={mint.puffId} />
                                     </td>
                                 </tr>
                             ))}

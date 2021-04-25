@@ -121,13 +121,17 @@
 		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
 		color: get-color(primary, 1);
 
+		table-layout: fixed;
+
 		tr {
 			border: none;
 			height: 64px;
 		}
 
 		th, td {
+			max-width: 246px;
 			padding: 8px 16px;
+			word-wrap: break-word;
 		}
 
 		.buttonText {
@@ -154,6 +158,19 @@
 		opacity: 1;
 		transform: translateY(0);
 	}
+}
+
+@media (max-width: 430px) {
+	.catalogue {
+		.recent-mints-table {
+			th, td {
+				max-width: 120px;
+				padding: 8px 16px;
+				word-wrap: break-word;
+			}
+		}
+	}
+
 }
 
 @media (min-width: 320px) {
