@@ -24,7 +24,7 @@ const Puff = props => {
 
     useEffect(() => {
         if (retries >= 0 && retries < maxRetries) {
-            setTimeout(() => {fetchNft();}, 10000);
+            setTimeout(() => {fetchNft();}, 3000);
         }
     }, [retries])
 
