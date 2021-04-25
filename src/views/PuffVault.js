@@ -92,8 +92,10 @@ const PuffVault = props => {
         const month = months[fullDate.getMonth()];
         const day = fullDate.getDate();
         const year = fullDate.getFullYear();
+        const hour = fullDate.getHours();
+        const minute = fullDate.getHours();
 
-        return `${month} ${day}, ${year}`
+        return `${month} ${day}, ${year} ${hour > 12 ? hour - 12 : hour}:${minute < 10 ? '0' : ''}${minute} ${hour > 12 ? 'PM' : 'AM'}`
     }
 
     const withdrawLiquidity = (index) => {
