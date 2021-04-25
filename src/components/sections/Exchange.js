@@ -60,6 +60,7 @@ const Exchange = props => {
 
     const [infoText, setInfoText] = useState('');
     const [isAddingLp, setIsAddingLp] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
     const [isOpening, setIsOpening] = useState(false);
     const [openingText, setOpeningText] = useState('Opening Crates');
     const [lockDuration, setLockDuration] = useState(0);
@@ -160,6 +161,7 @@ const Exchange = props => {
                     setIsOpening(false);
                     console.log(responses);
                     setInfoText('Succesfully Opened Crates!');
+                    setIsComplete(true);
                 })
                 .catch(err => {
                     console.error(err);
@@ -184,6 +186,7 @@ const Exchange = props => {
                 setIsOpening(false);
                 console.log(response);
                 setInfoText('Succesfully Opened Crates!');
+                setIsComplete(true);
             })
             .catch(err => {
                 console.error(err);
@@ -195,6 +198,7 @@ const Exchange = props => {
 
     const openCrate = () => {
         setIsOpening(true);
+        setIsComplete(false);
         const {
             puffCratePrice
         } = contractData
@@ -307,6 +311,8 @@ const Exchange = props => {
                 <p style={{textAlign: 'right'}}>*30% dev fees</p>
 
                 {isOpening ? <p>Please do not refresh or navigate away from the page while transaction is in progress...</p> : null}
+
+                {isComplete ? <p>Transaction complete. Check your new NFTs on the Catalog page!</p> : null}
 
                 <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </div>
