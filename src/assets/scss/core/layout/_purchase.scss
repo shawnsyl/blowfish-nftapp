@@ -1,4 +1,8 @@
 .purchase.section.container {
-    padding-top: 24px !important;  
-    padding-bottom: 24px;  
+    padding-top: 98px !important;  
+    padding-bottom: 24px; 
+    
+    .purchase-loader {
+        margin-bottom: 24px;
+    }
 }

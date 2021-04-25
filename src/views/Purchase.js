@@ -20,7 +20,7 @@ const Purchase = props => {
             {!!web3 && !!contract & !reloadRequired ? (
                 <Exchange />
             ) : (
-                    <div style={{minHeight: '740px'}}>
+                    <div className ='purchase-loader'>
                         <Loader active inverted inline='centered'>Loading</Loader>
                     </div>
                 )
