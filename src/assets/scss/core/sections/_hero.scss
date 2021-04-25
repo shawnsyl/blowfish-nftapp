@@ -22,6 +22,18 @@
 			vertical-align: top;
 		}
 	}
+	
+	&.section-inner {
+		padding-top: 24px !important;
+	}
+
+	.ui.button.hero-button {
+		padding: 11px 31px;
+		font-size: 24px;
+		width: 90%;
+		max-width: 300px;
+		font-family: 'Baloo', 'Nunito', sans-serif !important;
+	}
 }
 
 .hero-light {

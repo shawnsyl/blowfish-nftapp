@@ -6,7 +6,7 @@ import {
 
 import Image from '../elements/Image';
 
-
+const maxRetries = 10
 const axios = require('axios');
 
 const PuffTile = props => {
@@ -15,22 +15,36 @@ const PuffTile = props => {
     } = props;
 
     const [imageUrl, setImageUrl] = useState(null);
+    const [retries, setRetries] = useState(maxRetries);
 
     useEffect(() => {
-        const api = process.env.IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? 'https://api.blowfish.one/test/' : 'https://api.blowfish.one/puff/'
+        fetchNft();
+    }, [])
+
+    useEffect(() => {
+        if (retries >= 0 && retries < maxRetries) {
+            setTimeout(() => {fetchNft();}, 10000);
+        }
+    }, [retries])
+
+    const fetchNft = () =>  {
+        const api = process.env.IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? process.env.REACT_APP_NFT_API_TEST : 'https://api.blowfish.one/puff/'
         axios({
             method: 'get', 
             headers: {
+                'access-control-allow-origin' : '*',
                 'Content-Type': 'application/json'
             },
             url: api + puffId,
         }).then(response => {
             console.log(response);
+            setImageUrl(response.data.image);
+
         }).catch(err => {
             console.error(err);
+            setRetries(retries - 1);
         })
-    }, [])
-
+    }
 
     return (
         <div className="tiles-item pufftile-container">
@@ -40,7 +54,7 @@ const PuffTile = props => {
                         {!!imageUrl ? (
                             <div className="features-tiles-item-image mb-16">
                                 <Image
-                                src={require('./../../assets/examples/crypto - blowfish NFTs 005.png')}
+                                src={imageUrl}
                                 alt="Features tile icon 01"
                                 width={128}
                                 height={128} />

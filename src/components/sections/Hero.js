@@ -3,6 +3,12 @@ import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import Image from '../elements/Image';
 
+import {
+    Button,
+    Container,
+    Loader,
+} from 'semantic-ui-react'
+
 import bCool from '../../assets/images/b_cool.png'
 import bDark from '../../assets/images/b_dark.png'
 import bFancy from '../../assets/images/b_fancy.png'
@@ -59,7 +65,6 @@ const Hero = ({
     >
       <div className="container-sm">
         <div className={innerClasses}>
-
           <div className="hero-content">
             <Image src={logo} width={1000}/>
             <h2 className="mt-24 mb-24" data-reveal-delay="200">
@@ -76,6 +81,7 @@ const Hero = ({
                 <Image src={bDark}/>
               </div>
             </div> 
+            <Button className='hero-button button-primary' href='/purchase'>Open A Crate!</Button>
             <h2>
               How many CryptoPuffs will you find?
             </h2>

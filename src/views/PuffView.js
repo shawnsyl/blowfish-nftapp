@@ -9,6 +9,8 @@ import {
 
 const axios = require('axios');
 
+const maxRetries = 10
+
 const PuffView = props => {
     const {
         contract,
@@ -18,7 +20,9 @@ const PuffView = props => {
     } = useContractDataContext();
     const puffId = props.match.params.puffId;
 
-    const [ puff, setPuff ] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [puff, setPuff] = useState(null);
+    const [retries, setRetries] = useState(maxRetries);
 
     useEffect(() => {
         if (!!puffId && !!web3 && !!user &&!!contract && !reloadRequired) {
@@ -40,8 +44,34 @@ const PuffView = props => {
             .catch(err => {
                 console.error(err);
             })
+            fetchNft();
         }
     }, [puffId, web3, user, contract, reloadRequired])
+
+    useEffect(() => {
+        if (retries >= 0 && retries < maxRetries) {
+            setTimeout(() => {fetchNft();}, 10000);
+        }
+    }, [retries])
+
+    const fetchNft = () =>  {
+        const api = process.env.IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? process.env.REACT_APP_NFT_API_TEST : 'https://api.blowfish.one/puff/'
+        axios({
+            method: 'get', 
+            headers: {
+                'access-control-allow-origin' : '*',
+                'Content-Type': 'application/json'
+            },
+            url: api + puffId,
+        }).then(response => {
+            console.log(response);
+            setImageUrl(response.data.image);
+
+        }).catch(err => {
+            console.error(err);
+            setRetries(retries - 1);
+        })
+    }
 
     console.log(puff);
 
@@ -51,9 +81,17 @@ const PuffView = props => {
             {!!puff ? (
                 <div className='puffview'>
                     <div className="features-tiles-item-image mb-16">
-                        <Image
-                        src={require('./../assets/examples/crypto - blowfish NFTs 005.png')}
-                        alt="Features tile icon 01" />
+                        {!!imageUrl ? (
+                            <div className="features-tiles-item-image mb-16">
+                                <Image
+                                src={imageUrl}
+                                alt="Features tile icon 01"
+                                width={600}
+                                height={600} />
+                            </div>
+                        ) : (
+                            <Loader active inline='centered'><p style={{color: '#004d6f'}}>Loading...</p></Loader>
+                        )}
                     </div>
                     <h2>Owner: {puff.puffOwner}</h2>
                 </div> 
