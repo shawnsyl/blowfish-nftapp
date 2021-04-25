@@ -55,7 +55,7 @@ const PuffView = props => {
     }, [retries])
 
     const fetchNft = () =>  {
-        const api = process.env.IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? process.env.REACT_APP_NFT_API_TEST : 'https://api.blowfish.one/puff/'
+        const api = process.env.REACT_APP_IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? process.env.REACT_APP_NFT_API_TEST : 'https://api.blowfish.one/puff/'
         axios({
             method: 'get', 
             headers: {
