@@ -36,7 +36,7 @@ const Puff = props => {
                 'access-control-allow-origin' : '*',
                 'Content-Type': 'application/json'
             },
-            url: api + puffId,
+            url: (process.env.REACT_APP_IS_STAGING == 'TRUE' ? '/nftapi/' : api) + puffId,
         }).then(response => {
             setImageUrl(response.data.image);
 
