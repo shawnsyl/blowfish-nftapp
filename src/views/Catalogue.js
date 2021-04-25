@@ -136,7 +136,6 @@ const Catalogue = props => {
 
     useEffect(() => {
         if (numPages > 0) {
-            console.log(props.match.params.page)
             setPage(props.match.params.page);
             setCryptoPuffs(null);
         }

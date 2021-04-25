@@ -64,7 +64,6 @@ const PuffView = props => {
             },
             url: api + puffId,
         }).then(response => {
-            console.log(response);
             setImageUrl(response.data.image);
 
         }).catch(err => {
@@ -72,8 +71,6 @@ const PuffView = props => {
             setRetries(retries - 1);
         })
     }
-
-    console.log(puff);
 
     return (
         <section className='section container'>

@@ -38,7 +38,6 @@ const Puff = props => {
             },
             url: api + puffId,
         }).then(response => {
-            console.log(response);
             setImageUrl(response.data.image);
 
         }).catch(err => {
