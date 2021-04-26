@@ -11,8 +11,6 @@ import Puff from '../components/elements/Puff';
 
 const axios = require('axios');
 
-const maxRetries = 12
-
 const PuffView = props => {
     const {
         contract,
@@ -22,9 +20,7 @@ const PuffView = props => {
     } = useContractDataContext();
     const puffId = props.match.params.puffId;
 
-    const [imageUrl, setImageUrl] = useState(null);
     const [puff, setPuff] = useState(null);
-    const [retries, setRetries] = useState(maxRetries);
 
     useEffect(() => {
         if (!!puffId && !!web3 && !!user &&!!contract && !reloadRequired) {
@@ -45,34 +41,9 @@ const PuffView = props => {
             })
             .catch(err => {
                 console.error(err);
-            })
-            fetchNft();
+            });
         }
     }, [puffId, web3, user, contract, reloadRequired])
-
-    useEffect(() => {
-        if (retries >= 0 && retries < maxRetries) {
-            setTimeout(() => {fetchNft();}, 10000);
-        }
-    }, [retries])
-
-    const fetchNft = () =>  {
-        const api = process.env.REACT_APP_IS_STAGING == 'TRUE' || process.env.NODE_ENV === 'development' ? process.env.REACT_APP_NFT_API_TEST : 'https://api.blowfish.one/puff/'
-        axios({
-            method: 'get', 
-            headers: {
-                'access-control-allow-origin' : '*',
-                'Content-Type': 'application/json'
-            },
-            url: (process.env.REACT_APP_IS_STAGING == 'TRUE' ? '/nftapi/' : api) + puffId,
-        }).then(response => {
-            setImageUrl(response.data.image);
-
-        }).catch(err => {
-            console.error(err);
-            setRetries(retries - 1);
-        })
-    }
 
     return (
         <section className='section container'>
