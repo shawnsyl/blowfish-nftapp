@@ -52,6 +52,12 @@ const Purchase = props => {
                 <li>BLOWF Locked 8 Weeks: 4%</li>
                 <li>Liquidity Locked 8 Weeks: 8%</li>
             </ul>
+            <p>
+                Even rarer are the elusive whales. The base rate of a whale is only .05%
+            </p>
+            <p>
+                Your odds of getting a hat also increases as you lock longer or lock liquidity!
+            </p>
             <h2>
                 Bonding Curve (Pricing)
             </h2>

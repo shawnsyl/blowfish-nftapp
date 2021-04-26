@@ -262,7 +262,7 @@ const Exchange = props => {
 
         return (
             <div className='exchange-window'>
-                <h3>Swap BNB to open crates</h3>
+                <h3>Swap BNB to Open Crates</h3>
 
                 <p>Available: {web3.utils.fromWei(playerBalance)} BNB</p>
 
