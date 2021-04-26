@@ -300,7 +300,6 @@ const Exchange = props => {
                 <p>Select number of Puff Crates to open.</p>
 
                 <Dropdown
-                disabled={isDisabled()}
                 fluid
                 selection
                 onChange={(_, d) => setPuffCrateQuantity(d.value)}
@@ -309,13 +308,12 @@ const Exchange = props => {
                 <p>Select lock duration of your tokens. The longer the duration, the higher the chances of pulling a <strong>rarer Puff Crate</strong>!</p>
 
                 <Dropdown
-                disabled={isDisabled()}
                 fluid
                 selection
                 onChange={(_, d) => setLockDuration(d.value)}
                 options={stakeOptions} />
 
-                <Button className='button-primary' disabled={isDisabled() || isButtonDisabled() || isOpening} fluid onClick={openCrate}>
+                <Button className='button-primary' disabled={isButtonDisabled() || isOpening} fluid onClick={openCrate}>
                     {isOpening ? <span className='openingtext'>{openingText}</span> : 'Open Crates!'}
                 </Button>
 
