@@ -325,7 +325,7 @@ const Exchange = props => {
 
                 {isOpening ? <p>Please do not refresh or navigate away from the page while transaction is in progress...</p> : null}
 
-                {isComplete ? <p>Transaction complete. Check your new NFTs on the Catalog page!</p> : null}
+                {isComplete ? <p>Transaction complete. Check out your new NFTs on the <a href="/catalog/1/none">Catalog page</a>!</p> : null}
 
                 <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </div>

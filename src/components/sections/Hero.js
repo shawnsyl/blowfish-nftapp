@@ -117,13 +117,9 @@ const Hero = ({
             <p>
               You can open a PuffCrate by swapping and locking BNB to BLOWF, or by adding BNB to the BlowFish-BNB liquidity pool. It's simpler than it sounds. Our smart contract handles all the logic—you just pick how much BNB you want to send and press a button.
             </p>
-            <Image src={crate} width={200}/>
-            <p className="mt-24">
-              When opening a PuffCrate, you will be given a 1-8 week option for the "lock up period" of the BLOWF you're buying. <strong>The longer you lock up, the better odds you have of getting rare CryptoPuffs.</strong> After the lockup period, you will receive your unlocked BLOWF or liquidity pool tokens. The contract will also deduct a developer fee.
-            </p>
-            <p>
-              <strong>The price of a CryptoPuff will intially be .1 BNB</strong>. As more Puffs are minted, the price will follow a gentle bonding curve.
-            </p>
+            <div className="divpadding">
+                <Button className='hero-button button-primary' href='/purchase'>Open A Crate</Button>
+            </div>
             <h2>
               CryptoPuffs strengthen The BlowFish Platform
             </h2>
@@ -137,9 +133,6 @@ const Hero = ({
             <p>
               Visit <a href="https://www.blowfish.one/" target="_blank" rel="noopener noreferrer">blowfish.one</a> to learn more about the BlowFish platform and how to purchase $BLOWF.
             </p>
-            <div className="divpadding">
-                <Button className='hero-button button-primary' href='/purchase'>Open A Crate</Button>
-            </div>
           </div>
         </div>
       </div>
