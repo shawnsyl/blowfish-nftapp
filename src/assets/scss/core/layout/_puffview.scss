@@ -1,4 +1,9 @@
-.section.container {
+.section.container.puffview-container {
+
+    h2 {
+        text-align: center;
+    }
+
     .puffview {
         display: flex;
         flex-direction: column;

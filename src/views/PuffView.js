@@ -37,7 +37,7 @@ const PuffView = props => {
     }, [puffId])
 
     return (
-        <section className='section container'>
+        <section className='section container puffview-container'>
             <h2>CryptoPuff Id: {puffId}</h2>
             {!!puff ? (
                 <div className='puffview'>
