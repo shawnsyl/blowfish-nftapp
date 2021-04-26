@@ -1,8 +1,22 @@
 .purchase.section.container {
     padding-top: 98px !important;  
     padding-bottom: 24px; 
+
+    text-align: center;
     
     .purchase-loader {
         margin-bottom: 24px;
+    }
+
+    ol, ul {
+        color: get-color(light, 1);
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    img {
+        margin: 0 auto;
     }
 }
