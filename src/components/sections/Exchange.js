@@ -52,6 +52,7 @@ const stakeOptions = [
 ]
 
 const contractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_TEST_PUFF_CONTRACT;
+const networkId = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? 97 : 56;
 
 const Exchange = props => {
     const outerClasses = classNames(
@@ -114,7 +115,7 @@ const Exchange = props => {
         if (infoText.length) {
             setTimeout(() => {
                 setInfoText('');
-            }, 5000);
+            }, 10000);
         }
     }, [infoText])
     
@@ -204,55 +205,64 @@ const Exchange = props => {
         } = contractData
         const lockAmount = web3.utils.toWei((fromWei(puffCrateQuantity * puffCratePrice)).toString());
 
-        if (isAddingLp) {
-            try {
-                contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
-                .then(gasEstimate => {
-                    contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).send({
-                        gas: gasEstimate + 50000, from: user, value: lockAmount
-                    }).then(response => {
-                        console.log(response)
-                        console.log(response.events);
-                        console.log(response.events.Transfer.returnValues)
-                        updateDb(response.events.Transfer)
-                    }).catch(err => {
-                        console.log(err);
-                        setIsOpening(false);
-                        if (err.code === 4001) {
-                            setInfoText('User cancelled transaction!');
-                        }
-                    })
-                });
-            } catch (e) {
-                console.error(e);
+        web3.eth.net.getId()
+        .then(result => {
+            if (result !== networkId) {
+                setInfoText('Make sure you are on the BSC Mainnet!');
                 setIsOpening(false);
-                setInfoText('Failed to open crates!');
-            }
-        } else {
-            try {
-                contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
-                .then(gasEstimate => {
-                    contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).send({
-                        gas: gasEstimate + 50000, from: user, value: lockAmount
-                    }).then(response => {
-                        console.log(response)
-                        console.log(response.events);
-                        console.log(response.events.Transfer.returnValues)
-                        updateDb(response.events.Transfer)
-                    }).catch(err => {
-                        console.log(err);
+                return;
+            } else {
+                if (isAddingLp) {
+                    try {
+                        contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
+                        .then(gasEstimate => {
+                            contract.methods.purchaseCryptoPuffLiquidity(lockDuration, puffCrateQuantity).send({
+                                gas: gasEstimate + 50000, from: user, value: lockAmount
+                            }).then(response => {
+                                console.log(response)
+                                console.log(response.events);
+                                console.log(response.events.Transfer.returnValues)
+                                updateDb(response.events.Transfer)
+                            }).catch(err => {
+                                console.log(err);
+                                setIsOpening(false);
+                                if (err.code === 4001) {
+                                    setInfoText('User cancelled transaction!');
+                                }
+                            })
+                        });
+                    } catch (e) {
+                        console.error(e);
                         setIsOpening(false);
-                        if (err.code === 4001) {
-                            setInfoText('User cancelled transaction!');
-                        }
-                    })
-                });
-            } catch (e) {
-                console.error(e);
-                setIsOpening(false);
-                setInfoText('Failed to open crates!');
+                        setInfoText('Failed to open crates!');
+                    }
+                } else {
+                    try {
+                        contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).estimateGas({from: user, value: lockAmount})
+                        .then(gasEstimate => {
+                            contract.methods.purchaseCryptoPuffTokens(lockDuration, puffCrateQuantity).send({
+                                gas: gasEstimate + 50000, from: user, value: lockAmount
+                            }).then(response => {
+                                console.log(response)
+                                console.log(response.events);
+                                console.log(response.events.Transfer.returnValues)
+                                updateDb(response.events.Transfer)
+                            }).catch(err => {
+                                console.log(err);
+                                setIsOpening(false);
+                                if (err.code === 4001) {
+                                    setInfoText('User cancelled transaction!');
+                                }
+                            })
+                        });
+                    } catch (e) {
+                        console.error(e);
+                        setIsOpening(false);
+                        setInfoText('Failed to open crates!');
+                    }
+                }
             }
-        }
+        });
     }
 
     const stakingForm = () => {
