@@ -12,8 +12,6 @@ import {
     Loader,
 } from 'semantic-ui-react'
 
-import Countdown from '../elements/Countdown'
-
 const axios = require('axios');
 
 const stakeOptions = [
@@ -338,17 +336,13 @@ const Exchange = props => {
           when={isOpening}
           message='You have transactions in progress!'
         />
-        {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
-            <Countdown />
-        ) : (
             <div className='container'>
                 {contractData && !reloadRequired && web3 ? (
                     <Fragment>
                         {stakingForm()}
                     </Fragment>
                 ) : <Loader active inverted inline='centered'>Loading</Loader>}
-            </div>
-        )}                   
+            </div>             
         </section>
     )
 }

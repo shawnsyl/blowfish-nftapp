@@ -12,10 +12,8 @@ import {
     Pagination
 } from 'semantic-ui-react'
 
-import CatalogueSearch from '../components/elements/CatalogueSearch'
 import PuffTile from '../components/elements/PuffTile'
 import Puff from '../components/elements/Puff'
-import Countdown from '../components/elements/Countdown'
 
 const axios = require('axios');
 
@@ -207,60 +205,49 @@ const Catalogue = props => {
             {/* <div className='container search'>
                 <CatalogueSearch />
             </div> */}
-            {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
-                <div className='container'>
-                    <Countdown />
-                    <Container text className='mb-32'>
-                        <p>
-                        View your locked liquidity tokens here and what dates you can unlock at.
-                        </p>
-                    </Container>
-                </div>
-            ) : (
-                <Fragment>
-                <h1>My CryptoPuffs</h1>
-                    {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
-                        <Fragment>
-                            <div className='pufftiles container'>
-                                <div className={tilesClasses}>
-                                    {cryptoPuffs.map((puff, i) => {
-                                        return <PuffTile key={i} puffId={puff.puffId} /> 
-                                    })}
-                                </div>
+            <Fragment>
+            <h1>My CryptoPuffs</h1>
+                {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
+                    <Fragment>
+                        <div className='pufftiles container'>
+                            <div className={tilesClasses}>
+                                {cryptoPuffs.map((puff, i) => {
+                                    return <PuffTile key={i} puffId={puff.puffId} /> 
+                                })}
                             </div>
-                    
-                            {numPages > 0 ? (
-                                <Pagination
-                                onPageChange={(_,d) => onPageChange(d.activePage)}
-                                boundaryRange={1}
-                                siblingRange={1}
-                                defaultActivePage={page}
-                                ellipsisItem={undefined}
-                                firstItem={null}
-                                lastItem={null}
-                                totalPages={numPages} /> 
-                            ) : null}
-                        </Fragment>
-                    ) : (
-                        <div>
-                            <Loader active inverted inline='centered'>Loading</Loader>
                         </div>
-                    )}
-                    <h1>Recently Discovered CryptoPuffs</h1>
-                    {!!recentMints && !!web3 && !!contract && !reloadRequired ? (
-                        <div style={{paddingBottom: '48px'}}>
-                            {getRecentMints()}
-                            <Button className='button-primary' disabled={numRecent === totalSupply} onClick={loadMore}>
-                                Load More
-                            </Button>
-                        </div>
-                    ) : (
-                        <div>
-                            <Loader active inverted inline='centered'>Loading</Loader>
-                        </div>
-                    )}
-                </Fragment>
-            )}
+                
+                        {numPages > 0 ? (
+                            <Pagination
+                            onPageChange={(_,d) => onPageChange(d.activePage)}
+                            boundaryRange={1}
+                            siblingRange={1}
+                            defaultActivePage={page}
+                            ellipsisItem={undefined}
+                            firstItem={null}
+                            lastItem={null}
+                            totalPages={numPages} /> 
+                        ) : null}
+                    </Fragment>
+                ) : (
+                    <div>
+                        <Loader active inverted inline='centered'>Loading</Loader>
+                    </div>
+                )}
+                <h1>Recently Discovered CryptoPuffs</h1>
+                {!!recentMints && !!web3 && !!contract && !reloadRequired ? (
+                    <div style={{paddingBottom: '48px'}}>
+                        {getRecentMints()}
+                        <Button className='button-primary' disabled={numRecent === totalSupply} onClick={loadMore}>
+                            Load More
+                        </Button>
+                    </div>
+                ) : (
+                    <div>
+                        <Loader active inverted inline='centered'>Loading</Loader>
+                    </div>
+                )}
+            </Fragment>
         </section>
     )
 }

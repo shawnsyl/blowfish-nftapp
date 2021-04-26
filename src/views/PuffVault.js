@@ -234,24 +234,13 @@ const PuffVault = props => {
 
     return (
         <section className={outerClasses}>
-            {!(process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE') ? (
-                <div className='container'>
-                    <Countdown />
-                    <Container text className='mb-32'>
-                        <p>
-                        View your locked liquidity tokens here and what dates you can unlock at.
-                        </p>
-                    </Container>
-                </div>
-            ) : (
+            <Fragment>
                 <Fragment>
-                    <Fragment>
-                        {getLiquidityTable()}
-                    </Fragment>
-                    <div style={{minHeight: '1028px'}}>
-                    </div>
+                    {getLiquidityTable()}
                 </Fragment>
-            )}
+                <div style={{minHeight: '1028px'}}>
+                </div>
+            </Fragment>
         </section>
     )
 }
