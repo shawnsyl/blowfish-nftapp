@@ -112,7 +112,7 @@ const Hero = ({
               </div>
             </div> 
             <h2>
-              How do I buy a CryptoPuff? How much do they cost?
+              How do I buy a CryptoPuff?
             </h2>
             <p>
               You can open a PuffCrate by swapping and locking BNB to BLOWF, or by adding BNB to the BlowFish-BNB liquidity pool. It's simpler than it sounds. Our smart contract handles all the logic—you just pick how much BNB you want to send and press a button.
