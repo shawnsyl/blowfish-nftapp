@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import { useContractDataContext } from '../hooks/contractData/useContractDataContext'
-
 import {
     Image,
     Loader,
@@ -12,18 +10,12 @@ import Puff from '../components/elements/Puff';
 const axios = require('axios');
 
 const PuffView = props => {
-    const {
-        contract,
-        reloadRequired,
-        user,
-        web3,
-    } = useContractDataContext();
     const puffId = props.match.params.puffId;
 
     const [puff, setPuff] = useState(null);
 
     useEffect(() => {
-        if (!!puffId && !!web3 && !!user &&!!contract && !reloadRequired) {
+        if (!!puffId) {
             axios({
                 method: 'get', 
                 headers: {
@@ -32,7 +24,6 @@ const PuffView = props => {
                 baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
                 url: 'cryptopuffs/',
                 params: {
-                    user: user,
                     puffId: puffId
                 }
             })
@@ -43,7 +34,7 @@ const PuffView = props => {
                 console.error(err);
             });
         }
-    }, [puffId, web3, user, contract, reloadRequired])
+    }, [puffId])
 
     return (
         <section className='section container'>
