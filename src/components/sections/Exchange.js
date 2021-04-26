@@ -228,6 +228,10 @@ const Exchange = props => {
                                     setInfoText('User cancelled transaction!');
                                 }
                             })
+                        }).catch(e => {
+                            setIsOpening(false);
+                            console.error(e);
+                            setInfoText('Failed to open crates!');
                         });
                     } catch (e) {
                         console.error(e);
@@ -252,6 +256,10 @@ const Exchange = props => {
                                     setInfoText('User cancelled transaction!');
                                 }
                             })
+                        }).catch(e => {
+                            setIsOpening(false);
+                            console.error(e);
+                            setInfoText('Failed to open crates!');
                         });
                     } catch (e) {
                         console.error(e);
