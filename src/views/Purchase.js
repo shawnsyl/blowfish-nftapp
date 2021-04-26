@@ -9,6 +9,7 @@ import {
 import Image from '../components/elements/Image';
 import crate from '../assets/images/crate.png'
 import bonding from '../assets/images/bonding_curve.png'
+import bShark from '../assets/images/b_shark.png'
 
 import Exchange from '../components/sections/Exchange';
 
@@ -35,15 +36,18 @@ const Purchase = props => {
             <p>
                 Connect your BSC wallet first!
             </p>
+            <ol>
+                <li>Pick how many crates you want to open and the lock duration. The contract swaps your BNB for BLOWF tokens.</li>
+                <li>Your new BLOWF tokens are locked for 1-8 weeks.</li>
+                <li>When the lock period passes, you can withdraw your BLOWF from the Puff Vault.</li>
+            </ol>
             <p>
-                To open a crate, you swap BNB for BLOWF tokens on this website. Your new BLOWF tokens are locked for 1-8 weeks. When the lock period passes, you can withdraw your BLOWF from the Puff Vault.
-            </p>
-            <p>
-                The process is the same when swapping BNB for the liquidity pool tokens.
+                The process is the same when swapping BNB for liquidity pool tokens.
             </p>
             <p>
                 Locking liquidity for 8 weeks yields the best odds of rare puffs!
             </p>
+            <Image src={crate} width={200}/>
             <h2>
                 Chance of a Shark
             </h2>
@@ -53,12 +57,12 @@ const Purchase = props => {
                 <li>Liquidity Locked 8 Weeks: 8%</li>
             </ul>
             <p>
-                Even rarer are the elusive whales. The base rate of a whale is only .05%
+                Even rarer are the elusive whales. The base rate of a whale is only .05%. Sharks and whales will have special utility in our upcoming games.
             </p>
             <p>
-                Your odds of getting a hat also increases as you lock longer or lock liquidity!
+                Your odds of getting a hat also increases as you lock longer and/or lock liquidity.
             </p>
-            <Image src={crate} width={200}/>
+            <Image src={bShark} width={300}/>
             <h2>
                 Bonding Curve (Pricing)
             </h2>
@@ -66,6 +70,9 @@ const Purchase = props => {
                 The inital price of opening a CryptoPuff is .1 BNB. The price rises by 25% for the each 1000 Puffs minted until 4000 Puffs are minted. Then, the price rises by 25% for each 500 Puffs minted. There is a hard cap of 10,000 Generation 1 CryptoPuffs.
             </p>
             <Image src={bonding} width={600}/>
+            <p className="mt-24">
+                There is initially a 30% fee to fund development. As more Puffs are minted and the team's fundraising targets are met, we will decrease the fee.
+            </p>
             <h2>
                 Where do I see my CryptoPuffs?
             </h2>
