@@ -132,7 +132,7 @@ const Hero = ({
             </p>
             <Image src={dInject} width={600}/>
             <p className="mt-24">
-              The upcoming <strong>Enhance & Battle</strong> will feature more benefits to locking tokens and liquidity!
+              The upcoming <strong>Enhance & Battle</strong> will feature more benefits to locking tokens and liquidity! Upcoming games you can play with your Puffs.
             </p>
             <p>
               Visit <a href="https://www.blowfish.one/" target="_blank" rel="noopener noreferrer">blowfish.one</a> to learn more about the BlowFish platform and how to purchase $BLOWF.
