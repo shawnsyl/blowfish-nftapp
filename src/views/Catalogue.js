@@ -25,7 +25,6 @@ const Catalogue = props => {
     const [page, setPage] = useState(props.match.params.page);
     const [recentMints, setRecentMints] = useState(null);
     const [sortBy, setSortBy] = useState(props.match.params.sortBy);
-    const [totalSupply, setTotalSupply] = useState(0);
     const outerClasses = classNames(
       'catalogue section container',
     //   topOuterDivider && 'has-top-divider',
@@ -49,12 +48,23 @@ const Catalogue = props => {
     const history = useHistory();
 
     useEffect(() => {
+        axios({
+            method: 'get', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+            url: 'cryptopuffs/'
+        }).then(response => {
+            console.log(response)
+            setAllPuffs(response.data.cryptopuffs)
+        }).catch(err => {
+            console.error(err);
+        })
+    } , [])
+
+    useEffect(() => {
         if (!!web3 && !!contract && !reloadRequired && Object.keys(contract.methods).length) {
-            contract.methods.totalSupply().call()
-                .then(response => {
-                    console.log(response);
-                    setTotalSupply(parseInt(response));
-                })
             axios({
                 method: 'get', 
                 headers: {
@@ -88,20 +98,6 @@ const Catalogue = props => {
                 }
             }).then(response => {
                 setNumPages(Math.ceil(response.data.cryptopuffs.length/12));
-            }).catch(err => {
-                console.error(err);
-            })
-    
-            axios({
-                method: 'get', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-                url: 'cryptopuffs/'
-            }).then(response => {
-                console.log(response)
-                setAllPuffs(response.data.cryptopuffs)
             }).catch(err => {
                 console.error(err);
             })
@@ -140,10 +136,10 @@ const Catalogue = props => {
     }, [props.match.params.page])
 
     useEffect(() => {
-        if (!!allPuffs && totalSupply > 0) {
-            setRecentMints([...allPuffs.slice(totalSupply - numRecent, totalSupply).reverse()])
+        if (!!allPuffs) {
+            setRecentMints([...allPuffs.slice(allPuffs.length - numRecent, allPuffs.length).reverse()])
         }
-    }, [allPuffs, totalSupply, numRecent])
+    }, [allPuffs, numRecent])
 
     const onPageChange = newPage => {
         history.push(`/catalog/${newPage}/${sortBy}`);
@@ -152,13 +148,12 @@ const Catalogue = props => {
     }
     
     const loadMore = () => {
-        if (numRecent + 8 < totalSupply) {
+        if (numRecent + 8 < allPuffs.length) {
             setNumRecent(numRecent + 8)
-        } else if (numRecent + 8 >= totalSupply) {
-            setNumRecent(totalSupply);
+        } else if (numRecent + 8 >= allPuffs.length) {
+            setNumRecent(allPuffs.length);
         }
     }
-
     const getRecentMints = () => {
         return (
             <div className='recent-mints-table-container'>
@@ -235,10 +230,10 @@ const Catalogue = props => {
                     </div>
                 )}
                 <h1>Recently Discovered CryptoPuffs</h1>
-                {!!recentMints && !!web3 && !!contract && !reloadRequired ? (
+                {!!recentMints ? (
                     <div style={{paddingBottom: '48px'}}>
                         {getRecentMints()}
-                        <Button className='button-primary' disabled={numRecent === totalSupply} onClick={loadMore}>
+                        <Button className='button-primary' disabled={numRecent === allPuffs.length} onClick={loadMore}>
                             Load More
                         </Button>
                     </div>
