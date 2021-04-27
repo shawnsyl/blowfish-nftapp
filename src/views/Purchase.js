@@ -57,10 +57,13 @@ const Purchase = props => {
                 <li>Liquidity Locked 8 Weeks: 8%</li>
             </ul>
             <p>
-                Even rarer are the elusive whales. The base rate of a whale is only .05%. Sharks and whales will have special utility in our upcoming games.
+                Even rarer are the elusive whales. The base rate of a whale is only .05%, which scales up to .4% for 8 weeks locked liquidity. Sharks and whales will have special utility in our upcoming games.
             </p>
             <p>
-                Your odds of getting a hat also increases as you lock longer and/or lock liquidity.
+                Your odds of getting a hat increases as you lock longer and/or lock liquidity.
+            </p>
+            <p>
+                For pufferfish, you have a 33% chance of getting the default color, and a 66% of getting a random hue. There is a 50% chance of getting a darker shade. Eyes, mouths, spikes, and backgrounds are equally random. Sharks and whales have equally random features.
             </p>
             <Image src={bShark} width={300}/>
             <h2>
