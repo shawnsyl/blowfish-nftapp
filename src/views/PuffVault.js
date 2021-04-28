@@ -226,7 +226,7 @@ const PuffVault = props => {
                         </table>
                     </div>
                 ) : (
-                    <Loader active inverted inline='centered'>Loading</Loader>
+                    <Loader active inverted inline='centered'>Please connect your wallet</Loader>
                 )}
             </div>
         )

@@ -26,7 +26,7 @@ const Purchase = props => {
                 <Exchange />
             ) : (
                     <div className ='purchase-loader'>
-                        <Loader active inverted inline='centered'>Loading</Loader>
+                        <Loader active inverted inline='centered'>Please connect your wallet</Loader>
                     </div>
                 )
             }

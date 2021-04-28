@@ -226,7 +226,7 @@ const Catalogue = props => {
                     </Fragment>
                 ) : (
                     <div>
-                        <Loader active inverted inline='centered'>Loading</Loader>
+                        <Loader active inverted inline='centered'>Please connect your wallet</Loader>
                     </div>
                 )}
                 <h1>Recently Discovered CryptoPuffs</h1>
