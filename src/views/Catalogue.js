@@ -21,9 +21,9 @@ const Catalogue = props => {
     const [allPuffs, setAllPuffs] = useState(null);
     const [cryptoPuffs, setCryptoPuffs] = useState(null);
     const [numPages, setNumPages] = useState(0);
+    const [numRecent, setNumRecent] = useState(4);
     const [page, setPage] = useState(props.match.params.page);
-    const [recentMints, setRecentMints] = useState(1);
-    const [recentsDisabled, setRecentsDisabled] = useState(false);
+    const [recentMints, setRecentMints] = useState(null);
     const [sortBy, setSortBy] = useState(props.match.params.sortBy);
     const outerClasses = classNames(
       'catalogue section container',
@@ -48,18 +48,13 @@ const Catalogue = props => {
     const history = useHistory();
 
     useEffect(() => {
-        console.log(process.env.REACT_APP_BACKEND_HOST );
         axios({
             method: 'get', 
             headers: {
                 'Content-Type': 'application/json'
             },
             baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                page: 1, 
-                pageSize: 4
-            }
+            url: 'cryptopuffs/'
         }).then(response => {
             console.log(response)
             setAllPuffs(response.data.cryptopuffs)
@@ -140,6 +135,12 @@ const Catalogue = props => {
         }
     }, [props.match.params.page])
 
+    useEffect(() => {
+        if (!!allPuffs) {
+            setRecentMints([...allPuffs.slice(allPuffs.length - numRecent, allPuffs.length).reverse()])
+        }
+    }, [allPuffs, numRecent])
+
     const onPageChange = newPage => {
         history.push(`/catalog/${newPage}/${sortBy}`);
         setPage(newPage);
@@ -147,29 +148,11 @@ const Catalogue = props => {
     }
     
     const loadMore = () => {
-        axios({
-            method: 'get', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-            url: 'cryptopuffs/',
-            params: {
-                page: recentMints + 1,
-                pageSize: 8
-            }
-        })
-        .then(response => {
-            if (response.data.cryptopuffs.length) {
-                setRecentMints(recentMints + 1);
-                setAllPuffs(allPuffs.concat(response.data.cryptopuffs));
-            } else {
-                setRecentsDisabled(true);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        })
+        if (numRecent + 8 < allPuffs.length) {
+            setNumRecent(numRecent + 8)
+        } else if (numRecent + 8 >= allPuffs.length) {
+            setNumRecent(allPuffs.length);
+        }
     }
     const getRecentMints = () => {
         return (
@@ -190,7 +173,7 @@ const Catalogue = props => {
                             </tr>
                         </thead>
                         <tbody>
-                            {allPuffs.map((mint, index) => (
+                            {recentMints.map((mint, index) => (
                                 <tr key={index}>
                                     <td>
                                         {mint.puffId}
@@ -247,10 +230,10 @@ const Catalogue = props => {
                     </div>
                 )}
                 <h1>Recently Discovered CryptoPuffs</h1>
-                {!!allPuffs ? (
+                {!!recentMints ? (
                     <div style={{paddingBottom: '48px'}}>
                         {getRecentMints()}
-                        <Button className='button-primary' disabled={recentsDisabled} onClick={loadMore}>
+                        <Button className='button-primary' disabled={numRecent === allPuffs.length} onClick={loadMore}>
                             Load More
                         </Button>
                     </div>
