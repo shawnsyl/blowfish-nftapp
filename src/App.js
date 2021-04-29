@@ -9,6 +9,7 @@ import LayoutDefault from './layouts/LayoutDefault';
 // Views 
 import Battle from './views/Battle';
 import Catalogue from './views/Catalogue';
+import Construction from './views/Construction';
 import Home from './views/Home';
 import Purchase from './views/Purchase';
 import Marketplace from './views/Marketplace';
@@ -33,12 +34,12 @@ const App = () => {
       children={() => (
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
-          <AppRoute exact path="/catalog/:page/:sortBy" component={Catalogue} layout={LayoutDefault} />
-          <AppRoute exact path="/puffvault" component={PuffVault} layout={LayoutDefault} />
-          <AppRoute exact path="/purchase" component={Purchase} layout={LayoutDefault} />
-          <AppRoute exact path="/battle" component={Battle} layout={LayoutDefault} />
-          <AppRoute exact path="/marketplace" component={Marketplace} layout={LayoutDefault} />
-          <AppRoute exact path="/puff/:puffId" component={PuffView} layout={LayoutDefault} />
+          <AppRoute exact path="/catalog/:page/:sortBy" component={Construction} layout={LayoutDefault} />
+          <AppRoute exact path="/puffvault" component={Construction} layout={LayoutDefault} />
+          <AppRoute exact path="/purchase" component={Construction} layout={LayoutDefault} />
+          <AppRoute exact path="/battle" component={Construction} layout={LayoutDefault} />
+          <AppRoute exact path="/marketplace" component={Construction} layout={LayoutDefault} />
+          <AppRoute exact path="/puff/:puffId" component={Construction} layout={LayoutDefault} />
         </Switch>
       )} />
   );
