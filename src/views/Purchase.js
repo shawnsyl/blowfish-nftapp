@@ -57,7 +57,7 @@ const Purchase = props => {
                 <li>Liquidity Locked 8 Weeks: 8%</li>
             </ul>
             <p>
-                Even rarer are the elusive whales. The base rate of a whale is only .05%, which scales up to .4% for 8 weeks locked liquidity. Sharks and whales will have special utility in our upcoming games.
+                Even rarer are the elusive whales. The base rate of a whale is only .05%, which scales up to .8% for 8 weeks locked liquidity. Sharks and whales will have special utility in our upcoming games.
             </p>
             <p>
                 Your odds of getting a hat increases as you lock longer and/or lock liquidity.

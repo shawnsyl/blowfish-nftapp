@@ -69,7 +69,8 @@ const Hero = ({
           <div className="hero-content">
             <Image src={logo} width={1000}/>
             <h2 className="mt-24 mb-24" data-reveal-delay="200">
-              Collect them, auction them, battle them!
+              Collect them, auction them, battle them!<br></br>
+              Lock BNB-BLOWF To Get Crates
             </h2>
             <div className="divpadding">
                 <Button className='hero-button button-primary' href='/purchase'>Open A Crate</Button>
