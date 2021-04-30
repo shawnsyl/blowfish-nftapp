@@ -65,7 +65,7 @@ const Catalogue = props => {
         }).then(response => {
             console.log(response)
             setLoading(false);
-            setAllPuffs(response.data.cryptopuffs)
+            setAllPuffs(response.data.cryptopuffs.reverse());
         }).catch(err => {
             setLoading(false);
             console.error(err);
@@ -167,7 +167,7 @@ const Catalogue = props => {
         }).then(response => {
             console.log(response)
             if (response.data.cryptopuffs.length) {
-                setAllPuffs([...allPuffs, ...response.data.cryptopuffs])
+                setAllPuffs([...allPuffs, ...response.data.cryptopuffs.reverse()])
                 setRecentsPage(recentsPage + 1)
                 setLoading(false);
             } else {
