@@ -21,6 +21,7 @@ const Catalogue = props => {
     const [allPuffs, setAllPuffs] = useState(null);
     const [cryptoPuffs, setCryptoPuffs] = useState(null);
     const [numPages, setNumPages] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [loadMoreDisabled, setLoadMoreDisabled] = useState(false);
     const [page, setPage] = useState(props.match.params.page);
     const [recentsPage, setRecentsPage] = useState(1);
@@ -48,6 +49,7 @@ const Catalogue = props => {
     const history = useHistory();
 
     useEffect(() => {
+        setLoading(true);
         axios({
             method: 'get', 
             headers: {
@@ -62,8 +64,10 @@ const Catalogue = props => {
             }
         }).then(response => {
             console.log(response)
+            setLoading(false);
             setAllPuffs(response.data.cryptopuffs)
         }).catch(err => {
+            setLoading(false);
             console.error(err);
         })
     } , [])
@@ -140,12 +144,6 @@ const Catalogue = props => {
         }
     }, [props.match.params.page])
 
-    // useEffect(() => {
-    //     if (!!allPuffs) {
-    //         setRecentMints([...allPuffs.slice(allPuffs.length - numRecent, allPuffs.length).reverse()])
-    //     }
-    // }, [allPuffs, numRecent])
-
     const onPageChange = newPage => {
         history.push(`/catalog/${newPage}/${sortBy}`);
         setPage(newPage);
@@ -153,6 +151,7 @@ const Catalogue = props => {
     }
     
     const loadMore = () => {
+        setLoading(true);
         axios({
             method: 'get', 
             headers: {
@@ -170,10 +169,13 @@ const Catalogue = props => {
             if (response.data.cryptopuffs.length) {
                 setAllPuffs([...allPuffs, ...response.data.cryptopuffs])
                 setRecentsPage(recentsPage + 1)
+                setLoading(false);
             } else {
                 setLoadMoreDisabled(true);
+                setLoading(false);
             }
         }).catch(err => {
+            setLoading(false);
             console.error(err);
         })
     }
@@ -256,8 +258,8 @@ const Catalogue = props => {
                 {!!allPuffs ? (
                     <div style={{paddingBottom: '48px'}}>
                         {getRecentMints()}
-                        <Button className='button-primary' disabled={loadMoreDisabled} onClick={loadMore}>
-                            Load More
+                        <Button className='button-primary' disabled={loadMoreDisabled || loading} onClick={loadMore}>
+                            {loading ? 'Loading...' : 'Load More'}
                         </Button>
                     </div>
                 ) : (
