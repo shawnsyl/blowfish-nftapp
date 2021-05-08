@@ -1,0 +1,56 @@
+.puffCarousel-container {
+    margin: 0 auto;
+
+    .carousel-arrow {
+        color: #fffad6;
+        font-family: 'Baloo' !important;
+        font-size: 36px;
+        cursor: pointer;
+        user-select: none;
+
+        &.disabled {
+            pointer-events: none;
+            opacity: 50%;
+        }
+    }
+
+    .carouselArrowContainer--disabled {
+        pointer-events: none;
+        opacity: 50%;
+    }
+
+    .BrainhubCarousel__container {
+        height: 360px;
+    }
+
+    .BrainhubCarousel.customBrainhubCarousel { 
+        height: 100%;
+
+        .BrainhubCarousel__trackContainer {
+            height: 100%;
+
+            .customCarouselTrack {
+                height: 100%;
+            }
+        }
+    }
+
+    .BrainhubCarousel__container, .BrainhubCarousel, .BrainhubCarousel__trackContainer {
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+
+    .puffCarousel-buttonPlaceholder {
+        height: 24px;
+    }
+
+    .ui.button.button-secondary {
+        height: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    .BrainhubCarouselItem.BrainhubCarouselItem {
+        transform: scale(1) !important;
+    }
+}

@@ -34,73 +34,67 @@
 }
 
 .tiles-item {
-    .pufftile {
-		text-align: left;
-		h1, h2, h3, h4 {
-			color: get-color(primary, 1);
-			text-align: center;
-		}
+    // .pufftile {
+	// 	text-align: left;
+	// 	h1, h2, h3, h4 {
+	// 		color: get-color(primary, 1);
+	// 		text-align: center;
+	// 	}
 
-        h1 {
-            margin-bottom: 12px;
-        }
+    //     h1 {
+    //         margin-bottom: 12px;
+    //     }
 
-		h3 {
-			font-size: 24px;
-		}
+	// 	h3 {
+	// 		font-size: 24px;
+	// 	}
 
-		p {
-			color: get-color(primary, 1);
-			font-size: 14px;
-		}
+	// 	p {
+	// 		color: get-color(primary, 1);
+	// 		font-size: 14px;
+	// 	}
 
-		li {
-			line-height: normal;
-		}
-	}
+	// 	li {
+	// 		line-height: normal;
+	// 	}
+	// }
 
-	&.pufftile-container {
-		background-color: white;
-		margin: 0;
-		max-width: none;
-		padding: 0;
-		opacity : 0;
+	// &.pufftile-container {
+	// 	background-color: white;
+	// 	margin: 0;
+	// 	max-width: none;
+	// 	padding: 0;
+	// 	opacity : 0;
 
-		border-radius: 12px;
-		border: 1px solid #f7f8f9;
-		// box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
+	// 	border-radius: 12px;
+	// 	border: 1px solid #f7f8f9;
+	// 	// box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
 
-		// box-shadow: 0 0 1px 0 rgb(8 11 14 / 6%), 0 16px 16px -1px rgb(8 11 14 / 10%);
+	// 	// box-shadow: 0 0 1px 0 rgb(8 11 14 / 6%), 0 16px 16px -1px rgb(8 11 14 / 10%);
 
-		--tileDelay: 0.05s;
-		--defaultAnimationTime: s;
-		--tileLength: 12;
+	// 	--tileDelay: 0.05s;
+	// 	--defaultAnimationTime: s;
+	// 	--tileLength: 12;
 
-		transform: translateY(2.4rem);
-		will-change: transform;
-		animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
+	// 	transform: translateY(2.4rem);
+	// 	will-change: transform;
+	// 	animation: puffTileIn 1.0s cubic-bezier(.06,.67,.37,.99) forwards;
 
 
-		.tiles-item-inner {
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: column;
-			height: 100%;
-			padding: $tiles-item--inner-padding-v $tiles-item--inner-padding-h;
-		}
-
-		&:hover {
-			box-shadow: 0 0 1px 0 rgb(233, 235, 238), 0 16px 16px -1px rgb(233, 235, 238);
-			transform: scale(1.1);
-			cursor: pointer;
-		}
+	// 	.tiles-item-inner {
+	// 		display: flex;
+	// 		flex-wrap: wrap;
+	// 		flex-direction: column;
+	// 		height: 100%;
+	// 		padding: $tiles-item--inner-padding-v $tiles-item--inner-padding-h;
+	// 	}
 		
-		@for $i from 1 through 12 {
-			&:nth-child(#{$i}) {
-				animation-delay: calc(#{$i} * var(--tileDelay));
-			}
-		}
-	}
+	// 	@for $i from 1 through 12 {
+	// 		&:nth-child(#{$i}) {
+	// 			animation-delay: calc(#{$i} * var(--tileDelay));
+	// 		}
+	// 	}
+	// }
 }
 
 .puffvault {

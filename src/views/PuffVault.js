@@ -179,7 +179,7 @@ const PuffVault = props => {
                         </table>
                     </div>
                 ) : (
-                    <Loader active inverted inline='centered'>Loading</Loader>
+                    <Loader active inverted inline='centered'>{!web3 || reloadRequired ? 'Please connect your wallet.' : 'Loading locked liquidity'}</Loader>
                 )}
                 <h1>Locked BLOWF</h1>
                 {!!lockedTokens && !!web3 && !reloadRequired && contract ? (
@@ -226,7 +226,7 @@ const PuffVault = props => {
                         </table>
                     </div>
                 ) : (
-                    <Loader active inverted inline='centered'>Please connect your wallet</Loader>
+                    <Loader active inverted inline='centered'>{!web3 || reloadRequired ? 'Please connect your wallet.' : 'Loading locked BLOWF'}</Loader>
                 )}
             </div>
         )

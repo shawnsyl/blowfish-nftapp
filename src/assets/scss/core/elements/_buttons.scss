@@ -177,6 +177,26 @@
 	}
 }
 
+.ui.button.button-secondary {
+	color: color(button-secondary);
+	background: color-bg(button-secondary);
+	padding: 0;
+
+	&:hover {
+		background: color-bg(button-secondary-hover);
+		color: color-bg(button-secondary);
+	}
+
+	&:focus {
+		color: color(button-secondary);
+		background: color-bg(button-secondary);;
+	}
+
+	&.disabled {
+		color: black !important;
+	}
+}
+
 @include media( '<=medium' ) {
 
 	.button-wide-mobile {

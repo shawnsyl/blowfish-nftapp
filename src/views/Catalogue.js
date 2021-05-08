@@ -8,14 +8,27 @@ import { useContractDataContext } from '../hooks/contractData/useContractDataCon
 import {
     Button,
     Container,
+    Dropdown,
     Loader,
     Pagination
 } from 'semantic-ui-react'
 
 import PuffTile from '../components/elements/PuffTile'
 import Puff from '../components/elements/Puff'
+import PuffCarousel from '../components/elements/PuffCarousel'
 
 const axios = require('axios');
+
+const viewOptions = [
+    {
+        text: 'Carousel',
+        value: 'carousel'
+    },
+    {
+        text: 'Grid',
+        value: 'grid'
+    }
+]
 
 const Catalogue = props => {
     const [allPuffs, setAllPuffs] = useState(null);
@@ -26,6 +39,7 @@ const Catalogue = props => {
     const [page, setPage] = useState(props.match.params.page);
     const [recentsPage, setRecentsPage] = useState(1);
     const [sortBy, setSortBy] = useState(props.match.params.sortBy);
+    const [viewOption, setViewOption] = useState('carousel');
     const outerClasses = classNames(
       'catalogue section container',
     //   topOuterDivider && 'has-top-divider',
@@ -229,25 +243,44 @@ const Catalogue = props => {
             <h1>My CryptoPuffs</h1>
                 {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
                     <Fragment>
-                        <div className='pufftiles container'>
-                            <div className={tilesClasses}>
-                                {cryptoPuffs.map((puff, i) => {
-                                    return <PuffTile key={i} puffId={puff.puffId} /> 
-                                })}
+                        <div className='catalogue-viewer'>
+                            <div className='catalogue-filters'>
+                                <h2>Options</h2>
+                                <Dropdown
+                                fluid
+                                selection
+                                onChange={(_, d) => setViewOption(d.value)}
+                                options={viewOptions}
+                                value={viewOption} />
+                            </div>
+                            <div className='puffs-viewer'>
+                                {viewOption === 'carousel' ? (
+                                    <PuffCarousel puffIds={cryptoPuffs.map(puff => puff.puffId)}/>
+                                ) : (
+                                    <Fragment>
+                                        <div className='pufftiles container'>
+                                            <div className={tilesClasses}>
+                                                {cryptoPuffs.map((puff, i) => {
+                                                    return <PuffTile key={i} puffId={puff.puffId} /> 
+                                                })}
+                                            </div>
+                                        </div>
+                                
+                                        {numPages > 0 ? (
+                                            <Pagination
+                                            onPageChange={(_,d) => onPageChange(d.activePage)}
+                                            boundaryRange={1}
+                                            siblingRange={1}
+                                            defaultActivePage={page}
+                                            ellipsisItem={undefined}
+                                            firstItem={null}
+                                            lastItem={null}
+                                            totalPages={numPages} /> 
+                                        ) : null}
+                                    </Fragment>
+                                )}
                             </div>
                         </div>
-                
-                        {numPages > 0 ? (
-                            <Pagination
-                            onPageChange={(_,d) => onPageChange(d.activePage)}
-                            boundaryRange={1}
-                            siblingRange={1}
-                            defaultActivePage={page}
-                            ellipsisItem={undefined}
-                            firstItem={null}
-                            lastItem={null}
-                            totalPages={numPages} /> 
-                        ) : null}
                     </Fragment>
                 ) : (
                     <div>

@@ -2,6 +2,8 @@ import React from 'react'
 
 import Puff from './Puff'
 
+import { Button, Label } from 'semantic-ui-react';
+
 const PuffTile = props => {
     const {
         puffId
@@ -15,18 +17,15 @@ const PuffTile = props => {
                         <Puff size={128} puffId={puffId} />
                     </div>
                     <div className="pufftile">
-                        <h3 className="mt-0 mb-8">
-                            ID: {puffId}
-                        </h3>
-                        {/* <p className='m-0'>
-                            <strong>Characteristics</strong>
+                        <p className="mt-0 mb-8">
+                            Cryptopuff ID: {puffId}
                         </p>
-                        <ul className='list-reset'>
-                            <li>hi</li>
-                            <li>hi</li>
-                            <li>hi</li>
-                            <li>hi</li>
-                        </ul> */}
+                        <Button 
+                        className='button-secondary' 
+                        fluid
+                        onClick={(e) => {e.preventDefault()}}>
+                            SELL THIS PUFF
+                        </Button>
                     </div>
                 </div>
             </a>
