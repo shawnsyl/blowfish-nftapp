@@ -240,53 +240,69 @@ const Catalogue = props => {
                 <CatalogueSearch />
             </div> */}
             <Fragment>
-            <h1>My CryptoPuffs</h1>
-                {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
-                    <Fragment>
-                        <div className='catalogue-viewer'>
-                            <div className='catalogue-filters'>
-                                <h2>Options</h2>
-                                <Dropdown
-                                fluid
-                                selection
-                                onChange={(_, d) => setViewOption(d.value)}
-                                options={viewOptions}
-                                value={viewOption} />
-                            </div>
-                            <div className='puffs-viewer'>
-                                {viewOption === 'carousel' ? (
-                                    <PuffCarousel puffIds={cryptoPuffs.map(puff => puff.puffId)}/>
-                                ) : (
-                                    <Fragment>
-                                        <div className='pufftiles container'>
-                                            <div className={tilesClasses}>
-                                                {cryptoPuffs.map((puff, i) => {
-                                                    return <PuffTile key={i} puffId={puff.puffId} /> 
-                                                })}
-                                            </div>
-                                        </div>
-                                
-                                        {numPages > 0 ? (
-                                            <Pagination
-                                            onPageChange={(_,d) => onPageChange(d.activePage)}
-                                            boundaryRange={1}
-                                            siblingRange={1}
-                                            defaultActivePage={page}
-                                            ellipsisItem={undefined}
-                                            firstItem={null}
-                                            lastItem={null}
-                                            totalPages={numPages} /> 
-                                        ) : null}
-                                    </Fragment>
-                                )}
-                            </div>
-                        </div>
-                    </Fragment>
-                ) : (
-                    <div>
-                        <Loader active inverted inline='centered'>Please connect your wallet</Loader>
+                <div className='first-section'> 
+                    <h1>My CryptoPuffs</h1>
+                </div>
+                <div className='catalogue-viewer'>
+                    <div className='catalogue-filters'>
+                        <h2>Options</h2>
+                        <Dropdown
+                        fluid
+                        selection
+                        onChange={(_, d) => setViewOption(d.value)}
+                        options={viewOptions}
+                        value={viewOption} />
                     </div>
-                )}
+                    <div className='puffs-viewer'>
+                    {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
+                        <Fragment>
+                            {viewOption === 'carousel' ? (
+                                <PuffCarousel puffIds={cryptoPuffs.map(puff => puff.puffId)}/>
+                            ) : (
+                                <Fragment>
+                                    <div className='pufftiles container'>
+                                        <div className={tilesClasses}>
+                                            {cryptoPuffs.map((puff, i) => {
+                                                return (
+                                                    <PuffTile key={i} puffId={puff.puffId} href={`/puff/${puff.puffId}`}>
+                                                        <div className="pufftile-text">
+                                                            <p className="mt-0 mb-0">
+                                                                Cryptopuff ID: {puff.puffId}
+                                                            </p>
+                                                        </div>
+                                                        <Button 
+                                                        className='button-secondary' 
+                                                        fluid
+                                                        onClick={(e) => {e.preventDefault()}}>
+                                                            SELL THIS PUFF
+                                                        </Button>
+                                                    </PuffTile>
+                                                ) 
+                                            })}
+                                        </div>
+                                    </div>
+                            
+                                    {numPages > 0 ? (
+                                        <Pagination
+                                        onPageChange={(_,d) => onPageChange(d.activePage)}
+                                        boundaryRange={1}
+                                        siblingRange={1}
+                                        defaultActivePage={page}
+                                        ellipsisItem={undefined}
+                                        firstItem={null}
+                                        lastItem={null}
+                                        totalPages={numPages} /> 
+                                    ) : null}
+                                </Fragment>
+                            )}
+                        </Fragment>
+                    ) : (
+                        <div>
+                            <Loader active inverted inline='centered'>Please connect your wallet</Loader>
+                        </div>
+                    )}
+                    </div>
+                </div>
                 <h1>Recently Discovered CryptoPuffs</h1>
                 {!!allPuffs ? (
                     <div style={{paddingBottom: '48px'}}>
