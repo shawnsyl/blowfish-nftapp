@@ -2,7 +2,9 @@ import Web3 from 'web3';
 
 import MainContract from './abi/MainContract.json';
 import TestContract from './abi/TestContract.json';
+import TestMarketContract from './abi/TestMarket.json';
 const contractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_CRYPTOPUFF_CONTRACT;
+const marketContractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_MARKET_CONTRACT : process.env.REACT_APP_TEST_MARKET_CONTRACT;
 
 export const getWeb3 = () =>
     new Promise(async(resolve, reject) => {
@@ -32,15 +34,25 @@ export const getWeb3 = () =>
 
 export const getContract = async (web3) => {
     const contractAbi = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? TestContract : MainContract
+    const marketAbi = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? TestMarketContract : TestMarketContract
     window.user = (await web3.eth.getAccounts())[0];
     
-    window.instance = new web3.eth.Contract(
-        contractAbi,
-        contractAddress, // contract address here
-        {
-            from: window.user
-        }
-    );
+    window.instance = [
+        new web3.eth.Contract(
+            contractAbi,
+            contractAddress, // contract address here
+            {
+                from: window.user
+            }
+        ), 
+        new web3.eth.Contract(
+            marketAbi,
+            marketContractAddress, // contract address here
+            {
+                from: window.user
+            }
+        ),
+    ];
     return window.instance;
 }
 

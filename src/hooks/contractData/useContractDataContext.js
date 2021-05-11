@@ -37,6 +37,7 @@ export const useContractDataContext = () => useContext(ContractDataContext);
 
 export const ContractDataProvider = ({children}) => {
     const [contract, setContract] = useState(() => getLocalStorage('contract', null));
+    const [marketContract, setMarketContract] = useState(() => getLocalStorage('marketContract', null))
     const [contractData, setContractData] = useState(() => getLocalStorage('contractData', null));
     const [loadingData, setLoadingData] = useState(false);
     const [reloadRequired, setReloadRequired] = useState(() => getLocalStorage('reloadRequired', false));
@@ -63,7 +64,8 @@ export const ContractDataProvider = ({children}) => {
 
         if (contract) {
             console.log(contract);
-            setContract(contract);
+            setContract(contract[0]);
+            setMarketContract(contract[1]);
         }
 
         if (tokenInst) {
@@ -79,8 +81,8 @@ export const ContractDataProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if (!!tokenInst && !!user && !!contract && !!web3) {
-            if (Object.keys(contract.methods).length && Object.keys(tokenInst.methods).length) {
+        if (!!tokenInst && !!user && !!contract && !!marketContract && !!web3) {
+            if (Object.keys(contract.methods).length && Object.keys(tokenInst.methods).length && Object.keys(marketContract.methods).length) {
                 web3.eth.net.getId()
                 .then(result => {
                     if (result !== networkId) {
@@ -98,12 +100,17 @@ export const ContractDataProvider = ({children}) => {
             }
             setLocalStorage('user', user);
             setLocalStorage('contract', contract);
+            setLocalStorage('marketContract', marketContract);
         };
-    }, [contract, tokenInst, user, web3])
+    }, [contract, marketContract, tokenInst, user, web3])
 
     useEffect(() => {
         setLocalStorage('contractData', contractData);
     }, [contractData])
+
+    useEffect(() => {
+        setLocalStorage('marketContract', marketContract);
+    }, [marketContract])
 
     useEffect(() => {
         setLocalStorage('reloadRequired', reloadRequired)
@@ -111,6 +118,7 @@ export const ContractDataProvider = ({children}) => {
 
     const disconnectWallet = () => {
         setContract(null);
+        setMarketContract(null);
         setContractData(null);
         setTokenInst(null);
         setUser(null);
@@ -141,15 +149,32 @@ export const ContractDataProvider = ({children}) => {
         })
     }
 
+    const getMarketPuffs = async () => {
+        return marketContract.methods.getTradeCount().call()
+            .then(tradeCount => {
+                let tradeArray = [...Array(parseInt(tradeCount)).keys()];
+                console.log(tradeArray);
+                
+                let tradeQueries = tradeArray.map((_, index) => 
+                    marketContract.methods.erc721Trades(index + 1).call()
+                );
+                return Promise.all(tradeQueries)
+                    
+            })
+    }
+
     const loadData = async () => {;
         const playerBalance = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ?
             await web3.eth.getBalance(user) :   
             await web3.eth.getBalance(user);
         const puffCratePrice = await contract.methods.getCryptoPuffsPrice().call();
-
+        const marketPuffs = await getMarketPuffs();
+        console.log(marketPuffs);
+        // const market
         return {
             playerBalance,
-            puffCratePrice
+            puffCratePrice,
+            marketPuffs
         };
     }
 
@@ -160,6 +185,7 @@ export const ContractDataProvider = ({children}) => {
             contract: contract,
             contractData: contractData,
             loadingData: loadingData,
+            marketContract: marketContract,
             reloadRequired: reloadRequired,
             tokenInst: tokenInst,
             user: user,
