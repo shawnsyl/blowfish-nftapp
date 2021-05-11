@@ -29,7 +29,7 @@ const months = {
 const PuffVault = props => {
     const [lockedLiquidities, setLockedLiquidities] = useState(null);
     const [lockedTokens, setLockedTokens] = useState(null);
-    const [isWithdrawing, setIsWithdrawing] = useState(false);
+    const [isWithdrawing, setIsWithdrawing] = useState(null);
     const [withdrawText, setWithdrawText] = useState('Withdrawing')
 
     const {
@@ -99,32 +99,34 @@ const PuffVault = props => {
     }
 
     const withdrawLiquidity = (index) => {
-        setIsWithdrawing(true);
+        setIsWithdrawing(index.toString() + 'l');
         contract.methods.withdrawLiquidityTokens(index).estimateGas({from: user})
             .then(gasEstimate => {
                 contract.methods.withdrawLiquidityTokens(index).send({from: user, gas: gasEstimate + 50000})
                     .then(response => {
-                        setIsWithdrawing(false);
+                        setIsWithdrawing(null);
                         window.location.reload();
                     })
                     .catch(e => {
-                        setIsWithdrawing(false);
+                        setIsWithdrawing(null);
                         console.error(e);
                     })
             })
     }
 
+    console.log(isWithdrawing)
+
     const withdrawTokens = (index) => {
-        setIsWithdrawing(true);
+        setIsWithdrawing(index);
         contract.methods.withdrawTokens(index).estimateGas({from: user})
             .then(gasEstimate => {
                 contract.methods.withdrawTokens(index).send({from: user, gas: gasEstimate + 50000})
                     .then(response => {
-                        setIsWithdrawing(false);
+                        setIsWithdrawing(null);
                         window.location.reload();
                     })
                     .catch(e => {
-                        setIsWithdrawing(false);
+                        setIsWithdrawing(null);
                         console.error(e);
                     })
             })
@@ -165,9 +167,9 @@ const PuffVault = props => {
                                                 <td>
                                                     <Button 
                                                     className='button-primary' 
-                                                    disabled={Date.now() < liquidity.expiryTimestamp * 1000 || isWithdrawing || liquidity.tokenCount === '0'}
+                                                    disabled={Date.now() < liquidity.expiryTimestamp * 1000 || isWithdrawing === index.toString() + 'l'|| liquidity.tokenCount === '0'}
                                                     onClick={() => withdrawLiquidity(index)}>
-                                                        <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                        <span className={isWithdrawing === index.toString() + 'l' ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing === index.toString() + 'l' ? withdrawText  : 'Withdraw'}</span>
                                                     </Button>
                                                 </td>
                                             </tr>
@@ -212,9 +214,9 @@ const PuffVault = props => {
                                                 <td>
                                                     <Button 
                                                     className='button-primary' 
-                                                    disabled={Date.now() < token.expiryTimestamp * 1000 || isWithdrawing || token.tokenCount === '0'}
+                                                    disabled={Date.now() < token.expiryTimestamp * 1000 || isWithdrawing === index || token.tokenCount === '0'}
                                                     onClick={() => withdrawTokens(index)}>
-                                                        <span className={isWithdrawing ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing ? withdrawText  : 'Withdraw'}</span>
+                                                        <span className={isWithdrawing === index ? 'buttonText withdrawing' : 'buttonText'}>{isWithdrawing === index ? withdrawText  : 'Withdraw'}</span>
                                                     </Button>
                                                 </td>
                                             </tr>
