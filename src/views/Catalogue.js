@@ -83,7 +83,6 @@ const Catalogue = props => {
                 sortBy: 'puffId-desc'
             }
         }).then(response => {
-            console.log(response)
             setLoading(false);
             setAllPuffs(response.data.cryptopuffs.reverse());
         }).catch(err => {
@@ -186,7 +185,6 @@ const Catalogue = props => {
                 sortBy: 'puffId-desc'
             }
         }).then(response => {
-            console.log(response)
             if (response.data.cryptopuffs.length) {
                 setAllPuffs([...allPuffs, ...response.data.cryptopuffs.reverse()])
                 setRecentsPage(recentsPage + 1)

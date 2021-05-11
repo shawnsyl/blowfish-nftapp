@@ -39,8 +39,6 @@ const Marketplace = props => {
       'pufftiles-wrap center-content',
     );
 
-    console.log(contractData)
-
     useEffect(() => {
         if (!!contractData && !!web3 && !reloadRequired) {
             if (contractData.marketPuffs) {

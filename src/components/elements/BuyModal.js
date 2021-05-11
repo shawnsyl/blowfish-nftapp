@@ -53,10 +53,8 @@ const BuyModal = props => {
     }
 
     const buyPuff = () => {
-        console.log(contractAddress)
         marketContract.methods.executeERC721Trade(tradeId).estimateGas({from: user, value: web3.utils.toWei(puffPrice)})
             .then(gasEstimate => {
-                console.log(gasEstimate);
                 marketContract.methods.executeERC721Trade(tradeId).send({gas: gasEstimate, from: user, value: web3.utils.toWei(puffPrice)})
                     .then(result => {
                         console.log(result);

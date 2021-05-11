@@ -59,10 +59,8 @@ const SellModal = props => {
     }
 
     const sellPuff = () => {
-        console.log(contractAddress)
         marketContract.methods.openERC721Trade(contractAddress, puffId, web3.utils.toWei(price)).estimateGas()
             .then(gasEstimate => {
-                console.log(gasEstimate);
                 marketContract.methods.openERC721Trade(contractAddress, puffId, web3.utils.toWei(price)).send({gas: gasEstimate, from: user})
                     .then(result => {
                         console.log(result);

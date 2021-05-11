@@ -114,8 +114,6 @@ const PuffVault = props => {
             })
     }
 
-    console.log(isWithdrawing)
-
     const withdrawTokens = (index) => {
         setIsWithdrawing(index);
         contract.methods.withdrawTokens(index).estimateGas({from: user})
