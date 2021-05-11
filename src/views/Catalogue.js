@@ -37,6 +37,7 @@ const viewOptions = [
 const Catalogue = props => {
     const [allPuffs, setAllPuffs] = useState(null);
     const [cryptoPuffs, setCryptoPuffs] = useState(null);
+    const [carouselPuffs, setCarouselPuffs] = useState(null);
     const [numPages, setNumPages] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loadMoreDisabled, setLoadMoreDisabled] = useState(false);
@@ -126,6 +127,7 @@ const Catalogue = props => {
                 }
             }).then(response => {
                 setNumPages(Math.ceil(response.data.cryptopuffs.length/12));
+                setCarouselPuffs(response.data.cryptopuffs)
             }).catch(err => {
                 console.error(err);
             })
@@ -259,10 +261,10 @@ const Catalogue = props => {
                         value={viewOption} />
                     </div>
                     <div className='puffs-viewer'>
-                    {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired ? (
+                    {!!cryptoPuffs && numPages > 0 && !!web3 && !!contract && !reloadRequired && !!carouselPuffs? (
                         <Fragment>
                             {viewOption === 'carousel' ? (
-                                <PuffCarousel puffIds={cryptoPuffs.map(puff => puff.puffId)}/>
+                                <PuffCarousel puffIds={carouselPuffs.map(puff => puff.puffId)}/>
                             ) : (
                                 <Fragment>
                                     <div className='pufftiles container'>
