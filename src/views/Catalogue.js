@@ -9,13 +9,17 @@ import {
     Button,
     Container,
     Dropdown,
+    Header,
+    Input,
     Loader,
+    Modal,
     Pagination
 } from 'semantic-ui-react'
 
 import PuffTile from '../components/elements/PuffTile'
 import Puff from '../components/elements/Puff'
 import PuffCarousel from '../components/elements/PuffCarousel'
+import SellModal from '../components/elements/SellModal';
 
 const axios = require('axios');
 
@@ -36,6 +40,7 @@ const Catalogue = props => {
     const [numPages, setNumPages] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loadMoreDisabled, setLoadMoreDisabled] = useState(false);
+    const [open, setOpen] = useState(false);
     const [page, setPage] = useState(props.match.params.page);
     const [recentsPage, setRecentsPage] = useState(1);
     const [sortBy, setSortBy] = useState(props.match.params.sortBy);
@@ -270,12 +275,7 @@ const Catalogue = props => {
                                                                 Cryptopuff ID: {puff.puffId}
                                                             </p>
                                                         </div>
-                                                        <Button 
-                                                        className='button-secondary' 
-                                                        fluid
-                                                        onClick={(e) => {e.preventDefault()}}>
-                                                            SELL THIS PUFF
-                                                        </Button>
+                                                        <SellModal puffId={puff.puffId} />
                                                     </PuffTile>
                                                 ) 
                                             })}

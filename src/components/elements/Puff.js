@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import {
     Loader,
@@ -47,7 +47,7 @@ const Puff = props => {
     }
 
     return (
-        <div>
+        <Fragment>
             {!!imageUrl ? (
                 <div className="features-tiles-item-image mb-16">
                     <Image
@@ -59,7 +59,7 @@ const Puff = props => {
             ) : (
                 <Loader active inline='centered'><p style={{color: '#004d6f'}}>Loading...</p></Loader>
             )}
-        </div>
+        </Fragment>
     );
 }
 

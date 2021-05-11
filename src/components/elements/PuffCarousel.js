@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Carousel, { arrowsPlugin, slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
-import { Button, Label } from 'semantic-ui-react';
+import { Button, Header, Input, Label, Modal } from 'semantic-ui-react';
 
 import Puff from './Puff';
+import SellModal from './SellModal';
 
 const PuffCarousel = props => {
     const {
@@ -14,6 +15,7 @@ const PuffCarousel = props => {
 
     const [containerWidth, setContainerWidth] = useState(null);
     const [itemWidth, setItemWidth] = useState(null);
+    const [open, setOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     useEffect(() => {
@@ -86,12 +88,7 @@ const PuffCarousel = props => {
                     </p>
                     
                     {index === selectedIndex ? (
-                        <Button 
-                        className='button-secondary' 
-                        fluid
-                        onClick={() => {}}>
-                            SELL THIS PUFF
-                        </Button>
+                        <SellModal puffId={puffId}/>
                     ) : <div className='puffCarousel-buttonPlaceholder'>
                         </div>}
                 </div>
