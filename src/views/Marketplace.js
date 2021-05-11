@@ -13,8 +13,6 @@ import {
 import PuffCarousel from '../components/elements/PuffCarousel';
 import PuffTile from '../components/elements/PuffTile';
 
-const axios = require('axios');
-
 const Marketplace = props => {
     const outerClasses = classNames(
       'marketplace section container',
@@ -29,6 +27,8 @@ const Marketplace = props => {
 
     const {
         contract,
+        marketContract,
+        contractData,
         reloadRequired,
         user,
         web3,
@@ -38,26 +38,25 @@ const Marketplace = props => {
       'pufftiles-wrap center-content',
     );
 
+    console.log(contractData)
+
     useEffect(() => {
-        if (!!web3 && !!contract && !reloadRequired && Object.keys(contract.methods).length) {    
-            axios({
-                method: 'get', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
-                url: 'cryptopuffs/',
-                params: {
-                    puffOwner: user,
-                    sortBy: null
-                }
-            }).then(response => {
-                setCryptoPuffs(response.data.cryptopuffs);
-            }).catch(err => {
-                console.error(err);
-            })
+        if (!!contractData && !!web3 && !reloadRequired) {
+            if (contractData.marketPuffs) {
+                let puffsToAdd = [];
+                contractData.marketPuffs.map(marketPuff => {
+                    puffsToAdd.push({
+                        puffId: marketPuff.tokenId,
+                        price: web3.utils.fromWei(marketPuff.nftTokenPrice),
+                        seller: marketPuff.poster,
+                        status: marketPuff.status
+                    })
+                })
+
+                setCryptoPuffs(puffsToAdd)
+            }
         }
-    }, [web3, contract, reloadRequired])
+    }, [web3, contractData, reloadRequired])
 
     const hoverContent = (
         <Fragment>
@@ -81,7 +80,7 @@ const Marketplace = props => {
                     value={viewOption} /> */}
                 </div>
                 <div className='puffs-viewer'>
-                {!!cryptoPuffs && !!web3 && !!contract && !reloadRequired ? (
+                {!!cryptoPuffs && !!web3 && !reloadRequired ? (
                     <div className='pufftiles container'>
                         <div className={tilesClasses}>
                             {cryptoPuffs.map((puff, i) => {
@@ -96,12 +95,9 @@ const Marketplace = props => {
                                                 Current Price
                                             </p>
                                         </div>
-                                        <div className="pufftile-text">
+                                        <div style={{textAlign: 'right'}}>
                                             <p className="mt-0 mb-0">
-                                                Time Left: blah
-                                            </p>
-                                            <p className="mt-0 mb-0">
-                                                Price
+                                                {puff.price} BNB
                                             </p>
                                         </div>
                                     </PuffTile>
