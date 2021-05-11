@@ -10,6 +10,7 @@ import {
     Loader
 } from 'semantic-ui-react'
 
+import BuyModal from '../components/elements/BuyModal';
 import PuffCarousel from '../components/elements/PuffCarousel';
 import PuffTile from '../components/elements/PuffTile';
 
@@ -49,7 +50,8 @@ const Marketplace = props => {
                         puffId: marketPuff.tokenId,
                         price: web3.utils.fromWei(marketPuff.nftTokenPrice),
                         seller: marketPuff.poster,
-                        status: marketPuff.status
+                        status: marketPuff.status,
+                        tradeId: marketPuff.id
                     })
                 })
 
@@ -58,11 +60,9 @@ const Marketplace = props => {
         }
     }, [web3, contractData, reloadRequired])
 
-    const hoverContent = (
+    const hoverContent = (puffId, price, tradeId) => (
         <Fragment>
-            <Button className='button-secondary' fluid>
-                BUY THIS PUFF
-            </Button>
+            <BuyModal puffId={puffId} puffPrice={price} tradeId={tradeId} />
         </Fragment>
     )
 
@@ -86,7 +86,7 @@ const Marketplace = props => {
                             {cryptoPuffs.map((puff, i) => {
                                 return (
                                     <PuffTile 
-                                    key={i} hoverContent={hoverContent} puffId={puff.puffId}>
+                                    key={i} hoverContent={hoverContent(puff.puffId, puff.price, puff.tradeId)} puffId={puff.puffId}>
                                         <div className="pufftile-text">
                                             <p className="mt-0 mb-0">
                                                 ID: {puff.puffId}
