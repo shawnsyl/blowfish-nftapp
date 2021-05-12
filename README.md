@@ -8,7 +8,8 @@ start with `yarn start`
 
 needs .env
 
-REACT_APP_BACKEND_HOST is the backend api endpoint that queries for puffs stored in mongodb
+REACT_APP_BACKEND_HOST is the backend api endpoint for fetching puffs stored in mongodb
+REACT_APP_NFT_API_TEST is the api endpoint for fetching puff nft image
 # example .env file 
 ```
 REACT_APP_CRYPTOPUFF_CONTRACT = 0x3493a0Cae1411772a344Cacbdbf216244958c0Cc
