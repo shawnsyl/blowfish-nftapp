@@ -7,6 +7,8 @@ run `yarn` to install dependencies
 start with `yarn start`
 
 needs .env
+
+REACT_APP_BACKEND_HOST is the backend api endpoint that queries for puffs stored in mongodb
 # example .env file 
 ```
 REACT_APP_CRYPTOPUFF_CONTRACT = 0x3493a0Cae1411772a344Cacbdbf216244958c0Cc
