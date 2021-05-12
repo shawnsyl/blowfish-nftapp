@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import { useContractDataContext } from '../../hooks/contractData/useContractDataContext';
 
@@ -9,13 +9,55 @@ import Puff from './Puff';
 const contractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_PUFF_CONTRACT : process.env.REACT_APP_CRYPTOPUFF_CONTRACT;
 const marketContractAddress = process.env.NODE_ENV === 'development' || process.env.REACT_APP_IS_STAGING == 'TRUE' ? process.env.REACT_APP_TEST_MARKET_CONTRACT : process.env.REACT_APP_TEST_MARKET_CONTRACT;
 
+const axios = require('axios');
+
 const SellModal = props => {
     const { puffId } = props; 
     
+
+    const [approvingText, setApprovingText] = useState('APPROVING')
+    const [infoText, setInfoText] = useState('');
+    const [isSelling, setIsSelling] = useState(false);
+    const [isUnlocking, setIsUnlocking] = useState(false);
     const [open, setOpen] = useState(false);
     const [price, setPrice] = useState(null);
-    const [isUnlocking, setIsUnlocking] = useState(false);
+    const [sellingText, setSellingText] = useState('SELLING')
     const [unlocked, setUnlocked] = useState(false);
+
+    useEffect(() => {
+        let timer;
+        timer = setInterval(() => {
+            if (sellingText === 'SELLING...') {
+                setSellingText('SELLING');
+            } else {
+                setSellingText(sellingText + '.');
+            }
+        }, 1000)
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+    }, [sellingText])
+
+    useEffect(() => {
+        let timer;
+        timer = setInterval(() => {
+            if (approvingText === 'APPROVING...') {
+                setApprovingText('APPROVING');
+            } else {
+                setApprovingText(approvingText + '.');
+            }
+        }, 1000)
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+    }, [approvingText])
+
  
     const {
         contract,
@@ -59,14 +101,43 @@ const SellModal = props => {
     }
 
     const sellPuff = () => {
+        setIsSelling(true);
         marketContract.methods.openERC721Trade(contractAddress, puffId, web3.utils.toWei(price)).estimateGas()
             .then(gasEstimate => {
                 marketContract.methods.openERC721Trade(contractAddress, puffId, web3.utils.toWei(price)).send({gas: gasEstimate, from: user})
                     .then(result => {
                         console.log(result);
+                        axios({
+                            method: 'post', 
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            baseURL:  process.env.REACT_APP_BACKEND_HOST + 'api/',
+                            url: 'cryptopuffs/remove',
+                            data: JSON.stringify({
+                                puffId: puffId
+                            })
+                        })
+                        .then(response => {
+                            setIsSelling(false);
+                            console.log(response);
+                            setInfoText('Succesfully Put CryptoPuff on sale!');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 7500);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            setIsSelling(false);
+                            setInfoText('Failed Put CryptoPuff on sale!');
+                        })
                     })
-                    .catch(e => {
-                        console.error(e);
+                    .catch(err => {
+                        console.log(err);
+                        setIsSelling(false);
+                        if (err.code === 4001) {
+                            setInfoText('User cancelled transaction!');
+                        }
                     })
             })
     }
@@ -94,15 +165,16 @@ const SellModal = props => {
                 <p>Price</p>
                 <Input onChange={(_,d) => setPrice(d.value)} label={{ basic: true, content: 'BNB' }} labelPosition='right' />
                 </div>
+                <p className={infoText.toLowerCase().includes('failed') || infoText.toLowerCase().includes('cancelled') ? 'warn' : ''}>{infoText}</p>
             </Modal.Content>
             <Modal.Actions>
-                <Button color='black' onClick={() => setOpen(false)}>
+                <Button color='black' disabled={isUnlocking || isSelling} onClick={() => setOpen(false)}>
                 Cancel
                 </Button>
                 {unlocked ? (
                     <Button
-                    content="SELL"
-                    disabled={!price || parseFloat(price) === 0 || price === ''}
+                    content={!isSelling ? "SELL" : sellingText}
+                    disabled={!price || parseFloat(price) === 0 || price === '' || isSelling}
                     labelPosition='right'
                     icon='checkmark'
                     onClick={sellPuff}
@@ -110,7 +182,7 @@ const SellModal = props => {
                     /> 
                 ) :  (
                     <Button
-                    content="APPROVE"
+                    content={!isUnlocking ? "APPROVE" : approvingText}
                     disabled={isUnlocking}
                     labelPosition='right'
                     icon='checkmark'
